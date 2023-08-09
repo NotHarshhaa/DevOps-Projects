@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 http://maven.apache.org/xsd/settings-1.2.0.xsd" xmlns="http://maven.apache.org/SETTINGS/1.2.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <servers>
+    <server>
+      <username>prdevop26@gmail.com</username>
+      <password>Admin123!</password>
+      <id>central</id>
+    </server>
+    <server>
+      <username>prdevop26@gmail.com</username>
+      <password>Admin123!</password>
+      <id>snapshots</id>
+    </server>
+  </servers>
+  <profiles>
+    <profile>
+      <repositories>
+        <repository>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+          <id>central</id>
+          <name>libs-release</name>
+          <url>https://edshopdpt8.jfrog.io/artifactory/libs-release</url>
+        </repository>
+        <repository>
+          <snapshots />
+          <id>snapshots</id>
+          <name>libs-snapshot</name>
+          <url>https://edshopdpt8.jfrog.io/artifactory/libs-snapshot</url>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+          <id>central</id>
+          <name>libs-release</name>
+          <url>https://edshopdpt8.jfrog.io/artifactory/libs-release</url>
+        </pluginRepository>
+        <pluginRepository>
+          <snapshots />
+          <id>snapshots</id>
+          <name>libs-snapshot</name>
+          <url>https://edshopdpt8.jfrog.io/artifactory/libs-snapshot</url>
+        </pluginRepository>
+      </pluginRepositories>
+      <id>artifactory</id>
+    </profile>
+  </profiles>
+  <activeProfiles>
+    <activeProfile>artifactory</activeProfile>
+  </activeProfiles>
+</settings>

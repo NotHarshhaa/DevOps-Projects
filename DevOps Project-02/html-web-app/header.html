@@ -1,0 +1,44 @@
+<!doctype html>
+
+<html>
+  <head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>     <!-- link to the jQuery library (see http://jquery.com) -->
+    <script src="js/beaverslider.js"></script>                                                <!-- link to a framework -->
+	<script src="js/beaverslider-effects.js"></script>                                        <!-- link to a set of effects -->
+	
+	<!-- if you want to make styling link some css files -->
+	
+	<script>
+	
+	$(function(){
+      var slider = new BeaverSlider({
+        structure: {
+          container: {
+            id: "my-slider",
+            width: 1600,
+            height: 411
+          }
+        },
+        content: {
+          images: [
+            "images/header01.jpg",
+            "images/header02.jpg",
+			"images/header03.jpg",
+			"images/header04.jpg"
+          ]
+        },
+        animation: {
+          effects: effectSets["fadeSet"],
+          interval: 4000
+        }
+      });   
+	});
+	
+	</script>
+  <script src="js/jquery.min.js"></script>
+</head>
+
+  <body>
+    <div id="my-slider"></div>
+  </body>
+</html>

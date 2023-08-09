@@ -1,0 +1,16 @@
+{
+    "metrics":{
+       "metrics_collected":{
+          "mem":{
+             "measurement":[
+                "mem_used_percent"
+             ],
+             "metrics_collection_interval":60
+          }
+       },
+       "append_dimensions": {
+         "InstanceId": "${aws:InstanceId}"
+       }
+    }
+ }
+ 

@@ -1,0 +1,105 @@
+/**
+ * Name: booNavigation.css
+ * Date:Sun 16 Feb 2014
+ * Author: Noemi Losada Estrella <info@noemilosada.com>
+ * Creative Commons License <http://creativecommons.org/licenses/by-sa/3.0/>
+ */
+
+/** General
+================================================== */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #333;
+}
+
+.wrapper {
+    margin: 50px auto;
+    width: 960px;
+}
+
+ul li {
+    list-style-type: none;
+}
+
+a {
+    color: #333;
+    text-decoration: none;
+}
+
+/** Navigation theme
+================================================== */
+.booNavigation {
+    position: relative;
+}
+
+.booNavigation li.navItem {
+    background-color: #FFF;
+    border-top: 5px solid #fff;
+    padding:0 15px 20px 15px;
+	margin:0;
+    float: left;
+    text-decoration: none;
+    transition: all .3s ease;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -ms-transition: all .5s ease;
+    -o-transition: all .5s ease;
+}
+
+.booNavigation li.navItem:hover {
+    color:#5f8cb4;
+	background-color: #fff;
+    border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #5f8cb4;
+    cursor: pointer;
+	padding:0 15px 20px 15px;
+}
+
+.booNavigation li.navItem > a {
+    color: #797979;
+}
+
+.booNavigation li.navItem .navContent {
+    background-color: #01538e;
+    left: 0;
+	color:#5f8cb4;
+    position: absolute;
+    top: 35px;
+    width: 100%;
+    z-index: 999;
+}
+
+.booNavigation .navContent > li {
+    color:#5f8cb4;
+    float: left;
+    padding: 10px;
+    width: 30%;
+}
+
+.booNavigation .navContent ul li a {
+    color: #fff;
+    display: block;
+    padding: 10px;
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -o-transition: all .3s ease;
+}
+
+.booNavigation .navContent ul li a:hover {
+    background-color: #207dc0;
+    padding-left: 20px;
+}
+
+/** Navigation examples
+================================================== */
+.nav-example {
+    clear: left;
+}

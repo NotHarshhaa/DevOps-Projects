@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-app-dep
+  namespace: sample-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app:  sample-app
+  template:
+    metadata:
+      labels:
+        app:  sample-app
+    spec:
+      imagePullSecrets:
+      - name: dockercred
+      containers:
+      - name:  sample-app
+        image: satishk.jfrog.io/satish-docker-local/sample_app:2.1.2
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+        env:
+        - name: CONSUMER_KEY
+          value: "G6lmKhsi0V9TvXt6oKTfjRBCr"
+        - name: CONSUMER_SECRET
+          value: "bEyDk8X0p8SQd4376eoNV4nH8To22sHcJOoFt0ZqOKS37hhI4q"
+        - name: ACCESS_TOKEN
+          value: "9703354-52rXHD6EeOQeYyhtNz1w8UVOgbcLcgOo4O7MB6WV3"
+        - name: ACCESS_TOKEN_SECRET
+          value: "zBThlZDEp8qnu7NwwdHNth8eg3Rf9zqbvUEFUTaZtN2SF"

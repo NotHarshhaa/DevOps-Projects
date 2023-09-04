@@ -1,0 +1,14 @@
+name: azure-inspec-tests
+title: Azure InSpec Profile
+maintainer: The Authors
+copyright: The Authors
+copyright_email: you@example.com
+license: Apache-2.0
+summary: An InSpec Compliance Profile For Azure
+version: 0.1.0
+inspec_version: '>= 2.2.7'
+depends:
+- name: inspec-azure
+  url: https://github.com/inspec/inspec-azure/archive/main.tar.gz
+supports:
+- platform: azure

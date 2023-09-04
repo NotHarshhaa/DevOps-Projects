@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aspnetcore
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aspnetcore
+  template:
+    metadata:
+      labels:
+        app: aspnetcore
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
+      containers:
+      - name: aspnetcore
+        image: devopsjourneyacr.azurecr.io/aspnet:latest
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 250m
+            memory: 256Mi
+        ports:
+        - containerPort: 80
+        env:
+        - name: APPINSIGHTS_INSTRUMENTATIONKEY
+          valueFrom:
+            secretKeyRef:
+              name: aikey
+              key: aisecret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aspnetcore
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: aspnetcore
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: aspnetcore
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            backend:
+              serviceName: aspnetcore
+              servicePort: 80

@@ -1,13 +1,13 @@
 # Deploy Scalable VPC Architecture on AWS Cloud
 
+![AWS-Cloud](https://imgur.com/AXD50yl.png)
+
 ### TABLE OF CONTENTS
 1. [Goal](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps%20Project-02/Project-02.md#goal)
 2. [Pre-Requisites](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps%20Project-02/Project-02.md#pre-requisites)
 3. [Pre-Deployment](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps%20Project-02/Project-02.md#pre-deployment)
 4. [VPC Deployment](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps%20Project-02/Project-02.md#vpc-deployment)
 5. [Validation](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps%20Project-02/Project-02.md#validation)
-
-![VPC architecture](https://imgur.com/6FiFKNI.png)
 
 ## Goal
 Deploy a Modular and Scalable Virtual Network Architecture with Amazon VPC.

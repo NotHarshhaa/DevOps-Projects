@@ -1,5 +1,7 @@
 # Deploy Java Application on AWS 3-Tier Architecture
 
+![AWS](https://imgur.com/b9iHwVc.png)
+
 ### TABLE OF CONTENTS
 1. [Goal](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps%20Project-01/Project-01.md#goal)
 2. [Pre-Requisites](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps%20Project-01/Project-01.md#pre-requisites)

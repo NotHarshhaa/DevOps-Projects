@@ -1,5 +1,7 @@
 # Fun with Linux for Cloud & DevOps Engineers
 
+![linux](https://imgur.com/VpPW8PM.png)
+
 ***New to Linux? Below assignment covering all the required basics of Linux to be familiar for an DevOps engineer.***
 
 ![Linux](https://imgur.com/xedzuwy.png)

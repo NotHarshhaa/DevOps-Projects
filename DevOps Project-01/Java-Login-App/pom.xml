@@ -69,9 +69,16 @@
 	</build>
 <distributionManagement>
     <repository>
+       <repository>
         <id>central</id>
-        <name>a0nymgefaiwwu-artifactory-primary-0-releases</name>
-        <url>https://edshopdpt8.jfrog.io/artifactory/libs-release-local</url>
+        <name>ip-172-31-15-117.ap-south-1.compute.internal-releases</name>
+        <url>https://ramujfrog.com/artifactory/maven-local</url>
+    </repository>
+    <snapshotRepository>
+        <id>snapshots</id>
+        <name>ip-172-31-15-117.ap-south-1.compute.internal-snapshots</name>
+        <url>https://ramujfrog.com/artifactory/maven-local</url>
+    </snapshotRepository> 
     </repository>
 </distributionManagement> 
 

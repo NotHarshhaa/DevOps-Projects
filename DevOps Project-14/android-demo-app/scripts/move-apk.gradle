@@ -1,0 +1,7 @@
+def getDebugApk = tasks.register('getDebugApk', Copy) {
+    println("copying")
+    from("${project.buildDir}/outputs/apk/dev/debug/app-dev-debug.apk")
+    into("${rootProject.buildDir}/my-apk")
+    println("copied")
+}
+tasks."assemble".finalizedBy getDebugApk

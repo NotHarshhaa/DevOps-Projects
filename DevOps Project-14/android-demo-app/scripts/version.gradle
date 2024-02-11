@@ -1,0 +1,8 @@
+ext {
+    _minSdk = 24
+    _targetSdk = 30
+    _versionCode = 1
+    _versionName = "1.0"
+    _compileSdk = 30
+    _buildToolsVersion = "30.0.3"
+}

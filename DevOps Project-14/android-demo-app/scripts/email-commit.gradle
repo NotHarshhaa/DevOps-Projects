@@ -1,0 +1,15 @@
+tasks.register('mailLatestCommit') {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        workingDir '.'
+        standardOutput = stdout
+        commandLine "bash", "-c", "git log -1 | grep commit | head -1"
+    }
+    def commit = stdout.toString().split(" ")[1]
+    def emailId = project.hasProperty('emailId') ? project.getProperty("emailId") : "name@mail.com"
+    def url = "https://gitlab.my-private-domain.com/rohitgupta/gradleplayground/-/commit/$commit"
+    exec {
+        def mail = "mailto:$emailId?subject=Please Review Commit&body=Please find latest commit here\n$url"
+        commandLine "open", mail
+    }
+}

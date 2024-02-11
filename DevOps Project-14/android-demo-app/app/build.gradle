@@ -1,0 +1,74 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
+
+android {
+    compileSdk 30
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "com.gradleplayground"
+        minSdk 24
+        targetSdk 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {}
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    flavorDimensions "my-flavor"
+    productFlavors {
+        dev {
+            dimension "my-flavor"
+            manifestPlaceholders = [
+                    resize: false,
+            ]
+            buildConfigField("String", "DESC", "\"This is the development variant\"")
+        }
+
+        prod {
+            dimension "my-flavor"
+            manifestPlaceholders = [
+                    resize: true,
+            ]
+            buildConfigField("String", "DESC", "\"This is the prod variant\"")
+        }
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.5.0'
+    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation project(":first")
+    implementation project(":second")
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "android-app"
+        property "sonar.projectName", "android-app"
+    }
+}
+
+apply from: "$rootProject.rootDir/scripts/move-apk.gradle"

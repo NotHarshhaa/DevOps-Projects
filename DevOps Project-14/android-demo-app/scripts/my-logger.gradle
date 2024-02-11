@@ -1,0 +1,34 @@
+class MyEventLogger extends BuildAdapter implements TaskExecutionListener {
+
+    def startedTime = [:]
+    def buildTimeStart = System.currentTimeMillis()
+    def currentProject = ""
+
+    void beforeSettings(Settings settings) {
+        currentProject = settings.rootProject.name
+    }
+
+    void beforeExecute(Task task) {
+        startedTime.put(task.project.name, System.currentTimeMillis())
+        println "Running   [$task.name] for [${task.project.name}]"
+    }
+
+    void afterExecute(Task task, TaskState state) {
+        if(startedTime.get(task.project.name) != null) {
+            println("Completed [$task.name] for [${task.project.name}] in ${System.currentTimeMillis() - startedTime.get(task.project.name)} ms")
+            startedTime.remove(task.project.name)
+        }
+    }
+
+    void buildFinished(BuildResult result) {
+        println ("Build Completed for [$currentProject] in ${(System.currentTimeMillis() - buildTimeStart)/1000} seconds")
+        if (result.failure != null) {
+            result.failure.printStackTrace()
+        }
+    }
+}
+
+useLogger(new MyEventLogger())
+
+
+

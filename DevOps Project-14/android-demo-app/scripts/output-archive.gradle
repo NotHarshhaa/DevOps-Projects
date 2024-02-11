@@ -1,0 +1,12 @@
+tasks.register('getOutputsZip', Zip) {
+    archiveFileName = "outputs.zip"
+    destinationDirectory = file(rootProject.buildDir)
+    from("${rootProject.rootDir}/app/build/outputs/apk/dev/debug") {
+        include "*.apk"
+    }
+    from("${rootProject.rootDir}/first/build/outputs/aar") {
+        include "*.aar"
+    } from("${rootProject.rootDir}/app/build/outputs/aar") {
+        include "*.aar"
+    }
+}

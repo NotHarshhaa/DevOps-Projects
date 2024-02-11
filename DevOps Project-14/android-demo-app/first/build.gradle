@@ -1,0 +1,5 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+apply from: "$project.rootDir/scripts/root.gradle"

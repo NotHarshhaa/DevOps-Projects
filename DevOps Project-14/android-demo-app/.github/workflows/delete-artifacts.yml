@@ -1,0 +1,15 @@
+name: 'Delete Artifact every one hour'
+
+on:
+  schedule:
+    - cron: "0 0 1 1 *"
+  workflow_dispatch:
+
+jobs:
+  delete-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: kolpav/purge-artifacts-action@v1
+        with:
+          token: ${{ secrets.CI_GITHUB_TOKEN }}
+          expire-in: 0 # Set this to 0 to delete all artifacts - which are 0 days old

@@ -1,0 +1,50 @@
+parameters:
+- name: rootFolder
+  type: string
+- name: tfvarsFile
+  type: string
+- name: adoEnvironment
+  type: string
+
+stages:
+- stage: 'Terraform_Plan'
+  displayName: 'Terraform Plan'
+  jobs:
+  - job: 'Terraform_Plan'
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - script: |
+        echo "Running Terraform init..."
+        terraform init
+        echo "Running Terraform plan..."
+        terraform plan -var-file ${{ parameters.tfvarsFile }}
+      displayName: 'Terraform plan'
+      workingDirectory: ${{ parameters.rootFolder }}
+      env:
+        ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET) # this needs to be explicitly set as it's a sensitive value
+
+- stage: 'Terraform_Apply'
+  displayName: 'Terraform Apply'
+  dependsOn:
+  - 'Terraform_Plan'
+  condition: succeeded()
+  jobs:
+  - deployment: 'Terraform_Apply'
+    pool:
+      vmImage: 'ubuntu-latest'
+    environment: ${{ parameters.adoEnvironment }} # using an ADO environment allows us to add a manual approval check
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - checkout: self
+          - script: |
+              echo "Running Terraform init..."
+              terraform init
+              echo "Running Terraform apply..."
+              terraform apply -var-file ${{ parameters.tfvarsFile }} -auto-approve
+            displayName: 'Terraform apply'
+            workingDirectory: ${{ parameters.rootFolder }}
+            env:
+              ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)

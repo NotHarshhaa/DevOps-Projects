@@ -1,0 +1,19 @@
+name: Terraform - deploy Service Bus to env01
+
+trigger: none
+
+variables:
+  - group: Terraform_SPN
+  - name: rootFolder
+    value: 'terraform/'
+  - name: tfvarsFile
+    value: 'tfdemo.env01.tfvars'
+  - name: adoEnvironment
+    value: 'env01'
+  
+stages:
+- template: templates/terraform-template.yml
+  parameters:
+    rootFolder: $(rootFolder)
+    tfvarsFile: $(tfvarsFile)
+    adoEnvironment: $(adoEnvironment)

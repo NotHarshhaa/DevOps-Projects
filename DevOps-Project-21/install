@@ -1,0 +1,588 @@
+#!/usr/bin/env ruby
+
+##################################################################
+# This part of the code might be running on Ruby versions other
+# than 2.0. Testing on multiple Ruby versions is required for
+# changes to this part of the code.
+##################################################################
+
+class LoggerWrapper
+  def initialize(loggers)
+    @loggers = loggers
+  end
+
+  def debug(message)
+    @loggers.each do |logger|
+      logger.debug(message)
+    end
+  end
+
+  def error(message)
+    @loggers.each do |logger|
+      logger.error(message)
+    end
+  end
+
+  def info(message)
+    @loggers.each do |logger|
+      logger.info(message)
+    end
+  end
+
+  def level(message)
+    @loggers.each do |logger|
+      logger.level = message
+    end
+  end
+
+  def warn(message)
+    @loggers.each do |logger|
+      logger.warn(message)
+    end
+  end
+end
+
+log_file_path = "/tmp/codedeploy-agent.update.log"
+
+require 'logger'
+
+if($stdout.isatty)
+  # if we are being run in a terminal, log to stdout and the log file.
+  @log = LoggerWrapper.new([Logger.new(log_file_path), Logger.new($stdout)])
+  @log.level(Logger::INFO)
+else
+  # keep at most 2MB of old logs rotating out 1MB at a time
+  @log = Logger.new(log_file_path, 2, 1048576)
+  @log.level = Logger::INFO
+  # make sure anything coming out of ruby ends up in the log file
+  $stdout.reopen(log_file_path, 'a+')
+  $stderr.reopen(log_file_path, 'a+')
+end
+
+require 'net/http'
+
+# This class is copied (almost directly) from lib/instance_metadata.rb
+# It is not loaded as the InstanceMetadata makes additional assumptions
+# about the runtime that cannot be satisfied at install time, hence the
+# trimmed copy.
+class IMDS
+  IP_ADDRESS = '169.254.169.254'
+  TOKEN_PATH = '/latest/api/token'
+  BASE_PATH = '/latest/meta-data'
+  IDENTITY_DOCUMENT_PATH = '/latest/dynamic/instance-identity/document'
+  DOMAIN_PATH = '/latest/meta-data/services/domain'
+
+  def self.imds_supported?
+    imds_v2? || imds_v1?
+  end
+
+  def self.imds_v1?
+    begin
+      get_request(BASE_PATH) { |response|
+        return response.kind_of? Net::HTTPSuccess
+      }
+    rescue
+      false
+    end
+  end
+
+  def self.imds_v2?
+    begin
+      put_request(TOKEN_PATH) { |token_response|
+        (token_response.kind_of? Net::HTTPSuccess) && get_request(BASE_PATH, token_response.body) { |response|
+          return response.kind_of? Net::HTTPSuccess
+        }
+      }
+    rescue
+      false
+    end
+  end
+
+  def self.region
+    begin
+      identity_document()['region'].strip
+    rescue
+      nil
+    end
+  end
+
+  def self.domain
+    begin
+      get_instance_metadata(DOMAIN_PATH).strip
+    rescue
+      nil
+    end
+  end
+
+  def self.identity_document
+    # JSON is lazy loaded to ensure we dont break older ruby runtimes
+    require 'json'
+    JSON.parse(get_instance_metadata(IDENTITY_DOCUMENT_PATH).strip)
+  end
+
+  private
+  def self.get_instance_metadata(path)
+    begin
+      token = put_request(TOKEN_PATH)
+      get_request(path, token)
+    rescue
+      get_request(path)
+    end
+  end
+
+
+  private
+  def self.http_request(request)
+    Net::HTTP.start(IP_ADDRESS, 80, :read_timeout => 10, :open_timeout => 10) do |http|
+      response = http.request(request)
+      if block_given?
+        yield(response)
+      elsif response.kind_of? Net::HTTPSuccess
+        response.body
+      else
+        raise "HTTP error from metadata service: #{response.message}, code #{response.code}"
+      end
+    end
+  end
+
+  def self.put_request(path, &block)
+    request = Net::HTTP::Put.new(path)
+    request['X-aws-ec2-metadata-token-ttl-seconds'] = '21600'
+    http_request(request, &block)
+  end
+
+  def self.get_request(path, token = nil, &block)
+    request = Net::HTTP::Get.new(path)
+    unless token.nil?
+      request['X-aws-ec2-metadata-token'] = token
+    end
+    http_request(request, &block)
+  end
+end
+
+class S3Bucket
+  # Split out as older versions of ruby dont like multi entry attr
+  attr :domain
+  attr :region
+  attr :bucket
+  def initialize(domain, region, bucket)
+    @domain = domain
+    @region = region
+    @bucket = bucket
+  end
+
+  def object_uri(object_key)
+    URI.parse("https://#{@bucket}.s3.#{@region}.#{@domain}/#{object_key}")
+  end
+end
+
+begin
+  require 'fileutils'
+  require 'openssl'
+  require 'open-uri'
+  require 'uri'
+  require 'getoptlong'
+  require 'tempfile'
+
+  def usage
+    print <<EOF
+
+install [--sanity-check] [--proxy http://hostname:port] <package-type>
+   --sanity-check [optional]
+   --proxy [optional]
+   package-type: 'rpm', 'deb', or 'auto'
+
+Installs fetches the latest package version of the specified type and
+installs it. rpms are installed with yum; debs are installed using gdebi.
+
+This program is invoked automatically to update the agent once per day using
+the same package manager the codedeploy-agent is initially installed with.
+
+To use this script for a hands free install on any system specify a package
+type of 'auto'. This will detect if yum or gdebi is present on the system
+and select the one present if possible. If both rpm and deb package managers
+are detected the automatic detection will abort
+When using the automatic setup, if the system has apt-get but not gdebi,
+the gdebi will be installed using apt-get first.
+
+If --sanity-check is specified, the install script will wait for 3 minutes post installation
+to check for a running agent.
+
+To use a HTTP proxy, specify --proxy followed by the proxy server
+defined by http://hostname:port
+
+This install script needs Ruby versions 2.x or 3.x installed as a prerequisite.
+Currently recommended Ruby versions are 2.0.0, 2.1.8, 2.2.4, 2.3, 2.4, 2.5, 2.6, 2.7, 3.0, 3.1, and 3.2
+If multiple Ruby versions are installed, the default ruby version will be used.
+If the default ruby version does not satisfy requirement, the newest version will be used.
+If you do not have a supported Ruby version installed, please install one of them first.
+
+EOF
+  end
+
+  def supported_ruby_versions
+    ['3.2','3.1','3.0', '2.7', '2.6', '2.5', '2.4', '2.3', '2.2', '2.1', '2.0']
+  end
+
+  # check ruby version, only version 2.x 3.x works
+  def check_ruby_version_and_symlink
+    @log.info("Starting Ruby version check.")
+    actual_ruby_version = RUBY_VERSION.split('.').map{|s|s.to_i}[0,2]
+
+    supported_ruby_versions.each do |version|
+      if ((actual_ruby_version <=> version.split('.').map{|s|s.to_i}) == 0)
+        return File.join(RbConfig::CONFIG["bindir"], RbConfig::CONFIG["RUBY_INSTALL_NAME"] + RbConfig::CONFIG["EXEEXT"])
+      end
+    end
+
+    supported_ruby_versions.each do |version|
+      if(File.exist?("/usr/bin/ruby#{version}"))
+        return "/usr/bin/ruby#{version}"
+      elsif (File.symlink?("/usr/bin/ruby#{version}"))
+        @log.error("The symlink /usr/bin/ruby#{version} exists, but it's linked to a non-existent directory or non-executable file.")
+        exit(1)
+      end
+    end
+
+    unsupported_ruby_version_error
+    exit(1)
+  end
+
+  def unsupported_ruby_version_error
+    @log.error("Current running Ruby version for "+ENV['USER']+" is "+RUBY_VERSION+", but Ruby version 2.x, 3.x needs to be installed.")
+    @log.error('If you already have the proper Ruby version installed, please either create a symlink to /usr/bin/ruby2.x,')
+    @log.error( "or run this install script with right interpreter. Otherwise please install Ruby 2.x, 3.x for "+ENV['USER']+" user.")
+    @log.error('You can get more information by running the script with --help option.')
+  end
+
+  def parse_args()
+    if (ARGV.length > 4)
+      usage
+      @log.error('Too many arguments.')
+      exit(1)
+    elsif (ARGV.length < 1)
+      usage
+      @log.error('Expected package type as argument.')
+      exit(1)
+    end
+
+    @sanity_check = false
+    @reexeced = false
+    @http_proxy = nil
+    @target_version_arg = nil
+
+    @args = Array.new(ARGV)
+    opts = GetoptLong.new(
+      ['--sanity-check', GetoptLong::NO_ARGUMENT],
+      ['--help', GetoptLong::NO_ARGUMENT],
+      ['--re-execed', GetoptLong::NO_ARGUMENT],
+      ['--proxy', GetoptLong::OPTIONAL_ARGUMENT],
+      ['-v', '--version', GetoptLong::OPTIONAL_ARGUMENT]
+    )
+    opts.each do |opt, args|
+      case opt
+      when '--sanity-check'
+        @sanity_check = true
+      when '--help'
+        usage
+        exit(0)
+      when '--re-execed'
+        @reexeced = true
+      when '--proxy'
+        if (args != '')
+          @http_proxy = args
+        end
+      when '-v' || '--version'
+        @target_version_arg = args
+      end
+    end
+    if (ARGV.length < 1)
+      usage
+      @log.error('Expected package type as argument.')
+      exit(1)
+    end
+    @type = ARGV.shift.downcase;
+  end
+  def force_ruby2x(ruby_interpreter_path)
+    # change interpreter when symlink /usr/bin/ruby2.x exists, but running with non-supported ruby version
+    actual_ruby_version = RUBY_VERSION.split('.').map{|s|s.to_i}
+    left_bound = '2.0.0'.split('.').map{|s|s.to_i}
+    right_bound = '3.2.1'.split('.').map{|s|s.to_i}
+    if (actual_ruby_version <=> left_bound) < 0
+      if(!@reexeced)
+        @log.info("The current Ruby version is not 2.x or 3.x! Restarting the installer with #{ruby_interpreter_path}")
+        exec("#{ruby_interpreter_path}", __FILE__, '--re-execed' , *@args)
+      else
+        unsupported_ruby_version_error
+        exit(1)
+      end
+    elsif ((actual_ruby_version <=> right_bound) > 0)
+      @log.warn("The Ruby version in #{ruby_interpreter_path} is "+RUBY_VERSION+", . Attempting to install anyway.")
+    end
+  end
+
+  parse_args()
+
+  # Be helpful when 'help' was used but not '--help'
+  if @type == 'help'
+    usage
+    exit(0)
+  end
+
+  if (Process.uid != 0)
+    @log.error('Must run as root to install packages')
+    exit(1)
+  end
+
+  ########## Force running as Ruby 2.x or fail here       ##########
+  ruby_interpreter_path = check_ruby_version_and_symlink
+  force_ruby2x(ruby_interpreter_path)
+
+  def run_command(*args)
+    exit_ok = system(*args)
+    $stdout.flush
+    $stderr.flush
+    @log.debug("Exit code: #{$?.exitstatus}")
+    return exit_ok
+  end
+
+  def get_ec2_metadata_property(property)
+    if IMDS.imds_supported?
+      begin
+        return IMDS.send(property)
+      rescue => error
+        @log.warn("Could not get #{property} from EC2 metadata service at '#{error.message}'")
+      end
+    else
+      @log.warn("EC2 metadata service unavailable...")
+    end
+    return nil
+  end
+
+  def get_region
+    @log.info('Checking AWS_REGION environment variable for region information...')
+    region = ENV['AWS_REGION']
+    return region if region
+
+    @log.info('Checking EC2 metadata service for region information...')
+    region = get_ec2_metadata_property(:region)
+    return region if region
+
+    @log.info('Using fail-safe default region: us-east-1')
+    return 'us-east-1'
+  end
+
+  def get_domain(fallback_region = nil)
+    @log.info('Checking AWS_DOMAIN environment variable for domain information...')
+    domain = ENV['AWS_DOMAIN']
+    return domain if domain
+
+    @log.info('Checking EC2 metadata service for domain information...')
+    domain = get_ec2_metadata_property(:domain)
+    return domain if domain
+
+    domain = 'amazonaws.com'
+    if !fallback_region.nil? && fallback_region.split("-")[0] == 'cn'
+      domain = 'amazonaws.com.cn'
+    end
+
+    @log.info("Using fail-safe default domain: #{domain}")
+    return domain
+  end
+
+  def get_package_from_s3(s3_bucket, key, package_file)
+    @log.info("Downloading package from bucket #{s3_bucket.bucket} and key #{key}...")
+
+    uri = s3_bucket.object_uri(key)
+    @log.info("Endpoint: #{uri}")
+
+    # stream package file to disk
+    retries ||= 0
+    exceptions = [OpenURI::HTTPError, OpenSSL::SSL::SSLError]
+    begin
+      uri.open(:ssl_verify_mode => OpenSSL::SSL::VERIFY_PEER, :redirect => true, :read_timeout => 120, :proxy => @http_proxy) do |s3|
+        package_file.write(s3.read)
+      end
+    rescue *exceptions  => e
+      @log.warn("Could not find package to download at '#{uri.to_s}' - Retrying... Attempt: '#{retries.to_s}'")
+      if (retries < 5)
+        sleep 2 ** retries
+        retries += 1
+        retry
+      else
+        @log.error("Could not download CodeDeploy Agent Package. Exiting Install script.")
+        exit(1)
+      end
+    end
+  end
+
+  def get_version_file_from_s3(s3_bucket, key)
+    @log.info("Downloading version file from bucket #{s3_bucket.bucket} and key #{key}...")
+
+    uri = s3_bucket.object_uri(key)
+    @log.info("Endpoint: #{uri}")
+
+    retries ||= 0
+    exceptions = [OpenURI::HTTPError, OpenSSL::SSL::SSLError, Errno::ETIMEDOUT]
+    begin
+      require 'json'
+
+      version_string = uri.read(:ssl_verify_mode => OpenSSL::SSL::VERIFY_PEER, :redirect => true, :read_timeout => 120, :proxy => @http_proxy)
+      JSON.parse(version_string)
+    rescue *exceptions => e
+      @log.warn("Could not find version file to download at '#{uri.to_s}' - Retrying... Attempt: '#{retries.to_s}'")
+      if (retries < 5)
+        sleep 2 ** retries
+        retries += 1
+        retry
+      else
+        @log.error("Could not download CodeDeploy Agent version file. Exiting Install script.")
+        exit(1)
+      end
+    end
+  end
+
+  def install_from_s3(s3_bucket, package_key, install_cmd)
+    package_base_name = File.basename(package_key)
+    package_extension = File.extname(package_base_name)
+    package_name = File.basename(package_base_name, package_extension)
+    package_file = Tempfile.new(["#{package_name}.tmp-", package_extension]) # unique file with 0600 permissions
+
+    get_package_from_s3(s3_bucket, package_key, package_file)
+    package_file.close
+
+    install_cmd << package_file.path
+    @log.info("Executing `#{install_cmd.join(" ")}`...")
+
+    if (!run_command(*install_cmd))
+      @log.error("Error installing #{package_file.path}.")
+      package_file.unlink
+      exit(1)
+    end
+
+    package_file.unlink
+  end
+
+  def do_sanity_check(cmd)
+    if @sanity_check
+      @log.info("Waiting for 3 minutes before I check for a running agent")
+      sleep(3 * 60)
+      res = run_command(cmd, 'codedeploy-agent', 'status')
+      if (res.nil? || res == false)
+        @log.info("No codedeploy agent seems to be running. Starting the agent.")
+        run_command(cmd, 'codedeploy-agent', 'start-no-update')
+      end
+    end
+  end
+
+  def get_target_version(target_version, type, s3_bucket)
+    if target_version.nil?
+      version_file_key = 'latest/LATEST_VERSION'
+      version_data = get_version_file_from_s3(s3_bucket, version_file_key)
+      if version_data.include? type
+        return version_data[type]
+      else
+        @log.error("Unsupported package type '#{type}'")
+        exit(1)
+      end
+    end
+    return target_version
+  end
+
+  @log.info("Starting update check.")
+
+  if (@type == 'auto')
+    @log.info('Attempting to automatically detect supported package manager type for system...')
+
+    has_yum = run_command('which yum >/dev/null 2>/dev/null')
+    has_apt_get = run_command('which apt-get >/dev/null 2>/dev/null')
+    has_gdebi = run_command('which gdebi >/dev/null 2>/dev/null')
+    has_zypper = run_command('which zypper >/dev/null 2>/dev/null')
+
+    if (has_yum && (has_apt_get || has_gdebi))
+      @log.error('Detected both supported rpm and deb package managers. Please specify which package type to use manually.')
+      exit(1)
+    end
+
+    if(has_yum)
+      @type = 'rpm'
+    elsif(has_zypper)
+      @type = 'zypper'
+    elsif(has_gdebi)
+      @type = 'deb'
+    elsif(has_apt_get)
+      @type = 'deb'
+
+      @log.warn('apt-get found but no gdebi. Installing gdebi with `apt-get install gdebi-core -y`...')
+      #use -y to answer yes to confirmation prompts
+      if(!run_command('/usr/bin/apt-get', 'install', 'gdebi-core', '-y'))
+        @log.error('Could not install gdebi.')
+        exit(1)
+      end
+    else
+      @log.error('Could not detect any supported package managers.')
+      exit(1)
+    end
+  end
+
+  region = get_region()
+  domain = get_domain(region)
+  bucket = "aws-codedeploy-#{region}"
+  s3_bucket = S3Bucket.new(domain, region, bucket)
+
+  target_version = get_target_version(@target_version_arg, @type, s3_bucket)
+
+  case @type
+  when 'rpm'
+    running_version = `rpm -q codedeploy-agent`
+    running_version.strip!
+    if target_version.include? running_version
+      @log.info('Running version matches target version, skipping install')
+    else
+      #use -y to answer yes to confirmation prompts
+      install_cmd = ['/usr/bin/yum', '-y', 'localinstall']
+      install_from_s3(s3_bucket, target_version, install_cmd)
+      do_sanity_check('/sbin/service')
+    end
+  when 'deb'
+    running_agent = `dpkg -s codedeploy-agent`
+    running_agent_info = running_agent.split
+    version_index = running_agent_info.index('Version:')
+    if !version_index.nil?
+      running_version = running_agent_info[version_index + 1]
+    else
+      running_version = "No running version"
+    end
+    @log.info("Running version " + running_version)
+    if target_version.include? running_version
+      @log.info('Running version matches target version, skipping install')
+    else
+      #use -n for non-interactive mode
+      #use -o to not overwrite config files unless they have not been changed
+      install_cmd = ['/usr/bin/gdebi', '-n', '-o', 'Dpkg::Options::=--force-confdef', '-o', 'Dkpg::Options::=--force-confold']
+      install_from_s3(s3_bucket, target_version, install_cmd)
+      do_sanity_check('/usr/sbin/service')
+    end
+  when 'zypper'
+    #use -n for non-interactive mode
+    install_cmd = ['/usr/bin/zypper', 'install', '-n']
+    install_from_s3(s3_bucket, target_version, install_cmd)
+  else
+    @log.error("Unsupported package type '#{@type}'")
+    exit(1)
+  end
+
+  @log.info("Update check complete.")
+  @log.info("Stopping updater.")
+
+rescue SystemExit => e
+  # don't log exit() as an error
+  raise e
+rescue Exception => e
+  # make sure all unhandled exceptions are logged to the log
+  @log.error("Unhandled exception: #{e.inspect}")
+  e.backtrace.each do |line|
+    @log.error("  at " + line)
+  end
+  exit(1)
+end

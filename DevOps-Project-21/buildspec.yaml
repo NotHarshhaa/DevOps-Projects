@@ -1,0 +1,35 @@
+version: 0.2
+
+env:
+  parameter-store:
+    USERNAME: /myapp/docker-credentials/username
+    PASSWORD: /myapp/docker-credentials/password
+    KEY:  /myapp/api/key
+
+        
+phases:
+  install:
+    runtime-versions:
+      nodejs: latest
+    commands:
+      - node --version
+      - echo "installed node "
+    # steps:
+  pre_build:
+    commands:
+      - npm install
+      - echo "dependencies installed"
+  build:
+    commands:
+      - docker build . -t dhruvdarji123/netflix-react-app:latest --build-arg TMDB_V3_API_KEY=$KEY
+  post_build:
+    commands:
+      - echo "waiting right now"
+      - docker login -u $USERNAME -p $PASSWORD
+      - docker push dhruvdarji123/netflix-react-app:latest
+artifacts:
+  files:
+    - '**/*'
+  base-directory: "./"
+  name: build-artifact-name
+  discard-paths: no

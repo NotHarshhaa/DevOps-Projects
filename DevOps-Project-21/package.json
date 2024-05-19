@@ -1,0 +1,36 @@
+{
+	"name": "netflix-clone-using-react-typescript-mui",
+	"version": "0.1.1",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc && vite build",
+		"preview": "vite preview"
+	},
+	"dependencies": {
+		"@emotion/react": "^11.10.0",
+		"@emotion/styled": "^11.10.0",
+		"@mui/icons-material": "^5.8.4",
+		"@mui/material": "^5.10.0",
+		"@reduxjs/toolkit": "^1.8.3",
+		"framer-motion": "^7.1.0",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-redux": "^8.0.2",
+		"react-router-dom": "^6.9.0",
+		"react-slick": "^0.29.0",
+		"slick-carousel": "^1.8.1",
+		"video.js": "^8.3.0",
+		"videojs-youtube": "^3.0.1",
+		"vite-tsconfig-paths": "^3.5.2"
+	},
+	"devDependencies": {
+		"@types/react": "^18.0.24",
+		"@types/react-dom": "^18.0.8",
+		"@types/react-slick": "^0.23.10",
+		"@vitejs/plugin-react": "^2.2.0",
+		"typescript": "^4.6.4",
+		"vite": "^3.2.1"
+	}
+}

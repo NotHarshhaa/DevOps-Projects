@@ -1,0 +1,66 @@
+version: 0.2
+
+env:
+  parameter-store:
+    DOCKER_REGISTRY_USERNAME: /cicd/docker-credentials/username
+    DOCKER_REGISTRY_PASSWORD: /cicd/docker-credentials/password
+    DOCKER_REGISTRY_URL: /cicd/docker-registry/url
+    SONAR_TOKEN: /cicd/sonar/sonar-token
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+      java: corretto17
+  pre_build:
+    commands:
+      - echo "Installing dependencies..."
+      - echo "Performing Trivy file scan before building the image..."
+      # - wget https://github.com/aquasecurity/trivy/releases/download/v0.19.2/trivy_0.19.2_Linux-64bit.tar.gz
+      # - tar zxvf trivy_0.19.2_Linux-64bit.tar.gz
+      # - export PATH=$PATH:$PWD
+      # - trivy filesystem --exit-code 0 --no-progress . >> trivyfilescan.txt
+      # - echo "Downloading and installing OWASP Dependency-Check..."
+      # - wget https://github.com/jeremylong/DependencyCheck/releases/download/v7.0.2/dependency-check-7.0.2-release.zip
+      # - unzip dependency-check-7.0.2-release.zip
+      # - export SONAR_SCANNER_VERSION=4.7.0.2747
+      # - export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux
+      # - curl --create-dirs -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip
+      # - unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
+      # - export PATH=$SONAR_SCANNER_HOME/bin:$PATH
+      # - export SONAR_SCANNER_OPTS="-server"
+
+  build:
+    commands:
+      - echo "Running tests..."
+      - echo "Building Docker image..."
+      # - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY_URL"
+      # - docker build -t "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/swiggy:latest" .
+      # - docker push "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/swiggy:latest"
+  # post_build:
+  #   commands:
+  #     - echo "Performing Trivy image scan after building the image..."
+  #     - aws ses send-email --from "madithati123@gmail.com" --to "madithatisreedhar123@gmail.com" --subject "CodeBuild Status: $CODEBUILD_BUILD_ID" --text "Build status: $CODEBUILD_BUILD_STATUS" --region "ap-south-1" 
+
+  #     # - trivy image  "$DOCKER_REGISTRY_USERNAME/swiggy:latest" >> trivyimage.txt
+  #     # - echo "Running OWASP Dependency-Check scan..."
+  #     # - cd dependency-check/bin
+  #     # - ./dependency-check.sh --scan . --format ALL
+  #     # - echo "Build completed successfully!"
+  #     # - echo "Running SonarQube analysis result"
+  #     # - sonar-scanner -Dsonar.projectKey=swiggy -Dsonar.sources=. -Dsonar.host.url=http://65.1.1.149:9000/
+  #     #- aws ses send-email --from "madithati123@gmail.com" --to "madithatisreedhar123@gmail.com" --subject "CodeBuild Status: $CODEBUILD_BUILD_ID" --text "Build status: $CODEBUILD_BUILD_STATUS" --region "ap-south-1" 
+  #     # Update with your preferred AWS region
+
+post_build:
+  commands:
+    - aws ses send-email \
+        --from "madithati123@gmail.com" \
+        --to "madithati123@gmail.com" \
+        --subject "CodeBuild Status: $CODEBUILD_BUILD_ID" \
+        --text "Build status: $CODEBUILD_BUILD_STATUS" \
+        --region "us-east-1" # Update with your preferred AWS region
+
+
+artifacts:
+  files:
+    - appspec.yaml

@@ -1,0 +1,30 @@
+.Hotel-Card-img{
+    width: 290px;
+    height: 190px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 20px;
+}
+.Hotel-card{
+    width: 270px;
+    height: 400px;
+    transition: transform 160ms;
+}
+.Hotel-card:hover{
+    transform: scale(.93) ;
+}
+.Hotel-color{
+    width: 290px;
+    height: 190px;
+    background: linear-gradient(0deg, rgba(2,0,36,1) 2%, rgba(9,9,121,0) 39%, rgba(0,212,255,0) 100%);    border-radius: 0px 0px 20px 20px;
+    position: relative;
+}
+.Hotel-color h4{
+    position: absolute;
+    bottom: 0;
+    left: 12px;
+    color: White;
+    font-family: 'Lexend', sans-serif;
+    letter-spacing: -2px;
+}

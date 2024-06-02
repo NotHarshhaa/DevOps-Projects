@@ -1,0 +1,47 @@
+.buttonsoffiltering button {
+        background: transparent;
+        border: .5px solid rgb(116, 115, 115);
+        border-radius: 20px;
+        padding: 5px 10px;
+        margin-right: 10px;
+}
+
+.Online-Card-img {
+        width: 265px;
+        height: 160px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 20px;
+}
+
+.Online-card {
+        width: 265px;
+        height: 320px;
+        transition: transform 160ms;
+}
+
+.Online-card:hover {
+        transform: scale(.93);
+}
+
+.Online-color {
+        width: 265px;
+        height: 160px;
+        background: linear-gradient(0deg, rgba(2, 0, 36, 1) 2%, rgba(9, 9, 121, 0) 39%, rgba(0, 212, 255, 0) 100%);
+        border-radius: 0px 0px 20px 20px;
+        position: relative;
+}
+
+.Online-color h4 {
+        position: absolute;
+        bottom: 0;
+        left: 12px;
+        color: White;
+        font-family: 'Lexend', sans-serif;
+        letter-spacing: -2px;
+}
+#Card-section{
+        margin: 0;
+        padding: 0;
+}

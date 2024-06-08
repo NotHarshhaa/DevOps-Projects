@@ -3,26 +3,30 @@
 ![AWS](https://imgur.com/b9iHwVc.png)
 
 ### TABLE OF CONTENTS
-1. [Goal](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps%20Project-01/Project-01.md#goal)
-2. [Pre-Requisites](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps%20Project-01/Project-01.md#pre-requisites)
-3. [Pre-Deployment](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps%20Project-01/Project-01.md#pre-deployment)
-4. [VPC Deployment](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps%20Project-01/Project-01.md#vpc-deployment)
-5. [Maven (Build)](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps%20Project-01/Project-01.md#maven-build)
-6. [3-Tier Architecture](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps%20Project-01/Project-01.md#3-tier-architecture)
-7. [Application Deployment](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps%20Project-01/Project-01.md#application-deployment)
-8. [Post-Deployment](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps%20Project-01/Project-01.md#post-deployment)
-9. [Validation](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps%20Project-01/Project-01.md#validation)
+
+1. [Goal](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-01/README.md#goal)
+2. [Pre-Requisites](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-01/README.md#pre-requisites)
+3. [Pre-Deployment](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-01/README.md#pre-deployment)
+4. [VPC Deployment](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-01/README.md#vpc-deployment)
+5. [Maven (Build)](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-01/README.md#maven-build)
+6. [3-Tier Architecture](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-01/README.md#3-tier-architecture)
+7. [Application Deployment](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-01/README.md#application-deployment)
+8. [Post-Deployment](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-01/README.md#post-deployment)
+9. [Validation](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-01/README.md#validation)
+
 ---
 
 ![3-tier application](https://imgur.com/3XF0tlJ.png)
 ---
+
 ## Goal
+
 Goal of this project is to deploy scalable, highly available and secured Java application on 3-tier architecture and provide application access to the end users from public internet.
 
 ## Pre-Requisites
 
 1. Create AWS Free Tier account
-2. Create GitHub account and create repository to keep this Java [Source Code](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps%20Project-01/Java-Login-App)
+2. Create GitHub account and create repository to keep this Java [Source Code](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-01/Java-Login-App)
 3. Migrate Java Source Code to your own GitHub repository
 4. Create account in Sonarcloud.
 5. Create account in Jfrog cloud.
@@ -47,7 +51,8 @@ Goal of this project is to deploy scalable, highly available and secured Java ap
     3. Install JDK 11
     4. Update Maven Home to the system PATH environment variable
 
-## VPC Deployment   
+## VPC Deployment
+
 Deploy AWS Infrastructure resources as shown in the above architecture.
 
 #### VPC (Network Setup)
@@ -78,10 +83,12 @@ Deploy AWS Infrastructure resources as shown in the above architecture.
 ## 3-Tier Architecture
 
 #### Database (RDS)
+
 1. Deploy Multi-AZ MySQL RDS instance into private subnets
 2. Create Security Group allowing port 3306 from App instances and from Bastion Host.
 
 #### Tomcat (Backend)
+
 1. Create private facing Network Load Balancer and Target Group.
 2. Create Launch Configuration with below configuration.
     1. Tomcat Golden AMI
@@ -90,6 +97,7 @@ Deploy AWS Infrastructure resources as shown in the above architecture.
 3. Create Auto Scaling Group
 
 #### Nginx (Frontend)
+
 1. Create public facing Network Load Balancer and Target Group.
 2. Create Launch Configuration with below configuration
     1. Nginx Golden AMI
@@ -113,6 +121,7 @@ Deploy AWS Infrastructure resources as shown in the above architecture.
 2. Verify if you as an end user able to access application from public internet browser.
 
 # Hit the Star! ⭐
+
 ***If you are planning to use this repo for learning, please hit the star. Thanks!***
 
 #### Author by [Harshhaa Reddy](https://github.com/NotHarshhaa)

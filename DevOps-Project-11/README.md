@@ -1,4 +1,5 @@
 # Two-Tier AWS Infrastructure with Terraform
+
 [![LinkedIn](https://img.shields.io/badge/Connect%20with%20me%20on-LinkedIn-blue.svg)](https://www.linkedin.com/in/harshhaa-vardhan-reddy/)
 [![GitHub](https://img.shields.io/github/stars/NotHarshhaa.svg?style=social)](https://github.com/NotHarshhaa)
 [![AWS](https://img.shields.io/badge/AWS-%F0%9F%9B%A1-orange)](https://aws.amazon.com)
@@ -28,7 +29,8 @@ Follow these steps to deploy the Two-Tier architecture:
    cd DevOps-Projects/DevOps Project-11/
    ```
 
-2.  **Plan and Apply:**
+2. **Plan and Apply:**
+
     ```bash
     terraform init
     terraform plan -var-file=variables.tfvars
@@ -37,6 +39,7 @@ Follow these steps to deploy the Two-Tier architecture:
 
 3. **Cleanup:**
 When done the exploration, run the following to destroy the infrastructure
+
     ```bash
     terraform destroy -var-file=variables.tfvars --auto-approve
     ```
@@ -64,7 +67,6 @@ When done the exploration, run the following to destroy the infrastructure
 - **Infrastructure as Code (IaC) Excellence**: Embrace Infrastructure as Code (IaC) with Terraform, facilitating the provisioning and management of AWS resources in a declarative and scalable manner.
 
 These project highlights showcase the comprehensive AWS services integrated into the Two-Tier architecture, providing a solid foundation for your applications with security, scalability, and performance at the forefront.
-
 
 ## Detailed Guide
 

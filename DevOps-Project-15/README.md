@@ -11,69 +11,60 @@
 The 3-tier architecture is composed of three primary layers, each with distinct responsibilities:
 
 1. **Presentation Layer:**
-    
 
 * Also known as the user interface layer, this tier is responsible for interacting with end-users.
-    
+
 * It encompasses the user interface components, such as web pages, mobile apps, or any other interface through which users interact with the application.
-    
+
 * The goal is to provide a seamless and intuitive user experience while keeping the presentation logic separate from the business logic.
-    
 
 2\. **Application (or Business Logic) Layer:**
 
 * Positioned between the presentation and data layers, the application layer contains the business logic that processes and manages user requests.
-    
+
 * It acts as the brain of the application, handling tasks such as data validation, business rules implementation, and decision-making.
-    
+
 * Separating the business logic from the presentation layer promotes code reusability, maintainability, and adaptability to changes.
-    
 
 3\. **Data Layer:**
 
 * The data layer is responsible for managing and storing the application’s data.
-    
+
 * It includes databases, data warehouses, or any other data storage solutions.
-    
+
 * This layer ensures data integrity, security, and efficient data retrieval for the application.
-    
+
 * By isolating data-related operations, developers can optimize data access and storage mechanisms independently of the rest of the application.
-    
 
 **Benefits of 3-Tier Architecture:**
 
 1. **Scalability:**
-    
 
 * The modular nature of 3-tier architecture allows for independent scaling of each layer.
-    
+
 * This enables efficient resource allocation, ensuring that specific components can be scaled based on demand without affecting the entire application.
-    
 
 2\. **Maintainability:**
 
 * With clear separation of concerns, developers can make changes to one layer without impacting others.
-    
+
 * This facilitates easier debugging, updates, and maintenance, as modifications can be confined to the relevant layer.
-    
 
 3\. **Flexibility and Adaptability:**
 
 * The architecture accommodates technology changes and updates without disrupting the entire system.
-    
+
 * New technologies can be integrated into specific layers, allowing the application to evolve over time.
-    
 
 # **Prerequisites:**
 
 1. kubectl — A command line tool for working with Kubernetes clusters. For more information, see Installing or updating kubectl. [https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html](https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html)
-    
+
 2. eksctl — A command line tool for working with EKS clusters that automates many individual tasks. For more information, see Installing or updating. [https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html](https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html)
-    
+
 3. AWS CLI — A command line tool for working with AWS services, including Amazon EKS. For more information, see Installing, updating, and uninstalling the AWS CLI [https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) in the AWS Command Line Interface User Guide.
-    
+
 4. After installing the AWS CLI, I recommend that you also configure it. For more information, see Quick configuration with aws configure in the AWS Command Line Interface User Guide. [https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html#cli-configure-quickstart-config](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html#cli-configure-quickstart-config)
-    
 
 # **Steps:**
 
@@ -97,7 +88,6 @@ This will create an EKS Cluster along with the node-group
 ## **Step-2: Configure IAM OIDC provider**
 
 1. Export Cluster Name and assign oidc\_id
-    
 
 ```bash
 export cluster_name=<CLUSTER-NAME>
@@ -119,7 +109,6 @@ eksctl utils associate-iam-oidc-provider --cluster $cluster_name --approve
 ## **Step-3: Setup ALB Add-On**
 
 1. Download IAM policy.
-    
 
 ```bash
 curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.5.4/docs/install/iam_policy.json
@@ -152,7 +141,6 @@ eksctl create iamserviceaccount \
 ## **Step-4: Deploy ALB controller**
 
 1. Add helm repo.
-    
 
 ```bash
 helm repo add eks https://aws.github.io/eks-charts
@@ -183,9 +171,8 @@ kubectl get deployment -n kube-system aws-load-balancer-controller
 ## **Step-5: EBS CSI Plugin configuration.**
 
 1. The Amazon EBS CSI plugin requires IAM permissions to make calls to AWS APIs on your behalf.
-    
+
 2. Create an IAM role and attach a policy. AWS maintains an AWS managed policy or you can create your own custom policy. You can create an IAM role and attach the AWS managed policy with the following command. Replace my-cluster with the name of your cluster. The command deploys an AWS CloudFormation stack that creates an IAM role and attaches the IAM policy to it.
-    
 
 ```bash
 eksctl create iamserviceaccount \
@@ -211,9 +198,8 @@ eksctl create addon --name aws-ebs-csi-driver --cluster <YOUR-CLUSTER-NAME> --se
 ## **Step-6: Install the Helm Chart:**
 
 1. Initially Clone the GitHub Repo:
-    
 
-- GitHub URL : [RobotShop-Project](https://github.com/uniquesreedhar/RobotShop-Project.git)
+* GitHub URL : [RobotShop-Project](https://github.com/uniquesreedhar/RobotShop-Project.git)
 
 ```bash
 git clone https://github.com/uniquesreedhar/RobotShop-Project.git
@@ -284,8 +270,9 @@ And pay the amount .
 ***Congratulations… Your Order has been Successfully placed.. :)***
 
 # Thank you
+
 Thank you for taking the time to work on this tutorial/labs. Let me know what you thought!
 
 #### Author by [Harshhaa Reddy](https://github.com/NotHarshhaa)
 
-### Ensure to follow me on GitHub. Please star/share this repository!
+### Ensure to follow me on GitHub. Please star/share this repository

@@ -9,13 +9,12 @@
 **Launch an ec2 server - Jenkins-Master**
 
 * AMI - Ubuntu(Free tier)
-    
+
 * Instance Type - t2.micro
-    
+
 * Select or create Key Pair
-    
+
 * Configuration Storage - 15 GiB
-    
 
 *Launch Instance Now*
 
@@ -65,13 +64,12 @@ Edit Inbound rules of Jenkins-Master from Security Group to allow jenkins port 8
 **Launch an ec2 server - Jenkins-Agent**
 
 * AMI - Ubuntu(Free tier)
-    
+
 * Instance Type - t2.micro
-    
+
 * Select or create Key Pair
-    
+
 * Configuration Storage - 15 GiB
-    
 
 *Launch Instance Now*
 
@@ -149,7 +147,6 @@ Create first admin user -
 
 [![Image description](https://res.cloudinary.com/practicaldev/image/fetch/s--F1qpK28_--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/nwpboqjfabpxl5vk2nlj.png)](https://res.cloudinary.com/practicaldev/image/fetch/s--F1qpK28_--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/nwpboqjfabpxl5vk2nlj.png)
 
-  
 Save & Continue -&gt; Save and finish -&gt; Start using jenkins
 
 [![Image description](https://res.cloudinary.com/practicaldev/image/fetch/s--LUGTODQq--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/lkaw8zypw9jyys02u9fp.png)](https://res.cloudinary.com/practicaldev/image/fetch/s--LUGTODQq--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/lkaw8zypw9jyys02u9fp.png)
@@ -158,107 +155,102 @@ Save & Continue -&gt; Save and finish -&gt; Start using jenkins
 Manage Jenkins -&gt; Nodes -&gt; Build-in-Node -&gt; Configure
 
 * Number of Executor - 0
-    
+
 * Save
-    
+
     ![Image description](https://res.cloudinary.com/practicaldev/image/fetch/s--8NJ-rZPT--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/b5swgl3uwoan34iadp7q.png)
-    
 
 Create new Node -
 
 * Node name - Jenkins-Agent
-    
+
 * Type - Permanent Agent
-    
+
 * Click on 'Create'
-    
+
 * Description - Jenkins-Agent
-    
+
 * Number of Executor - 2
-    
+
 * Remote root Directory - /home/ubuntu
-    
+
 * Labels - Jenkins-Agent
-    
+
 * Launch Method - Launch agents via SSH
-    
+
 * Host - \[Jenkins-Agent server private IP\]
-    
+
 * Credentials -&gt; Add -&gt; Jenkins
-    
+
 * Kind -&gt; SSH Username with private key
-    
+
 * Id - Jenkins-Agent
-    
+
 * Description - Jenkins-Agent
-    
+
 * Username - ubuntu
-    
+
 * Private Key -&gt; Enter Directly -&gt; Under key Add
-    
 
 *Note: Copy private key of Master server (file name - id\_rsa) and paste here under add key.*
 
 * Now click on 'Add'
-    
+
 * Credentials - choose ubuntu(Jenkins-Agent)
-    
+
 * Host Key verification Strategy - Non verifying Verification Strategy
-    
+
 * Click on 'Save'
-    
+
     ![Image description](https://res.cloudinary.com/practicaldev/image/fetch/s--w0ZSo4R7--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/si5bc75qxsl5qenri7u4.png)
-    
 
 **Integrate Maven to Jenkins & add GitHub credentials to Jenkins:**
 
 Go to Jenkins Dashboard-
 
 * Manage Jenkins -&gt; Plugins -&gt; Available Plugins
-    
 
 *Note: Install selected plugins as shown below*
 
 [![Image description](https://res.cloudinary.com/practicaldev/image/fetch/s--y_YZcvoZ--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/b6axbyd58l5za76wu1gf.png)](https://res.cloudinary.com/practicaldev/image/fetch/s--y_YZcvoZ--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/b6axbyd58l5za76wu1gf.png)
 
 * Manage Jenkins -&gt; Tools -&gt; find Maven Installation
-    
+
 * Click on Add maven
-    
+
 * Name - Maven3
-    
+
 * Apply & Save
-    
+
 * Manage Jenkins -&gt; Tools -&gt; find JDK Installation
-    
+
 * Click on Add JDK
-    
+
 * Name - Java17
-    
+
 * Tick on 'Install automatically'
-    
+
 * Click on Add Installer -&gt; Install from adoptium.net
-    
+
 * Version -&gt; Under OpenJDK 17 HotSpot -&gt; Choose jdk-17.0.5+8
-    
+
 * Apply & Save
-    
+
 * Manage Jenkins -&gt; Under Security choose 'Credentials'
-    
+
 * Stores scoped to Jenkins - Click on global drop down and Add Credentials
-    
+
 * Kind - Username with password
-    
+
 * Username - \[GitHub username\]
-    
+
 * Password - \[Provide personal access token created in GitHub\]
-    
+
 * Id - github
-    
+
 * Description - github
-    
+
 * Click on 'Create'
-    
 
 **Create pipeline script(Jenkinsfile) for build and test Artifacts and Create CI Job on Jenkins**
 
@@ -267,42 +259,40 @@ Here is [GitHub repository](https://github.com/MSFaizi/register-app), you can fo
 Go to Jenkins Dashboard -
 
 * New Item
-    
+
 * Enter an Item name - register-app-ci -&gt; Select 'Pipeline' -&gt; Click 'Ok'
-    
+
 * Configuration -&gt; General
-    
+
 * Tick on 'Discard old build'
-    
+
 * Max # of builds to keep - 2
-    
+
 * Under 'Pipeline' -&gt; Definition -&gt; Choose 'pipeline script from SCM'
-    
+
 * SCM - git
-    
+
 * Repositories -&gt; Repository URL - \[Paste your forked repository URL\]
-    
+
 * Credentials -&gt; Choose \[your GitHub Credentials\]
-    
+
 * Branch Specifier - \*/main
-    
+
 * Apply and Save
-    
 
 **Install and Configure SonarQube-**
 
 Go to AWS Console -
 
 * Launch new ec2 with name as 'SonarQube'
-    
+
 * AMI - Ubuntu(Free tier)
-    
+
 * Instance Type - t3.medium
-    
+
 * Select or create Key Pair
-    
+
 * Configuration Storage - 15 GiB
-    
 
 *Launch Instance Now*
 
@@ -352,24 +342,22 @@ $ sudo vi /etc/security/limits.conf
 An editor file will open. Add below two line at the end of the files-
 
 * sonarqube - nofile 65536
-    
+
 * sonarqube - nproc 4097
-    
+
     ![Image description](https://res.cloudinary.com/practicaldev/image/fetch/s--yy6o0y2O--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/c1hzgxusw5e49iptr16m.png)
-    
+
 * Save and come out of the file using ESC button and :wq + hit enter
-    
 
 ```bash
-$ sudo vi /etc/sysctl.conf
+sudo vi /etc/sysctl.conf
 ```
 
 An editor file will open. Paste the below line at the end
 
 * vm.max\_map\_count = 262144
-    
+
     ![Image description](https://res.cloudinary.com/practicaldev/image/fetch/s--Nm9sXTH9--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/in4w4ycmj73mrwakce71.png)
-    
 
 ```bash
 // reboot server now
@@ -405,13 +393,12 @@ $ sudo vim /opt/sonarqube/conf/sonar.properties
 An editor will open. Find, uncomment and replace below values, you might need to add the sonar.jdbc.url
 
 * sonar.jdbc.username=sonar
-    
+
 * sonar.jdbc.password=sonar
-    
+
 * sonar.jdbc.url=jdbc:postgresql://localhost:5432/sonarqube
-    
+
     ![Image description](https://res.cloudinary.com/practicaldev/image/fetch/s--gVaFkmtx--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/9vklptbbp8jer7n36ei5.png)
-    
 
 ```bash
 // Create service for Sonarqube
@@ -450,109 +437,101 @@ Copy public IP of SonarQube server and paste in the browser with port 9000
 
 [![Image description](https://res.cloudinary.com/practicaldev/image/fetch/s--XNrSdLU7--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/0yhs47yxvjkp8ywxsa3l.png)](https://res.cloudinary.com/practicaldev/image/fetch/s--XNrSdLU7--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/0yhs47yxvjkp8ywxsa3l.png)
 
-  
 *Note: By default SonarQube's username is 'admin' and password is also 'admin'*
 
 * Update new password and go to console
-    
+
     ![Image description](https://res.cloudinary.com/practicaldev/image/fetch/s--lgLUJ59C--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/qdblka0y4h11rhtm3lnt.png)
-    
 
 **Integrate SonarQube with Jenkins**
 
 From SonarQube Console-
 
 * Click on profile -&gt; My Account -&gt; Security
-    
+
 * Name - jenkins-sonarqube-token
-    
+
 * Type - Global Analysis Token
-    
+
 * Expire in - Never
-    
+
 * Click on generate Note: Copy token & save it
-    
 
 Go to Jenkins Dashboard-
 
 * Manage jenkins -&gt; Credentials -&gt; Add new Credentials
-    
+
 * Kind - Secret Text
-    
+
 * Secret - \[Paste jenkins-sonarqube-token here\]
-    
+
 * Id - jenkins-sonarqube-token
-    
+
 * Description - jenkins-sonarqube-token
-    
+
 * Now click on 'create'
-    
+
 * Go to plugins and Download plugins for SonarQube and install it
-    
+
 * Restart Jenkins
-    
+
 * Manage Jenkins -&gt; System -&gt; Search for 'SonarQube Servers' -&gt; Add SonarQube
-    
+
 * Name - sonarqube-server
-    
+
 * Server URL - http://\[private IP of Sonar server\]:9000
-    
+
 * Server authentication Server - Select 'jenkins-sonarqube-token'
-    
+
 * Apply & Save
-    
+
 * Manage jenkins -&gt; Tools
-    
+
 * Search 'SonarQube Scanner installations' -&gt; Add SonarQube Scanner
-    
+
 * Name - sonarqube-scanner
-    
+
 * Apply & Save
-    
 
 Go to SonarQube Dashboard-
 
 * Create Webhook
-    
+
 * Name - sonarqube-webhook
-    
+
 * URL - http://\[Private IP of Jenkins-Master\]:8080/sonarqube-webhook/
-    
+
     ![Image description](https://res.cloudinary.com/practicaldev/image/fetch/s--pfvckTdR--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/wkd4caqda91gf1p6ynz7.png)
-    
 
 **Build and Push Docker Image using Pipeline Script**
 
 Go to Jenkins Dashboard-
 
 * Download all Plugins for Docker and install it
-    
+
 * Restart Jenkins
-    
+
 * Now, add credentials for Docker in Jenkins
-    
 
 *Note: Before adding credentials in Jenkins create a New access token from Docker hub and use the same while adding credentials in Jenkins.*
 
 * Id - dockerhub
-    
+
 * Description - dockerhub
-    
 
 **Setup Bootstrap server for eksctl and setup Kubernetes using eksctl**
 
 Go to AWS Console
 
 * Name - EKS-Bootstrap-Server
-    
+
 * AMI - Ubuntu(Free tier)
-    
+
 * Instance Type - t2.micro
-    
+
 * Select or create Key Pair
-    
+
 * Configuration Storage - 15 GiB
-    
 
 *Launch Instance Now*
 
@@ -582,31 +561,30 @@ $ eksctl version
 Go to AWS Console and create one IAM role
 
 * Select AWS Service
-    
+
 * Service or Use Case - EC2
-    
+
 * Add Permission - AdministrationAccess
-    
+
 * Name - eksctl\_role
-    
+
 * Click on Create role
-    
+
 * Back to Instances
-    
+
 * Select 'EKS-Bootstrap-Server'
-    
+
 * Click on 'Action' drop down
-    
+
 * Go to 'Security'
-    
+
 * Click on 'Modify IAM role'
-    
+
 * Click on 'Choose IAM role'
-    
+
 * Select 'eksctl\_role'
-    
+
 * Click 'Update IAM role'
-    
 
 Go to EKS-Bootstrap-Server terminal
 
@@ -655,13 +633,12 @@ Login to ArgoCD using admin as username and decoded password
 
 [![Image description](https://res.cloudinary.com/practicaldev/image/fetch/s--qvrzAOxX--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/7uyabp5sxtmxq8r3xo1d.png)](https://res.cloudinary.com/practicaldev/image/fetch/s--qvrzAOxX--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/7uyabp5sxtmxq8r3xo1d.png)
 
-  
 *Note*: *Update password once you are logged in*
 
 Login to ArgoCD in Terminal
 
 ```bash
-$ argocd login [url of argocd_cluster] --username admin // Use updated password
+argocd login [url of argocd_cluster] --username admin // Use updated password
 ```
 
 [![Image description](https://res.cloudinary.com/practicaldev/image/fetch/s--Io0o_M6s--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/knewqd9nhpw25a6ozq9e.png)](https://res.cloudinary.com/practicaldev/image/fetch/s--Io0o_M6s--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/knewqd9nhpw25a6ozq9e.png)
@@ -691,45 +668,44 @@ $ argocd cluster list
 Go to ArgoCD Dashboard and configure this repository.
 
 * Dashboard -&gt; Settings -&gt; Repositories -&gt; Connect Repo
-    
+
 * Via HTTPS
-    
+
 * Type - git
-    
+
 * Project - Default
-    
+
 * Repository URL - \[gitops-register-app github URL\]
-    
+
 * Username - \[GitHub username\]
-    
+
 * Password - \[GitHub account password\]
-    
+
 * Click on 'Connect' Note: It will show 'Successful' as connection status
-    
+
 * Dashboard -&gt; New App -&gt;
-    
+
 * Application Name - register-app
-    
+
 * Project Name - default
-    
+
 * Sync Policy - Automatic
-    
+
 * Tick on 'Prune Resources' and 'Self Heal'
-    
+
 * Repository URL - Select added one
-    
+
 * Revision - Head
-    
+
 * Path - ./
-    
+
 * Cluster URL - Select added one from drop down
-    
+
 * Namespace - default
-    
+
 * Now click on create
-    
+
     ![Image description](https://res.cloudinary.com/practicaldev/image/fetch/s--QU9gHZvi--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/0gfsv0kf88rbqqkxni07.png)
-    
 
 Go to EKS-Bootstrap-Server terminal
 
@@ -745,7 +721,6 @@ We can see default homepage of Apache server
 
 [![Image description](https://res.cloudinary.com/practicaldev/image/fetch/s--_otCHLQn--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/91x465jvr0w8numcm13a.png)](https://res.cloudinary.com/practicaldev/image/fetch/s--_otCHLQn--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/91x465jvr0w8numcm13a.png)
 
-  
 Put /webapp after port 8080 in the browser
 
 [![Image description](https://res.cloudinary.com/practicaldev/image/fetch/s--ITzgdZzr--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/18bwz1wdm1sc80lp8hog.png)](https://res.cloudinary.com/practicaldev/image/fetch/s--ITzgdZzr--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/18bwz1wdm1sc80lp8hog.png)
@@ -753,57 +728,56 @@ Put /webapp after port 8080 in the browser
 Go to Jenkins Dashboard in the browser
 
 * Dashboard -&gt; New Item
-    
+
 * Item Name - GitOps-register-app-cd
-    
+
 * Select 'Pipeline' and click OK
-    
+
 * Tick 'Discard old builds'
-    
+
 * Max # builds to keep - 2
-    
+
 * Tick on 'This project is parameterized'
-    
+
 * Add Parameter - String Parameter
-    
+
 * Name - IMAGE\_TAG
-    
+
 * Tick on 'Trigger builds remotely (e.g. from scripts)'
-    
+
 * Authentication token name - GitOps-token
-    
+
 * Under Pipeline -&gt; Definition - pipeline script from SCM
-    
+
 * SCM - git
-    
+
 * Repository URL - \[GitOps-register-app GitHub URL\]
-    
+
 * Credentials - Select GitHub credential \[If don't show in drop down then add it from Jenkins Credentials settings\]
-    
+
 * Branch Specifier - \*/main
-    
+
 * Apply & Save
-    
+
 * Click on User profile -&gt; Configure
-    
+
 * Under API token click on 'Add new token'
-    
+
 * Give name as 'JENKINS\_API\_TOKEN' and click on Generate *Note*: Copy token and save it
-    
+
 * Apply & Save
-    
+
 * Dashboard -&gt; Manage Jenkins -&gt; Credentials
-    
+
 * Click on global and and add Credentials
-    
+
 * Kind - Secret text
-    
+
 * Secret - \[paste JENKINS\_API\_TOKEN code here\]
-    
+
 * Description - JENKINS\_API\_TOKEN
-    
+
 * Click on create
-    
 
 ### **Congratulation! Its done now**
 
@@ -812,25 +786,25 @@ Go to Jenkins Dashboard in the browser
 Go to Jenkins Dashboard again
 
 * Click on register-app-ci
-    
+
     ![Image description](https://res.cloudinary.com/practicaldev/image/fetch/s--Cz_WAwRU--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/a855a7z44q3gpqxuqgpc.png)
-    
+
 * Configure
-    
+
 * Under build triggers
-    
+
 * Tick Poll SCM
-    
+
 * Schedule - \*
-    
+
 * Apply & Save
-    
 
 ***Note***: *Now you can test this pipeline as many times as you want by changing to the code and pushing them to GitHub*
 
 # Thank you
+
 Thank you for taking the time to work on this tutorial/labs. Let me know what you thought!
 
 #### Author by [Harshhaa Reddy](https://github.com/NotHarshhaa)
 
-### Ensure to follow me on GitHub. Please star/share this repository!
+### Ensure to follow me on GitHub. Please star/share this repository

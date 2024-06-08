@@ -2,7 +2,7 @@
 
 ![EKS](https://imgur.com/oADneqS.png)
 
-## **Prerequisites**:
+## **Prerequisites**
 
 **kubectl** – A command line tool for working with Kubernetes clusters. For more information, see Installing or updating kubectl.
 
@@ -12,25 +12,32 @@
 
 ## ✅ Project Title: Deploying 2048 Game App on Amazon EKS
 
-## ✅ Project Description: 
+## ✅ Project Description
+
 ***A Kubernetes End-to-End (E2E) project for deploying a 2048 game app on Amazon Elastic Kubernetes Service (EKS) involves setting up, deploying, and managing the popular 2048 game application on a Kubernetes cluster running on AWS EKS. This project aims to demonstrate how to containerize a web application, deploy it on EKS, manage the cluster, and expose the application to users.***
 
-## ✅ Containerization: 
+## ✅ Containerization
+
 ***I began by containerizing the 2048 game using Docker. This involved creating a Dockerfile to define the application's runtime environment and dependencies, ultimately resulting in a Docker image ready for deployment.***
 
-## ✅ Amazon EKS Setup: 
+## ✅ Amazon EKS Setup
+
 ***I set up an Amazon EKS cluster, configuring the required resources and network settings using AWS services. This step included authentication and permissions setup to interact with the EKS cluster.***
 
-## ✅ Deployment: 
+## ✅ Deployment
+
 ***The containerized 2048 game was deployed on the EKS cluster using Kubernetes. I defined Kubernetes deployment and service YAML files to ensure the application's efficient management and availability.***
 
-## ✅ Scaling and Management: 
+## ✅ Scaling and Management
+
 ***I explored Kubernetes's scaling capabilities, adjusting the number of application replicas based on demand. This ensured the game could handle varying levels of user traffic seamlessly***
 
-## ✅ Application Exposure: 
+## ✅ Application Exposure
+
 ***To make the 2048 game accessible to users, I created a Kubernetes service to expose it securely over the internet. Additionally, I could have implemented an Ingress controller for more advanced routing***
 
 ### Step 1: Create an EKS cluster
+
 ![Alt text](image.png)
 
 ![Alt text](image-1.png)
@@ -147,14 +154,17 @@ spec:
      targetPort: 80
    type: LoadBalancer
 ```
+
 ```
 # apply the config file
 kubectl apply -f mygame-svc.yaml
 ```
+
 ```
 # view details of the modified service
 kubectl describe svc mygame-svc
 ```
+
 ```
 # Access the LoadBalancer Ingress on the kops instance
 curl <LoadBalancer_Ingress>:<Port_number>
@@ -162,16 +172,18 @@ or
 curl a06aa56b81f5741268daca84dca6b4f8-694631959.us-east-1.elb.amazonaws.com:80
 (try this from your laptop, not from your cloudshell)
 ```
+
 ```
 # Go to EC2 console. get the DNS name of ELB and paste the DNS into address bar of the browser
 # It will show the 2048 game. You can play. (need to wait for 2-3 minutes for the 
 # setup to be complete)
 ```
+
 ![Alt text](image-4.png)
 
 # Thank you
-Thank you for taking the time to work on this tutorial/labs. Let me know what you thought!
 
+Thank you for taking the time to work on this tutorial/labs. Let me know what you thought!
 
 #### Author by [Harshhaa Reddy](https://github.com/NotHarshhaa)
 

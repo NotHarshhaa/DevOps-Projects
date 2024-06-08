@@ -68,11 +68,11 @@ Login to AWS cloud and create Linux based EC2 instance to complete the below ass
    6. Delete /f1 & /f4
    7. Delete /opt/dir14
 10. Logins as ‘root’ user and perform below
-   1. Delete users – ‘user1, user2, user3, user4, user5’
-   2. Delete groups – app, aws, database, devops
-   3. Delete home directories  of all users ‘user1, user2, user3, user4, user5’ if any exists still.
-   4. Unmount /data file system
-   5. Delete /data directory
+1. Delete users – ‘user1, user2, user3, user4, user5’
+2. Delete groups – app, aws, database, devops
+3. Delete home directories  of all users ‘user1, user2, user3, user4, user5’ if any exists still.
+4. Unmount /data file system
+5. Delete /data directory
 11. Login to AWS and detach EBS volume to the EC2 Instance and delete the volume and then terminate EC2 instance.
 
 All done? still not confident? repeat the steps!
@@ -80,6 +80,7 @@ All done? still not confident? repeat the steps!
 **Happy Learning!**
 
 # Hit the Star! ⭐
+
 ***If you are planning to use this repo for learning, please hit the star. Thanks!***
 
 #### Author by [Harshhaa Reddy](https://github.com/NotHarshhaa)

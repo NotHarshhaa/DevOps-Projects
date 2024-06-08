@@ -20,6 +20,7 @@ AWS CodePipeline is a fully managed continuous integration and continuous delive
 **2\. Build Stage:** Use AWS CodeBuild to build your Swiggy-clone Docker image from the source code. Run any necessary tests during this stage.
 
 **3\. Deploy Stage:** Configure AWS CodeDeploy for ECS to manage the deployment of your application to ECS clusters. Here’s where Blue-Green deployment strategy comes into play:  
+
 - A. Define two ECS services: Blue and Green.  
 - B. Use CodeDeploy to deploy the new version of your Swiggy-clone application to the Green service.  
 - C. After deployment, automate the ALB routing to gradually shift traffic from the Blue service to the Green service based on predefined health checks.  
@@ -30,10 +31,9 @@ AWS CodePipeline is a fully managed continuous integration and continuous delive
 # **Step:-1 : Create a Sonar Server**
 
 1. To run Static Code Analysis we need a sonar server.
-    
+
 2. Create a key-pair for this purpose.  
     i. Navigate to key-pairs in AWS Console and click on “Create key- pair”.
-    
 
 ![](https://miro.medium.com/v2/resize:fit:802/1*0wK1e8bOHEJlFiwztNGciA.png)
 
@@ -102,7 +102,6 @@ Username & Password: admin
 # **Step:2 :- SonarQube Set-Up.**
 
 1. After getting log-in create a custom password.
-    
 
 ![](https://miro.medium.com/v2/resize:fit:802/1*LzS_Zd-OCV9MoisUPPu6og.png)
 
@@ -162,7 +161,6 @@ Note: You need to give your Sonar URL and Project Key in buildspec.yaml
 # **Step:-3 : Create AWS Code Build Project**
 
 1. Navigate to AWS Codebuild console and click on “create project”.
-    
 
 ![](https://miro.medium.com/v2/resize:fit:802/1*TCikGTyQvlmoVRcQx3bRVA.png)
 
@@ -234,7 +232,6 @@ Trivy Image Scan:
 # **Step:4A :- ECS Cluster Creation**
 
 1. Navigate to ECS and click on “Create cluster”.
-    
 
 ![](https://miro.medium.com/v2/resize:fit:802/1*I3Jzh2DQpK2uHOXEh2JyBw.png)
 
@@ -265,7 +262,6 @@ Trivy Image Scan:
 # **Step:4B :- ECS Task Definition Creation**
 
 1. In the same ECS console click on “Task Definition” and then “create new task definition”
-    
 
 ![](https://miro.medium.com/v2/resize:fit:802/1*_DAwaM6MGSw8nI4lWC6Mhw.png)
 
@@ -288,7 +284,6 @@ Trivy Image Scan:
 # **Step:4C :- Load Balancer Creation**
 
 1. Navigate to EC2 and under Load Balancer click on “Create load balancer”.
-    
 
 ![](https://miro.medium.com/v2/resize:fit:802/1*jtrI2SFTInCkh_CGOj11sA.png)
 
@@ -356,7 +351,6 @@ Navigate to roles in IAM and click on “Create role”.
 # **Step:4D :- ECS Service Creation**
 
 1. Under Created ECS cluster and Service section click on “create”.
-    
 
 ![](https://miro.medium.com/v2/resize:fit:802/1*McOKRq-zdebBRpSqGUciRQ.png)
 
@@ -425,7 +419,6 @@ Resources:
 # **Step:5 :- AWS Code Pipeline Creation**
 
 1. Navigate to Code Pipeline in AWS console and click on “create pipeline”.
-    
 
 ![](https://miro.medium.com/v2/resize:fit:802/1*7tfko_PCqTiZodkViv082Q.png)
 
@@ -486,9 +479,8 @@ Resources:
 # **Step:6 :- ECS Deployment.**
 
 1. Now make some changes to the application code.
-    
+
 2. I am doing a change in public/index.html by changing the title.
-    
 
 ![](https://miro.medium.com/v2/resize:fit:802/1*wsPehtBu4QT4EqnacQSABQ.png)
 
@@ -532,17 +524,18 @@ Observe that the title changed as expected.
 # **Step:-7 : Clean Up**
 
 1. Deleted created Code Pipeline.
-    
+
 2. Delete ECS Cluster.
-    
+
 3. Delete Created Code Build.
-    
+
 4. Delete Sonar-Server EC2 Instance.
 
 ## Hit the Star! ⭐
+
 **If you are planning to use this repository for learning, please give it a star. Thanks!**
 
-### Author by:
+### Author by
 
 ![](https://imgur.com/2j6Aoyl.png)
 

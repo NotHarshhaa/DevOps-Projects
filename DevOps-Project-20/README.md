@@ -2,7 +2,7 @@
 
 ![None](https://miro.medium.com/v2/resize:fit:700/0*5iGW5XrxHIeZb-eX.png)
 
-#### In-depth guide to using Azure DevOps to deploy Terraform code to Azure. 
+## In-depth guide to using Azure DevOps to deploy Terraform code to Azure
 
 Recently needed to use Terraform to deploy Azure services via Azure DevOps.
 
@@ -15,13 +15,13 @@ This guide will cover everything required to deploy an example Azure Service Bus
 In addition to creating an example pipeline, we'll also add enhanced capabilities, including -
 
 * Hosting the Terraform backend state on Azure blob storage
-    
+
 * Creating a deployment Service Principal + setting RBAC permissions on the Azure subscription
-    
+
 * Create a multi-stage ADO pipeline with an approval step
-    
+
 * Demonstrating how we can scale with multiple deployments
-    
+
 
 > *If you'd like to skip straight to the download of the example pipeline and Terraform code, it can be found on* [*GitHub*](https://github.com/NotHarshhaa/DevOps-Projects/tree/master/DevOps-Project-20/terraform)*.*
 
@@ -34,13 +34,13 @@ In this diagram, we can see all of the different supporting components required 
 There are a couple of things worth highlighting -
 
 * **ADO build agent** — more advanced deployment scenarios sometimes require the use of self-hosted agents due to network or security requirements. But for simplicity, we'll use the ADO-hosted Linux (Ubuntu) build agent, which already has Terraform installed.
-    
+
 * **Git repo** — all of the pipeline config and Terraform code is hosted in a single ADO Git repo
-    
+
 * **Terraform state file** — the state file is hosted in the same Azure subscription, but this could be located on any storage account (permissions permitting)
-    
+
 * **Azure resource group** — the target resource group for the Service Bus instance is *env01-tfdemo-rg*. This will also be created by Terraform.
-    
+
 
 For easy reference, these are the files we'll be working with -
 
@@ -55,13 +55,13 @@ Okay, let's get into it!
 First things first, a Service Principal (SPN) is required to allow Terraform on the ADO build agent to authenticate against the Azure subscription and create Azure resources -
 
 * Within the Azure Portal, open **Microsoft Entra ID**
-    
+
 * Create a new **App registration**, *tfdemo-spn* (accept the default settings)
-    
+
 * Make a note of the *Application (client) ID* and *Directory (tenant) ID* as we'll need these later
-    
+
 * Under Certificates & Secrets, create a new secret called *ADO*. Make a note of this value, too.
-    
+
 
 ![None](https://miro.medium.com/v2/resize:fit:700/0*TcXK0wSIBfL2De7I.png)
 
@@ -74,16 +74,16 @@ Storing the state file locally is fine for basic testing, but for automated depl
 The steps below describe how to implement this part of the configuration (this is completed manually). Within the Azure Portal -
 
 * Create a new resource group, *tfstate-tfdemo-rg*
-    
+
 * Create a new storage account, *tfstatedemostg* (accept all default configuration settings)
-    
+
 * Create a *tfstate* blob container.
-    
+
 
 ![None](https://miro.medium.com/v2/resize:fit:700/0*M2hk7fQjuvsZFPMV.png)
 
 * Under **Access Control (IAM)** for the storage account, grant the *Storage Blob Data Contributor* role to the SPN
-    
+
 
 ![None](https://miro.medium.com/v2/resize:fit:700/0*aNWzEt0OhbJ2I03U.png)
 
@@ -96,11 +96,11 @@ In the above step, we granted the SPN permission to write the *tfstate* file to 
 Setting appropriate SPN permissions is a topic in itself, but for now, we'll grant the SPN *Contributor* permissions on the entire subscription. This allows Terraform on the build agent to create the *env01-tfdemo-rg* resource group and the Service Bus resources inside it -
 
 1. Within the Azure Portal, browse to the target subscription
-    
+
 2. Select **Access control (IAM)**
-    
+
 3. Create a new **role assignment** and assign the SPN the *Contributor* role
-    
+
 
 ![None](https://miro.medium.com/v2/resize:fit:700/0*A4td9JJmFUWkEgdj.png)
 
@@ -203,17 +203,17 @@ Within ADO, we need to configure a couple of things to get everything working.
 The variable group contains the details of the Service Principal we created earlier. Terraform will use these values to authenticate against the target Azure subscription -
 
 * Create a variable group, *Terraform\_SPN* , within **Pipelines → Library**
-    
+
 * Create the following variables using the SPN's values from earlier
-    
+
 * **ARM\_CLIENT\_ID**
-    
+
 * **ARM\_CLIENT\_SECRET**
-    
+
 * **ARM\_SUBSCRIPTION\_ID**
-    
+
 * **ARM\_TENANT\_ID**
-    
+
 
 > *These variable names are of special* [*significance*](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/service_principal_client_secret#configuring-the-service-principal-in-terraform) *to Terraform. When set as environment variables within the ADO build agent, Terraform will automatically attempt to authenticate against Azure using their values.*
 
@@ -230,16 +230,16 @@ When deploying the pipeline, we want an opportunity to review the output from th
 To create an ADO environment -
 
 * Within **Pipelines → Environments** select **New Environment**
-    
+
 * Set the name as *env01* and click **Create**
-    
+
 * Once created, select **Approvals and Checks** and click "**+**"
-    
+
 
 ![None](https://miro.medium.com/v2/resize:fit:700/0*lwx6MDC8kbvKvkoY.png)
 
 * Select **Next** and add the required approver, i.e. ourselves (fine-tune these settings as required for your organization)
-    
+
 
 ![None](https://miro.medium.com/v2/resize:fit:700/0*aVMcQ_NuQ6cXCWC3.png)
 
@@ -333,26 +333,26 @@ stages:
 To create the pipeline -
 
 * **Pipelines → New pipeline**
-    
+
 * Select **Azure Repos Git**
-    
+
 * Select the repo, i.e. *tfdemo*
-    
+
 
 ![None](https://miro.medium.com/v2/resize:fit:700/0*yY-R-oUlT_HlVX7J.png)
 
 * Select **Existing Azure Pipelines YAML** file. *Note — we select the pipeline .yml rather than the template .yml*
-    
+
 
 ![None](https://miro.medium.com/v2/resize:fit:700/0*9o7gmDvrioFMgTh7.png)
 
 * From the **Run** dropdown, select **Save**
-    
+
 
 ![None](https://miro.medium.com/v2/resize:fit:700/0*T5kb7_y4Q6Noot5l.png)
 
 * The default pipeline name of *tfdemo* is fine, but this can be renamed to something more meaningful, i.e. *tfdemo-env01-terraform*
-    
+
 
 Browsing our list of pipelines, our newly created pipeline is now visible -
 
@@ -403,4 +403,4 @@ Thank you for taking the time to work on this tutorial/labs. Let me know what yo
 
 #### Author by [Harshhaa Reddy](https://github.com/NotHarshhaa)
 
-### Ensure to follow me on GitHub. Please star/share this repository!
+### Ensure to follow me on GitHub. Please star/share this repository

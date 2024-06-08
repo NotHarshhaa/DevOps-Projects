@@ -19,6 +19,7 @@ The aim of this project is to deploy API to AWS Public cloud using only serverle
 ### API code is available [here](https://github.com/NotHarshhaa/DevOps-Projects/tree/master/DevOps-Project-22/serverless-api).
 
 Following are the serverless services used in this project:
+
 - API Gateway
 - Lambda
 - Aurora Serverless (MySql)
@@ -32,6 +33,7 @@ Secrets Manager stores the database credentials securely and the credentials are
 Lambda is launched in the VPC private subnet. The access to secrets manager from within the VPC is through VPC Interface endpoint and access to S3 is through VPC Gateway Endpoint.
 
 ## Terraform
+
 Terraform is an open-source infrastructure as code software tool that enables you to safely and predictably create, change, and improve infrastructure.
 
 ## Setting up Infrastructure using Terraform 
@@ -94,6 +96,7 @@ Some of the managed services used in this Architecture are:
 5. **IAM ROLES:** Lambda functions in the private subnets are assigned an IAM role with necessary permissions to send Logs and Metrics to CloudWatch, access S3 bucket, access Aurora database and also to create, describe and delete Elastic Network Interface (ENI) for lambda within the VPC.
 
 # **CI/CD:**
+
 CI and CD stand for continuous integration and continuous delivery/ deployment. In very simple terms, **Continuous Integration** is a modern software development practice in which incremental code changes are made frequently and reliably to a central code repository like GitHub, Bit Bucket, etc. and **Continuous Delivery** is a software development practice that works in conjunction with CI, CD takes over during the final stages to ensure it’s packaged with everything it needs to deploy to any environment at any time (where as, **Continuous deployment** deploys the applications automatically, eliminating the need for human intervention). The CI/CD pipeline for the above architecture consists of the following:
 
 ![](https://miro.medium.com/v2/resize:fit:802/1*xo6Jp9JX8JBOMi5YIGkm_Q.jpeg)
@@ -105,9 +108,11 @@ CI and CD stand for continuous integration and continuous delivery/ deployment. 
 A **dedicated IAM user** with relevant permissions can be created for Github Actions for deployment. **Access keys** and **secret keys** can be passed through Github Actions Secrets in the workflow configuration.
 
 # Serverless-api
+
 This Cloud Native API is designed to run on AWS Infrastructure while making use of AWS serverless services like Secrets Manager, Lambda functions, API Gateway, etc.
 
 ## Prerequisites for running the application locally:
+
 ```javascript
 // install dependencies
 npm install
@@ -116,7 +121,9 @@ npm start
 // run test cases
 npm test
 ```
+
 ## Endpoint URLs
+
 ```javascript
 // 1. Route to check if the server is healthy
 GET /healthz
@@ -127,7 +134,9 @@ POST /v1/user
 // 4. PUT route to update user details
 PUT /v1/user/{userId}
 ```
+
 ### Sample JSON Response for GET
+
 ```json
 {
   "id": 1,
@@ -140,6 +149,7 @@ PUT /v1/user/{userId}
 ```
 
 ### Sample JSON Request for POST
+
 ```json
 {
   "username": "jane.doe@example.com",
@@ -150,6 +160,7 @@ PUT /v1/user/{userId}
 ```
 
 ### Sample JSON Request for PUT
+
 ```json
 {
   "password": "password",
@@ -159,6 +170,7 @@ PUT /v1/user/{userId}
 ```
 
 ## Endpoint URLs
+
 ```javascript
 // 1. GET route to retrieve product details
 GET /v1/product/{productId}
@@ -173,6 +185,7 @@ PUT /v1/product/{productId}
 ```
 
 ### Sample JSON Response for GET
+
 ```json
 {
   "id": 1,
@@ -188,6 +201,7 @@ PUT /v1/product/{productId}
 ```
 
 ### Sample JSON Request for POST
+
 ```json
 {
   "name": null,
@@ -199,6 +213,7 @@ PUT /v1/product/{productId}
 ```
 
 ### Sample JSON Request for PUT
+
 ```json
 {
   "name": null,
@@ -210,6 +225,7 @@ PUT /v1/product/{productId}
 ```
 
 ### Sample JSON Request for PATCH
+
 ```json
 {
   "name": null,
@@ -220,7 +236,9 @@ PUT /v1/product/{productId}
 }
 ```
 ---
+
 # Thank you
+
 Thank you for taking the time to work on this tutorial/labs. Let me know what you thought!
 
 #### Author by [Harshhaa Reddy](https://github.com/NotHarshhaa)

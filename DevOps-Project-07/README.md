@@ -7,6 +7,7 @@ This tutorial/lab setup is going to take you through a DevOps journey using Azur
 # What you will learn
 
 In this tutorial/lab, you will learn:
+
 - Initial setup of Azure DevOps to begin deploying to Azure using Pipelines as code
 - Deploy Azure resources using Terraform modules
 - Deploy a test application to Azure Kubernetes Service 

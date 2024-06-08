@@ -10,7 +10,7 @@ Are you looking to streamline your application delivery process and automate you
 
 We'll start with the basics and gradually dive deeper into the technical details, so you'll find this guide helpful whether you're a beginner or an experienced DevOps engineer. By the end of this article, you'll have a fully functional EKS cluster and a simple containerized application up and running, with a CI/CD pipeline that automates the entire process from code to production.
 
-### Let's get started and explore the world of EKS, CI/CD, and automation!
+### Let's get started and explore the world of EKS, CI/CD, and automation
 
 ### **What we'll build**
 
@@ -19,34 +19,30 @@ We are going to build and deploy a lot of things. Here is the outline for our pr
 **I. Setting up Jenkins Server with Terraform**
 
 * Creating an EC2 instance with Terraform.
-    
+
 * Installing necessary tools: `Java, Jenkins, AWS CLI, Terraform CLI, Docker, Sonar, Helm, Trivy, Kubectl`.
-    
+
 * Configuring Jenkins server.
-    
 
 **II. Creating EKS Cluster with Terraform**
 
 * Writing Terraform configuration files for `EKS` cluster creation in a private subnet.
-    
+
 * Deploying EKS cluster using Terraform.
-    
 
 **III. Deploying NGinx Application with Kubernetes**
 
 * Writing Kubernetes manifest files `(YAML)` for the NGinx application.
-    
+
 * Deploying NGinx application to `EKS` cluster.
-    
 
 **IV. Automating Deployment with Jenkins CI/CD**
 
 * Creating `Jenkins` pipeline for automating EKS cluster creation and Nginx application deployment.
-    
+
 * Integrating Terraform and Kubernetes with the Jenkins pipeline.
-    
+
 * Configuring continuous integration and deployment (CI/CD).
-    
 
 ### **What we'll need**
 
@@ -69,11 +65,10 @@ You can download the complete source code inside this repository.
 Before creating and working with the project, let's set up some dev tools first -
 
 1. It's better to have an IDE to develop your project. I am using `Visual Studio Code` for the same. You can install it from the following link based on the operating system— [https://code.visualstudio.com/download](https://code.visualstudio.com/download)
-    
+
 2. Install the CLI tools — [**AWS-CLI**](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html), and [**Terraform-CLI**](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli).
-    
+
 3. Make sure you have an AWS Free Tier Account. And then create a user in IAM Console and finally create an `Access Key ID` and `Secret Access Key` in AWS Console for that user. You need to download these keys and then export those credentials in your terminal as follows —
-    
 
 ```yaml
 export AWS_ACCESS_KEY_ID=<Copy this from the credentials file downloaded>
@@ -336,11 +331,10 @@ chmod 700 get_helm.sh
 Please note a few points before running `terraform apply`.
 
 * Use the correct key pair name in the EC2 instance module `(main.tf)` and it must exist before creating the instance.
-    
+
 * Use the correct bucket name in the configuration for the `remote` backend `S3` in the`backend.tf`
-    
+
 * You need to use `user_data = file("../scripts/install_build_tools.sh")` in the EC2 module to specify the script to be executed after EC2 instance creation.
-    
 
 Let's run `terraform apply` and create this. Please make sure to run `terraform init` if you are doing this for the first time. Also, double-check your current working directory where you are running the `terraform cli` commands.
 
@@ -642,9 +636,8 @@ Now move to the bottom and start typing pipeline script using `stages` and `task
 However, I have included the pipeline code in Jenkinsfile as below. Let's observe a few things here —
 
 * We need to provide AWS credential variables that we added already in Jenkins.
-    
+
 * We need to provide `Github` location for the code with the current branch. Since this repository is public, we don't have to specify the `GitHub` `token` or `credentials` to access git.
-    
 
 > *Jenkinsfile*
 
@@ -1006,16 +999,17 @@ We have successfully implemented a robust and automated infrastructure provision
 There are a lot of areas for improvement in this pipeline. Some of them are as below —
 
 * **CI/CD Pipeline Enhancements:** We can explore additional Jenkins features, such as automated trigger, code review, testing, and artifact management, to further streamline our pipeline.
-    
+
 * **Security Enhancements:** Implement additional security measures, such as network policies, secret management, and role-based access control.
-    
+
 * **Kubernetes Advanced Features:** Experiment with Kubernetes advanced features, like StatefulSets, Deployments, and Persistent Volumes, to improve our application's resilience and efficiency.
-    
+
 * **Monitoring and Logging:** Integrate monitoring tools (e.g., Prometheus, Grafana) and logging solutions (e.g., ELK Stack) to ensure real-time visibility and insights.
 
 # Thank you
+
 Thank you for taking the time to work on this tutorial/labs. Let me know what you thought!
 
 #### Author by [Harshhaa Reddy](https://github.com/NotHarshhaa)
 
-### Ensure to follow me on GitHub. Please star/share this repository!
+### Ensure to follow me on GitHub. Please star/share this repository

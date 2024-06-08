@@ -4,7 +4,7 @@
 
 **In this blog, we are going to deploy a Java Web app on a Docker Container built on an EC2 Instance through the use of Jenkins.**
 
-### Agenda:
+### Agenda
 
 * Setup Jenkins
 * Setup & Configure Maven and Git
@@ -14,7 +14,7 @@
 * Automate the Build and Deploy process using Jenkins
 * Test the deployment
 
-### Prerequisites:
+### Prerequisites
 
 * AWS Account
 * Git/ Github Account with the Source Code
@@ -66,9 +66,9 @@ _Open any SSH Client in your local machine, take the public IP of your EC2 Insta
 ![aws](https://miro.medium.com/v2/resize:fit:750/format:webp/0*JOmBQOp3cOumPdcx.png)
 
 _After logging in to our EC2 machine we will install Jenkins following the instructions from the official Jenkins website:_
-https://pkg.jenkins.io/redhat-stable/
+<https://pkg.jenkins.io/redhat-stable/>
 
-### To use this repository, run the following command:
+### To use this repository, run the following command
 
 ```
 sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
@@ -229,7 +229,7 @@ _Also, let’s enable and start the Docker Service:_
 
 ![aws](https://miro.medium.com/v2/resize:fit:750/format:webp/1*T-66VH7jbZzOYXD_BqGVEQ.png)
 
-### Create Tomcat Docker Container:
+### Create Tomcat Docker Container
 
 _In my previous blog, I deployed a Java code on a Tomcat VM, here in this blog we will deploy on a Tomcat Docker container._
 
@@ -333,7 +333,6 @@ _Hence we should be now able to launch as many times the same container without 
 
 ### Step 5: Integrate Docker with Jenkins
 
-
 * Create a dockeradmin user
 * Install the “Publish Over SSH” plugin
 * Add Dockerhost to Jenkins “configure systems”
@@ -380,7 +379,6 @@ Now we need to configure our dockerhost in Jenkins. For that go to Manage Jenkin
 On the next page after scrolling down you would be able to see Publish over SSH section where you need to add a new SSH server with the info as shown below:
 
 ![aws](https://miro.medium.com/v2/resize:fit:750/format:webp/1*3hnLNy9fWJ036nHBTMjLbA.png)
-
 
 _It should be noted that it's best practice to use ssh keys however for this demo we are using password-based authentication. In the above screenshot, we have provided details of our Docker host which we created on EC2 Instance. Also, note the use of private IP under Hostname as both our Jenkins Server and Dockerhost are on the same subnet. We can also use Public IP here._
 
@@ -478,7 +476,7 @@ docker run -d --name tomcatv1 -p 8086:8080 tomcat:v1
 
 ![aws](https://miro.medium.com/v2/resize:fit:750/format:webp/1*HQ3McOs6pUTRn6lHmOuHYQ.png)
 
-Now let’s access this application from our browser using URL http://54.173.227.226:8086/webapp/
+Now let’s access this application from our browser using URL <http://54.173.227.226:8086/webapp/>
 
 ![aws](https://miro.medium.com/v2/resize:fit:750/format:webp/1*UU4dtCjSfFagp3yI0xNaKg.png)
 
@@ -517,6 +515,7 @@ Also, we if access our new dockerized app from our browser on port 8087, the res
 **Happy Learning!**
 
 # Hit the Star! ⭐
-***If you are planning to use this repo for learning, please hit the star. Thanks!***
+
+***If you are planning to use this repo for learning, please hit the star. Thanks!**_
 
 #### Author by [Harshhaa Reddy](https://github.com/NotHarshhaa)

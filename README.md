@@ -25,6 +25,7 @@ Whether you're new to DevOps or looking to enhance your skills, this repository 
 Feel free to contribute your own DevOps projects or collaborate with others in enhancing existing projects. Let's build a thriving community of DevOps enthusiasts!
 
 ## Hit the Star! ⭐
+
 **If you are planning to use this repository for learning, please give it a star. Thanks!**
 
 ### Author by:
@@ -32,4 +33,4 @@ Feel free to contribute your own DevOps projects or collaborate with others in e
 ![](https://imgur.com/2j6Aoyl.png)
 
 > [!Note]
-> Join Our [Telegram Community](https:t.me/prodevopsguy) || [Follow me](https://github.com/NotHarshhaa) for more DevOps Content
+> Join Our [Telegram Community](https://t.me/prodevopsguy) || [Follow me](https://github.com/NotHarshhaa) for more DevOps Content

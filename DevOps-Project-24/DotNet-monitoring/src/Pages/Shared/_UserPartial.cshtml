@@ -1,0 +1,18 @@
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@if (@Configuration.GetSection("AzureAd").Exists()
+&& Configuration.GetSection("AzureAd").GetValue<String>("ClientId") != "")
+{
+  <div class="d-flex">
+  @if (User.Identity.IsAuthenticated)
+    {
+      <a href="/user" class="btn btn-info btn-lg" type="button"><i class="fas fa-fw fa-user-circle"></i>
+        @User.Identity.Name</a>
+    }
+    else
+    {
+      <a href="/user" class="btn btn-success btn-lg" type="button"><i class="fas fa-fw fa-sign-in-alt"></i> Login</a>
+    }
+  </div>
+}

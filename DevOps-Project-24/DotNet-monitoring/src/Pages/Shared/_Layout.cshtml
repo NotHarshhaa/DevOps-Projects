@@ -1,0 +1,88 @@
+﻿@using System.Reflection
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <title>Dotnet DemoApp: @ViewData["Title"]</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap & Bootswatch -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.1.3/pulse/bootstrap.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Fontawesome icons -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" />
+
+  <title>.NET DemoApp: @ViewData["Title"]</title>
+  <link rel="stylesheet" href="~/css/site.css" />
+
+  @Html.Raw(AppInsightsSnippet.FullScript)
+</head>
+
+<body>
+  <!-- Main app navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">
+        <img src="/img/icon.svg" class="align-top" />
+        <span class="ms-2">.NET Demo App</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+        aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarMain">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link btn btn-primary btn-lg mx-1" href="/info">
+              <i class="fas fa-info-circle fa-fw"></i>
+              Info
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-primary btn-lg mx-1" href="/tools">
+              <i class="fas fa-tools fa-fw"></i>
+              Tools
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-primary btn-lg mx-1" href="/monitor">
+              <i class="fas fa-chart-line fa-fw"></i>
+              Monitor
+            </a>
+          </li>
+
+          @if (@Configuration.GetSection("Weather").Exists() &&
+          Configuration.GetSection("Weather").GetValue<String>("ApiKey") != "")
+          {
+            <li>
+              <a class="nav-link btn btn-primary btn-lg mx-1" href="/weather">
+                <i class="fas fa-cloud-sun-rain fa-fw"></i>
+                Weather
+              </a>
+            </li>
+          }
+        </ul>
+
+        <partial name="_UserPartial" />
+
+      </div>
+    </div>
+  </nav>
+
+  <div class="container pt-4">
+    @RenderBody()
+  </div>
+
+  <footer class="footer bg-light p-1 fixed-bottom w-100">
+    &copy; 2021 Ben Coleman - v@(Assembly.GetEntryAssembly().GetName().Version)
+  </footer>
+</body>
+
+</html>

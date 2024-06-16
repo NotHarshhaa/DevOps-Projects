@@ -1,0 +1,30 @@
+@page
+@{
+  ViewData["Title"] = "System Info";
+}
+
+<link rel="stylesheet" href="/open-weather-icons/css/open-weather-icons.css" />
+
+<div class="card shadow-lg">
+  <div class="card-header bg-info h3 text-white">
+    <i class="fa fa-fw fa-globe"></i>
+    Geolocated Weather
+    <span id="location"></span>
+  </div>
+  <div class="card-body">
+    <div class="alert alert-warning fade text-dark" role="alert" id="error"></div>
+
+    <div class="row">
+      <div class="col-7">
+        <ul id="weather-list" class="h4"></ul>
+      </div>
+      <div class="col"><i id="weatherIcon" class="owi"></i></div>
+    </div>
+  </div>
+</div>
+
+<div class="p-4">
+  <img src="img/open-weather.png" height="64px" />
+</div>
+
+<script src="js/weather.js"></script>

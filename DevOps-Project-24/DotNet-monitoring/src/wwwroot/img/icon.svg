@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(4,0,0,4,0,0)">
+        <circle cx="32" cy="32" r="32" style="fill:rgb(122,60,192);"/>
+    </g>
+    <g transform="matrix(4,0,0,4,4,-4.56292)">
+        <path d="M9.82,9C3.01,15.069 -0.891,23.769 -0.891,32.891C-0.891,50.445 13.555,64.891 31.109,64.891C40.231,64.891 48.931,60.99 55,54.18L9.82,9Z" style="fill-opacity:0.25;fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,0,16)">
+        <path d="M7.4,37.25C7.023,37.256 6.66,37.104 6.4,36.83C6.133,36.566 5.985,36.205 5.99,35.83C5.987,35.455 6.135,35.095 6.4,34.83C6.657,34.552 7.021,34.395 7.4,34.4C7.778,34.399 8.14,34.555 8.4,34.83C8.67,35.093 8.821,35.454 8.82,35.83C8.824,36.207 8.671,36.569 8.4,36.83C8.138,37.1 7.777,37.252 7.4,37.25Z" style="fill:white;fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,0,16)">
+        <path d="M27.27,37L24.65,37L15.28,22.46C15.047,22.102 14.852,21.72 14.7,21.32L14.62,21.32C14.709,22.15 14.742,22.985 14.72,23.82L14.72,37L12.59,37L12.59,18.77L15.36,18.77L24.48,33.05C24.86,33.643 25.107,34.05 25.22,34.27L25.27,34.27C25.164,33.381 25.121,32.485 25.14,31.59L25.14,18.77L27.27,18.77L27.27,37Z" style="fill:white;fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,0,16)">
+        <path d="M41.69,37L32,37L32,18.77L41.24,18.77L41.24,20.7L34.18,20.7L34.18,26.76L40.76,26.76L40.76,28.68L34.18,28.68L34.18,35L41.7,35L41.69,37Z" style="fill:white;fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(4,0,0,4,0,16)">
+        <path d="M56,20.7L50.7,20.7L50.7,37L48.57,37L48.57,20.7L43.33,20.7L43.33,18.77L56,18.77L56,20.7Z" style="fill:white;fill-rule:nonzero;"/>
+    </g>
+</svg>

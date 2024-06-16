@@ -1,0 +1,3 @@
+[submodule "external/microsoft-identity-web"]
+	path = external/microsoft-identity-web
+	url = https://github.com/AzureAD/microsoft-identity-web.git

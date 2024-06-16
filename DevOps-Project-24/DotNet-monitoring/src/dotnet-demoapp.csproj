@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>DotnetDemoapp</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <Version>1.5.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- <PackageReference Include="Microsoft.Graph" Version="3.27.0" /> -->
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.17" />
+    <PackageReference Include="Microsoft.Identity.Web" Version="1.21.0" />
+    <PackageReference Include="Microsoft.Identity.Web.UI" Version="1.21.0" />
+    <PackageReference Include="Microsoft.Identity.Web.MicrosoftGraph" Version="1.21.0" />
+  </ItemGroup>
+
+</Project>

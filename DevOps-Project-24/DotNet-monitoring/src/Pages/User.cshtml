@@ -1,0 +1,68 @@
+@page
+@model UserInfoModel
+@{
+  ViewData["Title"] = "User Profile";
+}
+
+<div class="card shadow-lg">
+  <div class="card-header h3 bg-info text-white"> <i class="fas fa-fw fa-user-circle"></i> User Details
+    <a asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignOut" class="btn btn-warning float-end">
+      <i class="fas fa-fw fa-sign-out-alt"></i>
+      Sign out
+    </a>
+  </div>
+
+  <div class="card-body">
+    @if (Model.graphData != null)
+    {
+      <h3>Microsoft Graph</h3>
+      <div class="row">
+
+        <div class="col col-sm-7">
+          <table class="table table-hover table-striped">
+            @foreach (KeyValuePair<string, string> kvp in Model.graphData)
+            {
+              <tr>
+                <td>@kvp.Key:</td>
+                <td>@kvp.Value</td>
+              </tr>
+            }
+          </table>
+        </div>
+        <div class="col d-grid">
+          @if (@Model.graphPhoto != null)
+          {
+            <img class="profile-photo"
+          src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.graphPhoto))">
+          }
+        </div>
+      </div>
+    }
+
+    <hr>
+
+    <h3>OIDC Claim Data</h3>
+    <table class="table table-hover table-striped">
+      <tr>
+        <td>Name:</td>
+        <td>@Model.name</td>
+      </tr>
+      <tr>
+        <td>Username:</td>
+        <td>@Model.username</td>
+      </tr>
+      <tr>
+        <td>Preferred Username:</td>
+        <td>@Model.preferredUsername</td>
+      </tr>
+      <tr>
+        <td>OID:</td>
+        <td>@Model.oid</td>
+      </tr>
+      <tr>
+        <td>Tenant Id:</td>
+        <td>@Model.tenantId</td>
+      </tr>
+    </table>
+  </div>
+</div>

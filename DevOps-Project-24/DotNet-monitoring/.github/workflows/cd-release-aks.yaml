@@ -1,0 +1,77 @@
+#
+# Deploy to Azure Kubernetes Service
+# Using Helm for parameterized deployment
+#
+
+name: CD Release - AKS
+
+on:
+  workflow_dispatch:
+    inputs:
+      IMAGE_TAG:
+        description: "Image tag to be deployed"
+        required: true
+        default: "latest"
+
+# Note. Required secrets: CLUSTER_KUBECONFIG
+
+env:
+  CLUSTER_NAME: benc
+  HELM_RELEASE: dotnet
+  HELM_NAMESPACE: demoapps
+  INGRESS_DNS_HOST: dotnet-demoapp.kube.benco.io
+  AD_CLIENT_ID: 3584ac39-1ab1-4fe6-a3dd-4b2fbedc9d7d
+
+jobs:
+  #
+  # Deploy to Kubernetes (AKS)
+  #
+  deploy-aks:
+    name: Deploy to AKS with Helm
+    runs-on: ubuntu-latest
+    environment:
+      name: AKS - dotnet-demoapp
+      url: https://${{ env.INGRESS_DNS_HOST }}/
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Set kubeconfig"
+        uses: azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.CLUSTER_KUBECONFIG }}
+          context: ${{ env.CLUSTER_NAME }}
+
+      - name: "Helm release"
+        run: |
+          helm repo add benc-uk https://benc-uk.github.io/helm-charts
+          helm upgrade ${{ env.HELM_RELEASE }} benc-uk/webapp \
+          --install \
+          --namespace ${{ env.HELM_NAMESPACE }} \
+          --values deploy/kubernetes/aks-live.yaml \
+          --set image.tag=${{ github.event.inputs.IMAGE_TAG }},ingress.host=${{ env.INGRESS_DNS_HOST }}
+
+  #
+  # Post deployment testing stage
+  #
+  validate-deployment:
+    name: "Run Deployment Tests"
+    needs: deploy-aks
+    runs-on: ubuntu-latest
+    environment:
+      name: AKS - dotnet-demoapp
+      url: https://${{ env.INGRESS_DNS_HOST }}/
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Validate site is running"
+        run: .github/scripts/url-check.sh -u https://${{ env.INGRESS_DNS_HOST }} -s ".NET" -t 200
+
+      - name: "Run API tests"
+        run: |
+          npm install newman --silent
+          node_modules/newman/bin/newman.js run tests/postman_collection.json --global-var apphost=${{ env.INGRESS_DNS_HOST }}

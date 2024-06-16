@@ -1,0 +1,188 @@
+{
+	"info": {
+		"_postman_id": "41c17837-9d8a-4cc5-974e-1d23ea7a6217",
+		"name": "Dotnet Demoapp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Check Home Page",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Home Page: Successful GET request\", function () {",
+							"    pm.response.to.be.ok;",
+							"});",
+							"",
+							"pm.test(\"Home Page: Response valid & HTML body\", function () {",
+							"    pm.response.to.be.withBody;",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.contain('text/html');",
+							"});",
+							"",
+							"pm.test(\"Home Page: Check content\", function () {",
+							"    pm.expect(pm.response.text()).to.include('Ben Coleman');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{apphost}}/",
+					"protocol": "http",
+					"host": [
+						"{{apphost}}"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check Info Page",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Info Page: Successful GET request\", function () {",
+							"    pm.response.to.be.ok;",
+							"});",
+							"",
+							"pm.test(\"Info Page: Response valid & HTML body\", function () {",
+							"    pm.response.to.be.withBody;",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.contain('text/html');",
+							"});",
+							"",
+							"pm.test(\"Info Page: Check content\", function () {",
+							"    pm.expect(pm.response.text()).to.include('Linux');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{apphost}}/info",
+					"protocol": "http",
+					"host": [
+						"{{apphost}}"
+					],
+					"path": [
+						"info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check Weather API",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Weather API: Successful GET request\", function () {",
+							"    pm.response.to.be.ok;",
+							"});",
+							"",
+							"pm.test(\"Weather API: Response valid & JSON body\", function () {",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Weather API: Check API response\", function () {",
+							"    var weatherData = pm.response.json();",
+							"    pm.expect(weatherData.weather).to.exist;",
+							"    pm.expect(weatherData.main).to.exist;",
+							"    pm.expect(weatherData.weather).to.be.an('array')",
+							"    pm.expect(weatherData.main.temp).to.be.an('number')",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{apphost}}/api/weather/51.40329/0.05619",
+					"protocol": "http",
+					"host": [
+						"{{apphost}}"
+					],
+					"path": [
+						"api",
+						"weather",
+						"51.40329",
+						"0.05619"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check Error Page",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Error Page: Returns 500\", function () {",
+							"    pm.response.to.not.be.ok;",
+							"});",
+							"",
+							"pm.test(\"Error Page: Response valid & HTML body\", function () {",
+							"    pm.response.to.be.withBody;",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.contain('text/html');",
+							"});",
+							"",
+							"pm.test(\"Error Page: Check exception\", function () {",
+							"    pm.expect(pm.response.text()).to.include('occurred while');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/html",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{apphost}}/tools/exception",
+					"protocol": "http",
+					"host": [
+						"{{apphost}}"
+					],
+					"path": [
+						"tools",
+						"exception"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

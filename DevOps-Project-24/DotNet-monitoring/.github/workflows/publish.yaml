@@ -1,0 +1,28 @@
+name: Release Versioned Image
+
+on:
+  release:
+    types: [published]
+
+env:
+  IMAGE_REG: ghcr.io
+  IMAGE_REPO: benc-uk/dotnet-demoapp
+
+jobs:
+  publish-image:
+    name: "Build & Publish"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Docker build image with version tag"
+        run: |
+          make image IMAGE_TAG=${{ github.event.release.tag_name }}
+          make image IMAGE_TAG=latest
+
+      - name: "Push to container registry"
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login $IMAGE_REG -u $GITHUB_ACTOR --password-stdin
+          make push IMAGE_TAG=${{ github.event.release.tag_name }}
+          make push IMAGE_TAG=latest

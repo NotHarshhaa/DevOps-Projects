@@ -1,0 +1,73 @@
+name: CI Build App
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "src/**"
+      - "tests/**"
+      - ".github/workflows/**"
+  pull_request:
+
+env:
+  IMAGE_REG: ghcr.io
+  IMAGE_REPO: benc-uk/dotnet-demoapp
+
+jobs:
+  test:
+    name: "Tests & Linting"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Run linting"
+        # We have to update the path because HOME is set weird in actions runner
+        run: export PATH=$PATH:$HOME/.dotnet/tools && make lint
+
+      - name: "Run tests"
+        run: make test-report
+
+      - name: "Upload test results"
+        uses: actions/upload-artifact@v2
+        # Disabled when running locally with the nektos/act tool
+        if: ${{ always() }}
+        with:
+          name: test-results
+          path: tests/TestResults/
+
+      - name: "Publish test results"
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: ${{ always() }}
+        with:
+          files: tests/TestResults/TestResults.xml
+
+  build:
+    name: "Build & Push Image"
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      # Nicer than using github runid, I think, will be picked up automatically by make
+      - name: "Create datestamp image tag"
+        run: echo "IMAGE_TAG=$(date +%d-%m-%Y.%H%M)" >> $GITHUB_ENV
+
+      - name: "Docker build image"
+        run: make image
+
+      # Only when pushing to default branch (e.g. master or main), then push image to registry
+      - name: Push to container registry
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login $IMAGE_REG -u $GITHUB_ACTOR --password-stdin
+          make push
+
+      - name: "Trigger AKS release pipeline"
+        if: github.ref == 'refs/heads/master'
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: "CD Release - AKS"
+          token: ${{ secrets.GH_PAT }}
+          inputs: '{ "IMAGE_TAG": "${{ env.IMAGE_TAG }}" }'

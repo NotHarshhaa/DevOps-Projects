@@ -1,0 +1,41 @@
+﻿.navbar-brand img {
+  height: 3rem;
+}
+
+.navbar-brand span {
+  line-height: 3rem;
+}
+
+.home-box {
+  background-color: var(--bs-gray-300);
+}
+
+.profile-photo {
+  width: clamp(10rem, 25vw, 18rem);
+  border-radius: 1rem;
+  margin: auto;
+  align-self: center;
+}
+
+.env-table {
+  display: block;
+  max-height: 50vh !important;
+  max-width: 80vw;
+  overflow-y: scroll;
+  font-family: "Consolas", "Lucida Console", "Lucida Sans Typewriter", monospace;
+  word-break: keep-all;
+}
+
+table {
+  font-size: 120%;
+}
+
+.env-table tr:hover {
+  color: #6eda43;
+  background-color: #111;
+}
+
+.owi {
+  font-size: clamp(10rem, 20vw, 18rem) !important;
+  color: #39d8dd;
+}

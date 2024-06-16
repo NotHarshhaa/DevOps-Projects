@@ -1,0 +1,144 @@
+/**
+ The MIT License (MIT)
+
+ Copyright (c) 2017 Ivan Vilanculo
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ **/
+
+@font-face {
+    font-family: OpenWeatherIcons;
+    src: url("../fonts/OpenWeatherIcons.eot");
+    src: url("../fonts/OpenWeatherIcons.eot?#iefix") format("embedded-opentype"), url("../fonts/OpenWeatherIcons.woff2") format("woff2"), url("../fonts/OpenWeatherIcons.woff") format("woff"), url("../fonts/OpenWeatherIcons.ttf") format("truetype"), url("../fonts/OpenWeatherIcons.svg#OpenWeatherIcons") format("svg");
+    font-style: normal;
+    font-weight: 400;
+}
+
+.owi {
+    display: inline-block;
+    transform: translate(0, 0);
+    text-rendering: auto;
+    font: normal normal 400 14px/1 OpenWeatherIcons;
+    font-size: inherit;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+}
+
+.owi-lg {
+    vertical-align: -15%;
+    line-height: 0.75em;
+    font-size: 1.33333333em;
+}
+
+.owi-2x {
+    font-size: 2em;
+}
+
+.owi-3x {
+    font-size: 3em;
+}
+
+.owi-4x {
+    font-size: 4em;
+}
+
+.owi-5x {
+    font-size: 5em;
+}
+
+.owi-fw {
+    width: 1.28571429em;
+    text-align: center;
+}
+
+.owi-01d::before {
+    content: "\ea01";
+}
+
+.owi-01n::before {
+    content: "\ea02";
+}
+
+.owi-02d::before {
+    content: "\ea04";
+}
+
+.owi-02n::before {
+    content: "\ea03";
+}
+
+.owi-03d::before {
+    content: "\ea05";
+}
+
+.owi-03n::before {
+    content: "\ea06";
+}
+
+.owi-04d::before {
+    content: "\ea07";
+}
+
+.owi-04n::before {
+    content: "\ea08";
+}
+
+.owi-09d::before {
+    content: "\ea09";
+}
+
+.owi-09n::before {
+    content: "\ea0a";
+}
+
+.owi-10d::before {
+    content: "\ea0b";
+}
+
+.owi-10n::before {
+    content: "\ea0c";
+}
+
+.owi-11d::before {
+    content: "\ea0d";
+}
+
+.owi-11n::before {
+    content: "\ea0e";
+}
+
+.owi-1232n::before {
+    content: "\ea0f";
+}
+
+.owi-13d::before {
+    content: "\ea10";
+}
+
+.owi-13n::before {
+    content: "\ea12";
+}
+
+.owi-50d::before {
+    content: "\ea11";
+}
+
+.owi-50n::before {
+    content: "\ea13";
+}

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dotnet-app-deployment
+spec:
+  replicas: 1 # Set the desired number of replicas
+  selector:
+    matchLabels:
+      app: dotnet-app
+  template:
+    metadata:
+      labels:
+        app: dotnet-app
+    spec:
+      containers:
+      - name: dotnet-app
+        image: writetoritika/dotnet-monitoring:latest # Replace with your Docker image name
+        ports:
+        - containerPort: 5000 # Expose the port specified in your Dockerfile
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dotnet-app-service
+spec:
+  selector:
+    app: dotnet-app
+  ports:
+  - protocol: TCP
+    port: 80 # Service port
+    targetPort: 5000 # Port in the container
+  type: NodePort # Use NodePort service type            

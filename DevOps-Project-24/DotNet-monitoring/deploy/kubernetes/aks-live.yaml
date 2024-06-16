@@ -1,0 +1,30 @@
+image:
+  repository: ghcr.io/benc-uk/dotnet-demoapp
+  pullPolicy: Always
+
+service:
+  targetPort: 5000
+
+secretEnv:
+  Weather__ApiKey:
+    secretName: dotnet-demoapp
+    secretKey: weatherKey
+  AzureAd__ClientSecret:
+    secretName: dotnet-demoapp
+    secretKey: aadAppSecret
+
+env:
+  ApplicationInsights__InstrumentationKey: ace55567-7613-45ce-a2b6-f967aa74362e
+  AzureAd__ClientId: 3584ac39-1ab1-4fe6-a3dd-4b2fbedc9d7d
+  AzureAd__Instance: https://login.microsoftonline.com/
+  AzureAd__TenantId: common
+
+ingress:
+  enabled: true
+  className: nginx
+  host: dotnet-demoapp.kube.benco.io
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  tls:
+    enabled: true
+    secretName: benco-io-cert

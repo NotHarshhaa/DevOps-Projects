@@ -1,0 +1,84 @@
+@page
+@model SystemInfoModel
+@{
+  ViewData["Title"] = "System Info";
+}
+<div class="card shadow-lg">
+  <div class="card-header h3 bg-info text-white"> <i class="fas fa-fw fa-info-circle"></i> System Information</div>
+  <div class="card-body">
+    <h3>Basic Details</h3>
+
+    <table class="table table-hover table-striped table">
+      <tr>
+        <td><i class="fa fa-fw fa-cube"></i> Containerized:</td>
+        @if (Model.isInContainer)
+        {
+          <td>Looks like we're running in a Docker container! &#x1F604;</td>
+        }
+        else
+        {
+          <td>Not running as a Docker container &#x1F622;</td>
+        }
+      </tr>
+      <tr>
+        <td><i class="fa fa-fw fa-project-diagram"></i> Kubernetes:</td>
+        @if (Model.isInKubernetes)
+        {
+          <td>We're also running in a Kubernetes pod! &#x1f44d;</td>
+        }
+        else
+        {
+          <td>Not running in Kubernetes &#x1F622;</td>
+        }
+      </tr>
+      <tr>
+        <td><i class="fa fa-fw fa-microscope"></i> App Insights:</td>
+        @if (Model.isAppInsightsEnabled)
+        {
+          <td>Reporting telemetry to Azure Application Insights</td>
+        }
+        else
+        {
+          <td>Not enabled</td>
+        }
+      </tr>
+      <tr>
+        <td><i class="fa fa-fw fa-home"></i> Hostname:</td>
+        <td>@Model.hostname</td>
+      </tr>
+      <tr>
+        <td><i class="fas fa-fw fa-cogs"></i> OS Details:</td>
+        <td>@Model.osDesc</td>
+      </tr>
+      <tr>
+        <td><i class="fa fa-fw fa-microchip"></i> Architecture:</td>
+        <td>@Model.osArch - @Model.processorCount cores</td>
+      </tr>
+      <tr>
+        <td><i class="fab fa-fw fa-codepen"></i> Framework:</td>
+        <td>@Model.framework</td>
+      </tr>
+      <tr>
+        <td><i class="fas fa-fw fa-memory"></i> Memory:</td>
+        <td>@Model.workingSet MB / @String.Format("{0,12:n} MB", Model.physicalMem)</td>
+      </tr>
+    </table>
+
+    <hr>
+
+    <h3>Environment Variables</h3>
+
+    <table class="table text-success bg-dark env-table">
+      <tbody>
+        @foreach (KeyValuePair<string, string> var in @Model.envVars)
+        {
+          @if (var.Key == "PATH") continue;
+          <tr>
+            <td class=""> @var.Key </td>
+            <td class=""> @var.Value </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

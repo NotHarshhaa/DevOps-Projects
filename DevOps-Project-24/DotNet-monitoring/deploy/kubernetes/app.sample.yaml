@@ -1,0 +1,36 @@
+#
+# See this Helm chart for options
+# https://github.com/benc-uk/helm-charts/tree/master/webapp
+#
+
+image:
+  repository: ghcr.io/benc-uk/dotnet-demoapp
+  tag: latest
+  pullPolicy: Always
+
+service:
+  targetPort: 5000
+  type: LoadBalancer
+# secretEnv:
+#   Weather__ApiKey:
+#     secretName: dotnet-secrets
+#     secretKey: weatherKey
+#   AzureAd__ClientSecret:
+#     secretName: dotnet-secrets
+#     secretKey: aadAppSecret
+
+# env:
+#   ApplicationInsights__InstrumentationKey: __CHANGE_ME__
+#   AzureAd__ClientId: __CHANGE_ME__
+#   AzureAd__Instance: __CHANGE_ME__
+#   AzureAd__TenantId: __CHANGE_ME__
+
+# ingress:
+#   enabled: true
+#   className: nginx
+#   host: __CHANGE_ME__
+#   annotations:
+#     nginx.ingress.kubernetes.io/ssl-redirect: "true"
+#   tls:
+#     enabled: true
+#     secretName: __CHANGE_ME__

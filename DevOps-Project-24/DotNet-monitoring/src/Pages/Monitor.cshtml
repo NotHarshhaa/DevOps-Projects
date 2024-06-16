@@ -1,0 +1,28 @@
+@page
+@{
+  ViewData["Title"] = "Realtime Monitor";
+}
+<script src="https://cdn.jsdelivr.net/npm/chart.js/dist/Chart.min.js"></script>
+<script>
+  var chartCssLink = document.createElement("link");
+  chartCssLink.rel = "stylesheet";
+  chartCssLink.href = "https://cdn.jsdelivr.net/npm/chart.js/dist/Chart.min.css";
+  document.head.appendChild(chartCssLink);
+</script>
+
+<div class="card shadow-lg">
+  <div class="card-header h3 bg-info text-white"> <i class="fas fa-fw fa-chart-line"></i> Realtime Monitor</div>
+  <div class="card-body">
+    <!-- Used by chart.js -->
+    <canvas id="wsChart" width="500" height="200"></canvas>
+    <hr />
+    <!-- Used by chart.js -->
+    <canvas id="cpuChart" width="500" height="200"></canvas>
+  </div>
+</div>
+
+<!-- Our main monitoring script for calling the API and displaying results -->
+<script src='js/monitoring.js'></script>
+<script>
+  window.addEventListener('load', startMonitoring);
+</script>

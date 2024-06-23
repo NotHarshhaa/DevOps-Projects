@@ -19,109 +19,105 @@
 ![3-tier application](https://imgur.com/3XF0tlJ.png)
 ---
 
+# Project Overview
+
 ## Goal
 
-Goal of this project is to deploy scalable, highly available and secured Java application on 3-tier architecture and provide application access to the end users from public internet.
+The primary objective of this project is to deploy a scalable, highly available, and secure Java application using a 3-tier architecture. The application will be accessible to end-users via the public internet.
 
 ## Pre-Requisites
 
-1. Create AWS Free Tier account
-2. Create GitHub account and create repository to keep this Java [Source Code](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-01/Java-Login-App)
-3. Migrate Java Source Code to your own GitHub repository
-4. Create account in Sonarcloud.
-5. Create account in Jfrog cloud.
+1. **AWS Free Tier Account**: Sign up for an [Amazon Web Services (AWS) Free Tier account](https://aws.amazon.com/free/) to use various AWS services for deployment.
+2. **GitHub Account and Repository**: Create a [GitHub account](https://github.com/join) and a repository to host your Java source code. Migrate the provided Java source code from the [Java-Login-App repository](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-01/Java-Login-App) to your own GitHub repository.
+3. **SonarCloud Account**: Create an account on [SonarCloud](https://sonarcloud.io/) for static code analysis and quality checks.
+4. **JFrog Cloud Account**: Create an account on [JFrog Cloud](https://jfrog.com/start-free/) to manage your artifacts.
 
-## Pre-Deployment
+## Pre-Deployment Steps
 
-1. Create Global AMI
-    1. AWS CLI
-    2. Cloudwatch agent
-    3. Install AWS SSM agent
-2. Create Golden AMI using Global AMI for Nginx application
-    1. Install Nginx
-    2. Push custom memory metrics to Cloudwatch.
-3. Create Golden AMI using Global AMI for Apache Tomcat application
-    1. Install Apache Tomcat
-    2. Configure Tomcat as Systemd service
-    3. Install JDK 11
-    4. Push custom memory metrics to Cloudwatch.
-4. Create Golden AMI using Global AMI for Apache Maven Build Tool
-    1. Install Apache Maven
-    2. Install Git
-    3. Install JDK 11
-    4. Update Maven Home to the system PATH environment variable
+1. **Create Global AMI (Amazon Machine Image)**:
+   - Install [AWS CLI](https://aws.amazon.com/cli/).
+   - Install [CloudWatch Agent](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Install-CloudWatch-Agent.html).
+   - Install [AWS Systems Manager (SSM) Agent](https://docs.aws.amazon.com/systems-manager/latest/userguide/ssm-agent.html).
+
+2. **Create Golden AMIs**:
+   - **For Nginx**:
+     - Install [Nginx](https://www.nginx.com/).
+     - Configure custom memory metrics for CloudWatch.
+   - **For Apache Tomcat**:
+     - Install [Apache Tomcat](http://tomcat.apache.org/).
+     - Configure Tomcat as a systemd service.
+     - Install [JDK 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html).
+     - Configure custom memory metrics for CloudWatch.
+   - **For Apache Maven Build Tool**:
+     - Install [Apache Maven](https://maven.apache.org/).
+     - Install [Git](https://git-scm.com/).
+     - Install [JDK 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html).
+     - Update the Maven Home in the system PATH environment variable.
 
 ## VPC Deployment
 
-Deploy AWS Infrastructure resources as shown in the above architecture.
+Deploy AWS infrastructure resources as per the architecture diagram.
 
-#### VPC (Network Setup)
+1. **VPC (Network Setup)**:
+   - Create VPC networks:
+     - `192.168.0.0/16` for Bastion Host.
+     - `172.32.0.0/16` for application servers.
+   - Set up NAT Gateway in the public subnet and update the route table for the private subnet.
+   - Create a Transit Gateway and associate both VPCs for private communication.
+   - Create Internet Gateways for each VPC and update route tables for inbound/outbound internet access.
 
-1. Build VPC network ( 192.168.0.0/16 ) for Bastion Host deployment as per the architecture shown above.
-2. Build VPC network ( 172.32.0.0/16 ) for deploying Highly Available and Auto Scalable application servers as per the architecture shown above.
-3. Create NAT Gateway in Public Subnet and update Private Subnet associated Route Table accordingly to route the default traffic to NAT for outbound internet connection.
-4. Create Transit Gateway and associate both VPCs to the Transit Gateway  for private communication.
-5. Create Internet Gateway for each VPC and update Public Subnet associated Route Table accordingly to route the default traffic to IGW for inbound/outbound internet connection.
-
-#### Bastion
-
-1. Deploy Bastion Host in the Public Subnet with EIP associated.
-2. Create Security Group allowing port 22 from public internet
+2. **Bastion Host**:
+   - Deploy a Bastion Host in the public subnet with an Elastic IP (EIP).
+   - Create a security group allowing port 22 (SSH) from the public internet.
 
 ## Maven (Build)
 
-1. Create EC2 instance using Maven Golden AMI
-2. Clone GitHub repository to VSCode and update the pom.xml with Sonar and JFROG deployment details.
-3. Add settings.xml file to the root folder of the repository with the JFROG credentials and JFROG repo to resolve the dependencies.
-4. Update application.properties file with JDBC connection string to authenticate with MySQL.
-5. Push the code changes to feature branch of GitHub repository
-6. Raise Pull Request to approve the PR and Merge the changes to Master branch.
-7. Login to EC2 instance and clone the GitHub repository
-8. Build the source code using  maven arguments “-s settings.xml”
-9. Integrate Maven build with Sonar Cloud and generate analysis dashboard with default Quality Gate profile.
+1. Launch an EC2 instance using the Maven Golden AMI.
+2. Clone the GitHub repository to [VSCode](https://code.visualstudio.com/), update `pom.xml` with SonarCloud and JFrog deployment details, and add `settings.xml` with JFrog credentials.
+3. Update `application.properties` with JDBC connection string.
+4. Push code changes to a feature branch, create a pull request, and merge changes to the master branch.
+5. Clone the repository on the EC2 instance and build the source code using Maven with `-s settings.xml`.
+6. Integrate the Maven build with SonarCloud and generate an analysis dashboard using the default quality gate profile.
 
 ## 3-Tier Architecture
 
-#### Database (RDS)
+1. **Database (RDS)**:
+   - Deploy a Multi-AZ MySQL RDS instance in private subnets.
+   - Create a security group allowing port 3306 from application instances and Bastion Host.
 
-1. Deploy Multi-AZ MySQL RDS instance into private subnets
-2. Create Security Group allowing port 3306 from App instances and from Bastion Host.
+2. **Tomcat (Backend)**:
+   - Create a private-facing Network Load Balancer and Target Group.
+   - Create a Launch Configuration:
+     - Use Tomcat Golden AMI.
+     - Deploy `.war` artifacts from JFrog to the `webapps` folder.
+     - Configure security groups to allow port 22 from Bastion Host and port 8080 from the private NLB.
+   - Set up an Auto Scaling Group.
 
-#### Tomcat (Backend)
-
-1. Create private facing Network Load Balancer and Target Group.
-2. Create Launch Configuration with below configuration.
-    1. Tomcat Golden AMI
-    2. User Data to deploy .war artifact from JFROG into webapps folder.
-    3. Security Group allowing Port 22 from Bastion Host and Port 8080 from private NLB.
-3. Create Auto Scaling Group
-
-#### Nginx (Frontend)
-
-1. Create public facing Network Load Balancer and Target Group.
-2. Create Launch Configuration with below configuration
-    1. Nginx Golden AMI
-    2. User Data to update proxy_pass rules in nginx.conf file and reload nginx service.
-    3. Security Group allowing Port 22 from Bastion Host and Port 80 from Public NLB.
-3. Create Auto Scaling Group
+3. **Nginx (Frontend)**:
+   - Create a public-facing Network Load Balancer and Target Group.
+   - Create a Launch Configuration:
+     - Use Nginx Golden AMI.
+     - Update `proxy_pass` rules in `nginx.conf` and reload the Nginx service.
+     - Configure security groups to allow port 22 from Bastion Host and port 80 from the public NLB.
+   - Set up an Auto Scaling Group.
 
 ## Application Deployment
 
-1. Artifact deployment taken care by User Data script during  Application tier EC2 instance launch process.
-2. Login to MySQL database from Application Server using MySQL CLI client and create database and table schema to store the user login data (Instructions are update in README.md file in the GitHub repo)
+1. The deployment of artifacts is handled by user data scripts during the launch of EC2 instances in the application tier.
+2. Log into the MySQL database from the application server using MySQL CLI and create the database and table schema to store user login data (as described in the README.md file in the GitHub repo).
 
 ## Post-Deployment
 
-1. Configure Cronjob to push the Tomcat Application log data to S3 bucket and also rotate the log data to remove the log data on the server after the data pushed to S3 Bucket.
-2. Configure Cloudwatch alarms to send E-Mail notification when database connections are more than 100 threshold.
+1. Configure a Cron job to push Tomcat application logs to an S3 bucket and rotate logs by deleting them from the server after upload.
+2. Set up CloudWatch alarms to send email notifications if database connections exceed 100.
 
 ## Validation
 
-1. Verify you as an administrator able to login to EC2 instances from session manager & from Bastion Host.
-2. Verify if you as an end user able to access application from public internet browser.
+1. Ensure administrators can log into EC2 instances via the session manager and Bastion Host.
+2. Verify that end-users can access the application from a public internet browser.
 
-# Hit the Star! ⭐
+## Final Note
 
-***If you are planning to use this repo for learning, please hit the star. Thanks!***
+If you find this repository useful for learning, please give it a star on GitHub. Thank you!
 
-#### Author by [Harshhaa Reddy](https://github.com/NotHarshhaa)
+### Authored by [Harshhaa Reddy](https://github.com/NotHarshhaa)

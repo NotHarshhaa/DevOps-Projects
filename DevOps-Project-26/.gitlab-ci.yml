@@ -1,0 +1,54 @@
+image:
+  name: registry.gitlab.com/gitlab-org/gitlab-build-images:terraform  # Docker image with Terraform installed
+  entrypoint:
+    - '/usr/bin/env'
+    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'  # Setting the PATH environment variable
+
+variables:
+  TF_VAR_gitlab_token: ${GITLAB_ACCESS_TOKEN}  # Setting Terraform variable for GitLab token
+  AWS_ACCESS_KEY_ID: ${MY_AWS_KEY}  # Setting AWS access key ID
+  AWS_SECRET_ACCESS_KEY: ${MY_AWS_ACCESS_KEY}  # Setting AWS secret access key
+  AWS_DEFAULT_REGION: "us-east-1"  # Setting AWS region
+
+cache:
+  paths:
+    - .terraform  # Caching Terraform plugins and modules
+
+before_script:
+  - terraform --version  # Output Terraform version for visibility
+  - terraform init -backend-config="tfstate.config"  -migrate-state # Initialize Terraform with backend configuration
+
+stages:
+  - validate  # Stage to validate Terraform configurations
+  - plan      # Stage to generate Terraform execution plan
+  - apply     # Stage to apply Terraform changes
+  - destroy   # Stage to destroy Terraform resources
+
+validate:
+  stage: validate
+  script:
+    - terraform validate  # Validate Terraform configurations
+
+plan:
+  stage: plan
+  script:
+    - terraform plan -out="planfile"  # Generate Terraform execution plan and save to planfile
+  dependencies:
+    - validate  # Dependency on 'validate' stage to run before 'plan'
+  artifacts:
+    paths:
+      - planfile  # Publish 'planfile' as an artifact for later stages
+
+apply:
+  stage: apply
+  script:
+    - terraform apply -input=false "planfile"  # Apply Terraform changes using planfile
+  dependencies:
+    - plan  # Dependency on 'plan' stage to run before 'apply'
+  when: manual  # Manually trigger the 'apply' stage to execute
+
+destroy:
+  stage: destroy
+  script:
+    - terraform destroy --auto-approve  # Destroy Terraform resources automatically
+  when: manual  # Manually trigger the 'destroy' stage to execute

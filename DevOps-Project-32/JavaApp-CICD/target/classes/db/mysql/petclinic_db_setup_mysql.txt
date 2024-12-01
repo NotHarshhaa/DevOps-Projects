@@ -1,0 +1,23 @@
+================================================================================
+===        Spring PetClinic sample application - MySQL Configuration         ===
+================================================================================
+
+@author Sam Brannen
+@author Costin Leau
+
+--------------------------------------------------------------------------------
+
+1) Download and install the MySQL database (e.g., MySQL Community Server 8.0.x),
+   which can be found here: http://dev.mysql.com/downloads/mysql/
+   Alternatively, you may use the official MySQL docker image. Refer to the
+   README.md for the Docker command line.
+
+2) Dependency for Connector/J, the MySQL JDBC driver (e.g., Connector/J 8.0.x) is
+   included in Petclinic pom.xml file. See the MySQL maven profile.
+   Alternatively, download Connector/J JDBC driver from here:
+   https://dev.mysql.com/downloads/connector/j/
+   and copy the MySQL JDBC driver JAR file (e.g., mysql-connector-java-0.0.19-bin.jar).
+
+3) Change connection parameters into the MySQL profile of the pom.xml.
+   Build and starth the web app with the MySQL profile:
+   ./mvnw jetty:run-war -P MySQL

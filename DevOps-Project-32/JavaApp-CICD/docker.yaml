@@ -1,0 +1,35 @@
+- name: Install Docker on Ubuntu
+  hosts: local  # Replace with the hostname or IP address of your target server
+  become: yes  # Run tasks with sudo privileges
+
+  tasks:
+    - name: Update apt package cache
+      apt:
+        update_cache: yes
+
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present    
+        
+    - name: Build Docker Image
+      command: docker build -t petclinic7 .
+      args:
+        chdir: /var/lib/jenkins/workspace/Ansible/
+
+    - name: tag image
+      command: docker tag petclinic7:latest sevenajay/petclinic7:latest
+
+    - name: Log in to Docker Hub
+      docker_login:
+        registry_url: https://index.docker.io/v1/
+        username: sevenajay
+        password: dckr_pat_n3rrKF4kgVcDuAxxxxxxxg6eg
+      register: docker_login_result  
+
+    - name: Push image
+      command: docker push sevenajay/petclinic7:latest
+
+    - name: Run container
+      command: docker run -d --name pet1 -p 8081:8080 sevenajay/petclinic7:latest
+      

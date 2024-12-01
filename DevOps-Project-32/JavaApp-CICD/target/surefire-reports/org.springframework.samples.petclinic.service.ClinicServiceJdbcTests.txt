@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: org.springframework.samples.petclinic.service.ClinicServiceJdbcTests
+-------------------------------------------------------------------------------
+Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.071 s - in org.springframework.samples.petclinic.service.ClinicServiceJdbcTests

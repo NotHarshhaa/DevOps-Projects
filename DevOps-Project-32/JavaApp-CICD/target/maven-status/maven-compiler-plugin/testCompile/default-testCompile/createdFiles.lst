@@ -1,0 +1,13 @@
+org\springframework\samples\petclinic\web\PetTypeFormatterTests$1.class
+org\springframework\samples\petclinic\service\AbstractClinicServiceTests.class
+org\springframework\samples\petclinic\web\VetControllerTests.class
+org\springframework\samples\petclinic\model\ValidatorTests.class
+org\springframework\samples\petclinic\web\VisitControllerTests.class
+org\springframework\samples\petclinic\service\ClinicServiceJpaTests.class
+org\springframework\samples\petclinic\web\CrashControllerTests.class
+org\springframework\samples\petclinic\web\PetControllerTests.class
+org\springframework\samples\petclinic\web\PetTypeFormatterTests.class
+org\springframework\samples\petclinic\service\ClinicServiceJdbcTests.class
+org\springframework\samples\petclinic\web\PetTypeFormatterTests$2.class
+org\springframework\samples\petclinic\service\ClinicServiceSpringDataJpaTests.class
+org\springframework\samples\petclinic\web\OwnerControllerTests.class

@@ -1,0 +1,432 @@
+<?xml version="1.0"?>
+<!--
+
+       Copyright 2010-2023 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          https://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.mybatis</groupId>
+    <artifactId>mybatis-parent</artifactId>
+    <version>39</version>
+    <relativePath />
+  </parent>
+
+  <groupId>org.mybatis</groupId>
+  <artifactId>jpetstore</artifactId>
+  <version>6.1.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+
+  <name>JPetStore Demo 6</name>
+  <url>http://www.mybatis.org</url>
+
+  <scm>
+    <url>http://github.com/mybatis/jpetstore-6</url>
+    <connection>scm:git:ssh://github.com/mybatis/jpetstore-6.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/mybatis/jpetstore-6.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+  <issueManagement>
+    <system>GitHub Issue Management</system>
+    <url>https://github.com/mybatis/jpetstore-6/issues</url>
+  </issueManagement>
+  <ciManagement>
+    <system>GitHub Actions</system>
+    <url>https://github.com/mybatis/jpetstore-6/actions</url>
+  </ciManagement>
+  <distributionManagement>
+    <site>
+      <id>gh-pages</id>
+      <name>Mybatis GitHub Pages</name>
+      <url>git:ssh://git@github.com/mybatis/jpetstore-6.git?gh-pages#</url>
+    </site>
+  </distributionManagement>
+
+  <dependencies>
+    
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis</artifactId>
+      <version>3.5.13</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis-spring</artifactId>
+      <version>2.1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>net.sourceforge.stripes</groupId>
+      <artifactId>stripes</artifactId>
+      <version>1.6.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>log4j</groupId>
+          <artifactId>log4j</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.taglibs</groupId>
+      <artifactId>taglibs-standard-spec</artifactId>
+      <version>1.2.5</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.taglibs</groupId>
+      <artifactId>taglibs-standard-impl</artifactId>
+      <version>1.2.5</version>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.servlet.jsp</groupId>
+      <artifactId>jakarta.servlet.jsp-api</artifactId>
+      <version>2.3.6</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <version>4.0.4</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>2.0.9</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>2.0.9</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <version>${hsqldb.version}</version>
+      <classifier>jdk8</classifier>
+    </dependency>
+
+    <!-- Test dependencies -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.10.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>${mockito.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-junit-jupiter</artifactId>
+      <version>${mockito.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>${assertj.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.codeborne</groupId>
+      <artifactId>selenide</artifactId>
+      <version>6.19.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>htmlunit-driver</artifactId>
+      <version>4.13.0</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>${spring.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>jpetstore</finalName>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>3.4.0</version>
+          <configuration>
+            <archive>
+              <manifestEntries>
+                <Dependencies>jdk.unsupported</Dependencies>
+              </manifestEntries>
+            </archive>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>3.1.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <configuration>
+            <locales>en,es,ja,ko</locales>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <configuration>
+            <overwrite>true</overwrite>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.cargo</groupId>
+          <artifactId>cargo-maven3-plugin</artifactId>
+          <version>${cargo-maven3-plugin.version}</version>
+          <configuration>
+            <container>
+              <containerId>${cargo.maven.containerId}</containerId>
+              <zipUrlInstaller>
+                <url>${cargo.maven.containerUrl}</url>
+              </zipUrlInstaller>
+            </container>
+            <daemon>
+              <properties>
+                <cargo.daemon.url>http://localhost:18000</cargo.daemon.url>
+                <cargo.daemon.handleid>${project.artifactId}</cargo.daemon.handleid>
+              </properties>
+            </daemon>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.cargo</groupId>
+        <artifactId>cargo-maven3-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>start-container</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>start</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>stop-container</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>stop</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <repositories>
+    <repository>
+      <id>sonatype-oss-snapshots</id>
+      <name>Sonatype OSS Snapshots Repository</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>sonatype-oss-snapshots</id>
+      <name>Sonatype OSS Snapshots Repository</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <properties>
+    <cargo.maven.containerId>tomcat${tomcat.major-version}x</cargo.maven.containerId>
+    <cargo.maven.containerUrl>https://archive.apache.org/dist/tomcat/tomcat-${tomcat.major-version}/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}.zip</cargo.maven.containerUrl>
+    <tomcat.major-version />
+    <tomcat.version />
+
+    <surefire.version>3.0.0-M7</surefire.version>
+    <cargo-maven3-plugin.version>1.10.10</cargo-maven3-plugin.version>
+    <clirr.comparisonVersion>6.0.2</clirr.comparisonVersion>
+
+    <spring.version>5.3.30</spring.version>
+    <assertj.version>3.24.2</assertj.version>
+    <mockito.version>5.6.0</mockito.version>
+    <hsqldb.version>2.7.2</hsqldb.version>
+    <module.name>org.mybatis.jpetstore</module.name>
+
+    <!-- Reproducible Builds -->
+    <project.build.outputTimestamp>1670877034</project.build.outputTimestamp>
+  </properties>
+
+  <profiles>
+    <!-- Profiles for Application Server -->
+    <profile>
+      <id>tomcat90</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <tomcat.major-version>9</tomcat.major-version>
+        <tomcat.version>9.0.70</tomcat.version>
+      </properties>
+    </profile>
+    <profile>
+      <id>tomcat85</id>
+      <properties>
+        <tomcat.major-version>8</tomcat.major-version>
+        <tomcat.version>8.5.84</tomcat.version>
+      </properties>
+    </profile>
+    <profile>
+      <id>tomee80</id>
+      <properties>
+        <tomee.major-version>8</tomee.major-version>
+        <tomee.version>8.0.13</tomee.version>
+        <cargo.maven.containerId>tomee${tomee.major-version}x</cargo.maven.containerId>
+        <cargo.maven.containerUrl>https://repo1.maven.org/maven2/org/apache/tomee/apache-tomee/${tomee.version}/apache-tomee-${tomee.version}-plume.zip</cargo.maven.containerUrl>
+      </properties>
+    </profile>
+    <profile>
+      <id>tomee71</id>
+      <properties>
+        <tomee.major-version>7</tomee.major-version>
+        <tomee.version>7.1.4</tomee.version>
+        <cargo.maven.containerId>tomee${tomee.major-version}x</cargo.maven.containerId>
+        <cargo.maven.containerUrl>https://repo1.maven.org/maven2/org/apache/tomee/apache-tomee/${tomee.version}/apache-tomee-${tomee.version}-plume.zip</cargo.maven.containerUrl>
+      </properties>
+    </profile>
+    <profile>
+      <id>wildfly26</id>
+      <properties>
+        <wildfly.major-version>26</wildfly.major-version>
+        <wildfly.version>26.1.2.Final</wildfly.version>
+        <cargo.maven.containerId>wildfly${wildfly.major-version}x</cargo.maven.containerId>
+        <cargo.maven.containerUrl>https://github.com/wildfly/wildfly/releases/download/${wildfly.version}/wildfly-${wildfly.version}.zip</cargo.maven.containerUrl>
+      </properties>
+    </profile>
+    <profile>
+      <id>wildfly13</id>
+      <properties>
+        <wildfly.major-version>13</wildfly.major-version>
+        <wildfly.version>13.0.0.Final</wildfly.version>
+        <cargo.maven.containerId>wildfly${wildfly.major-version}x</cargo.maven.containerId>
+        <cargo.maven.containerUrl>https://download.jboss.org/wildfly/${wildfly.version}/wildfly-${wildfly.version}.zip</cargo.maven.containerUrl>
+      </properties>
+    </profile>
+    <profile>
+      <id>liberty-ee8</id>
+      <properties>
+        <liberty.version>22.0.0.12</liberty.version>
+        <cargo.maven.containerId>liberty</cargo.maven.containerId>
+        <cargo.maven.containerUrl>https://repo1.maven.org/maven2/com/ibm/websphere/appserver/runtime/wlp-javaee8/${liberty.version}/wlp-javaee8-${liberty.version}.zip</cargo.maven.containerUrl>
+      </properties>
+    </profile>
+    <profile>
+      <id>liberty-ee7</id>
+      <properties>
+        <liberty.version>22.0.0.12</liberty.version>
+        <cargo.maven.containerId>liberty</cargo.maven.containerId>
+        <cargo.maven.containerUrl>https://repo1.maven.org/maven2/com/ibm/websphere/appserver/runtime/wlp-javaee7/${liberty.version}/wlp-javaee7-${liberty.version}.zip</cargo.maven.containerUrl>
+      </properties>
+    </profile>
+    <profile>
+      <id>jetty</id>
+      <properties>
+        <jetty.major-version>9</jetty.major-version>
+        <jetty.version>9.4.50.v20221201</jetty.version>
+        <cargo.maven.containerId>jetty${jetty.major-version}x</cargo.maven.containerId>
+        <cargo.maven.containerUrl>https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/${jetty.version}/jetty-distribution-${jetty.version}.tar.gz</cargo.maven.containerUrl>
+      </properties>
+    </profile>
+    <profile>
+      <id>glassfish5</id>
+      <properties>
+        <glassfish.major-version>5</glassfish.major-version>
+        <glassfish.version>5.1.0</glassfish.version>
+        <cargo.maven.containerId>glassfish${glassfish.major-version}x</cargo.maven.containerId>
+        <cargo.maven.containerUrl>https://repo.maven.apache.org/maven2/org/glassfish/main/distributions/glassfish/${glassfish.version}/glassfish-${glassfish.version}.zip</cargo.maven.containerUrl>
+      </properties>
+    </profile>
+    <profile>
+      <id>glassfish4</id>
+      <properties>
+        <glassfish.major-version>4</glassfish.major-version>
+        <glassfish.version>4.1.2</glassfish.version>
+        <cargo.maven.containerId>glassfish${glassfish.major-version}x</cargo.maven.containerId>
+        <cargo.maven.containerUrl>https://download.java.net/glassfish/${glassfish.version}/release/glassfish-${glassfish.version}.zip</cargo.maven.containerUrl>
+      </properties>
+    </profile>
+    <profile>
+      <id>resin</id>
+      <properties>
+        <resin.major-version>4</resin.major-version>
+        <resin.version>4.0.66</resin.version>
+        <cargo.maven.containerId>resin${resin.major-version}x</cargo.maven.containerId>
+        <cargo.maven.containerUrl>https://www.caucho.com/download/resin-${resin.version}.zip</cargo.maven.containerUrl>
+      </properties>
+    </profile>
+  </profiles>
+
+</project>

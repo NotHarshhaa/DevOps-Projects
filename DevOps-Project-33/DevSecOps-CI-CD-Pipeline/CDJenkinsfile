@@ -1,0 +1,35 @@
+pipeline{
+    agent any
+    stages{
+        stage ('WorkSpace CleanUp'){
+            steps{
+                cleanWs()
+            }
+        }
+        stage ('checkout scm') {
+            steps {
+                git 'https://github.com/priyanshu-bhatt/DevSecOps-CI-CD-Pipeline.git'
+            }
+        }
+        stage('K8s'){
+            steps{
+                script{
+                    withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'k8s', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
+                        sh 'kubectl apply -f deployment.yaml'
+                    }
+                }
+            }
+    }
+}
+    post {
+     always {
+        emailext attachLog: true,
+            subject: "'${currentBuild.result}'",
+            body: "Project: ${env.JOB_NAME}<br/>" +
+                "Build Number: ${env.BUILD_NUMBER}<br/>" +
+                "URL: ${env.BUILD_URL}<br/>",
+            to: 'priyansh12t@gmail.com',
+            attachmentsPattern: 'trivy.txt'
+        }
+    }
+}

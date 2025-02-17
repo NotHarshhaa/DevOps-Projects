@@ -86,6 +86,20 @@ _*Welcome to the ultimate resource for **learning DevOps through hands-on projec
 
 **If you find this repository helpful and plan to use it for learning, please give it a star. Your support is appreciated!**
 
-### Author
+## 🛠️ Author & Community  
 
-![Author Image](https://imgur.com/f4rBnpK.gif)
+This project is crafted by **[Harshhaa](https://github.com/NotHarshhaa)** 💡.  
+I’d love to hear your feedback! Feel free to share your thoughts.  
+
+📧 **Connect with me:**
+
+- **GitHub**: [@NotHarshhaa](https://github.com/NotHarshhaa)  
+- **Blog**: [ProDevOpsGuy](https://blog.prodevopsguy.xyz)  
+- **Telegram Community**: [Join Here](https://t.me/prodevopsguy)  
+- **LinkedIn**: [Harshhaa Vardhan Reddy](https://www.linkedin.com/in/harshhaa-vardhan-reddy/)  
+
+---
+
+### 📢 Stay Connected  
+
+![Follow Me](https://imgur.com/2j7GSPs.png)

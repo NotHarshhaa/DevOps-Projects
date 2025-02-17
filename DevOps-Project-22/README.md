@@ -16,7 +16,7 @@ I have a NodeJS Cloud Native API which I have used to deploy in this architectur
 
 The aim of this project is to deploy API to AWS Public cloud using only serverless components.
 
-### API code is available [here](https://github.com/NotHarshhaa/DevOps-Projects/tree/master/DevOps-Project-22/serverless-api).
+### API code is available [here](https://github.com/NotHarshhaa/DevOps-Projects/tree/master/DevOps-Project-22/serverless-api)
 
 Following are the serverless services used in this project:
 
@@ -36,24 +36,28 @@ Lambda is launched in the VPC private subnet. The access to secrets manager from
 
 Terraform is an open-source infrastructure as code software tool that enables you to safely and predictably create, change, and improve infrastructure.
 
-## Setting up Infrastructure using Terraform 
- 
+## Setting up Infrastructure using Terraform
+
 The terraform init command initializes a working directory containing Terraform configuration files:
+
 ```
 terraform init
 ```
 
 The terraform plan command creates an execution plan, which lets you preview the changes that Terraform plans to make to your infrastructure:
+
 ```
 terraform plan
 ```
 
 The terraform apply command executes the actions proposed in a Terraform plan to create, update, or destroy infrastructure:
+
 ```
 terraform apply
 ```
 
 The terraform destroy command is a convenient way to destroy all remote objects managed by a particular Terraform configuration:
+
 ```
 terraform destroy
 ```
@@ -111,7 +115,7 @@ A **dedicated IAM user** with relevant permissions can be created for Github Act
 
 This Cloud Native API is designed to run on AWS Infrastructure while making use of AWS serverless services like Secrets Manager, Lambda functions, API Gateway, etc.
 
-## Prerequisites for running the application locally:
+## Prerequisites for running the application locally
 
 ```javascript
 // install dependencies
@@ -235,12 +239,26 @@ PUT /v1/product/{productId}
   "quantity": 1
 }
 ```
+
 ---
 
-# Thank you
+## 🛠️ Author & Community  
 
-Thank you for taking the time to work on this tutorial/labs. Let me know what you thought!
+This project is crafted by **[Harshhaa](https://github.com/NotHarshhaa)** 💡.  
+I’d love to hear your feedback! Feel free to share your thoughts.  
 
-#### Author by [Harshhaa Reddy](https://github.com/NotHarshhaa)
+📧 **Connect with me:**
 
-### Ensure to follow me on GitHub. Please star/share this repository!
+- **GitHub**: [@NotHarshhaa](https://github.com/NotHarshhaa)
+- **Blog**: [ProDevOpsGuy](https://blog.prodevopsguy.xyz)  
+- **Telegram Community**: [Join Here](https://t.me/prodevopsguy)  
+
+---
+
+## ⭐ Support the Project  
+
+If you found this helpful, consider **starring** ⭐ the repository and sharing it with your network! 🚀  
+
+### 📢 Stay Connected  
+
+![Follow Me](https://imgur.com/2j7GSPs.png)

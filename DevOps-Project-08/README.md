@@ -181,10 +181,24 @@ curl a06aa56b81f5741268daca84dca6b4f8-694631959.us-east-1.elb.amazonaws.com:80
 
 ![Alt text](image-4.png)
 
-# Thank you
+## 🛠️ Author & Community  
 
-Thank you for taking the time to work on this tutorial/labs. Let me know what you thought!
+This project is crafted by **[Harshhaa](https://github.com/NotHarshhaa)** 💡.  
+I’d love to hear your feedback! Feel free to share your thoughts.  
 
-#### Author by [Harshhaa Reddy](https://github.com/NotHarshhaa)
+📧 **Connect with me:**
 
-Ensure to follow me on GitHub. Please star/share this repository!
+- **GitHub**: [@NotHarshhaa](https://github.com/NotHarshhaa)  
+- **Blog**: [ProDevOpsGuy](https://blog.prodevopsguy.xyz)  
+- **Telegram Community**: [Join Here](https://t.me/prodevopsguy)  
+- **LinkedIn**: [Harshhaa Vardhan Reddy](https://www.linkedin.com/in/harshhaa-vardhan-reddy/)  
+
+---
+
+## ⭐ Support the Project  
+
+If you found this helpful, consider **starring** ⭐ the repository and sharing it with your network! 🚀  
+
+### 📢 Stay Connected  
+
+![Follow Me](https://imgur.com/2j7GSPs.png)

@@ -514,8 +514,24 @@ Also, we if access our new dockerized app from our browser on port 8087, the res
 
 **Happy Learning!**
 
-# Hit the Star! ⭐
+## 🛠️ Author & Community  
 
-***If you are planning to use this repo for learning, please hit the star. Thanks!**_
+This project is crafted by **[Harshhaa](https://github.com/NotHarshhaa)** 💡.  
+I’d love to hear your feedback! Feel free to share your thoughts.  
 
-#### Author by [Harshhaa Reddy](https://github.com/NotHarshhaa)
+📧 **Connect with me:**
+
+- **GitHub**: [@NotHarshhaa](https://github.com/NotHarshhaa)  
+- **Blog**: [ProDevOpsGuy](https://blog.prodevopsguy.xyz)  
+- **Telegram Community**: [Join Here](https://t.me/prodevopsguy)  
+- **LinkedIn**: [Harshhaa Vardhan Reddy](https://www.linkedin.com/in/harshhaa-vardhan-reddy/)  
+
+---
+
+## ⭐ Support the Project  
+
+If you found this helpful, consider **starring** ⭐ the repository and sharing it with your network! 🚀  
+
+### 📢 Stay Connected  
+
+![Follow Me](https://imgur.com/2j7GSPs.png)  

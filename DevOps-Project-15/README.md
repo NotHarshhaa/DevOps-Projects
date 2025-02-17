@@ -269,10 +269,23 @@ And pay the amount .
 
 ***Congratulations… Your Order has been Successfully placed.. :)***
 
-# Thank you
+## 🛠️ Author & Community  
 
-Thank you for taking the time to work on this tutorial/labs. Let me know what you thought!
+This project is crafted by **[Harshhaa](https://github.com/NotHarshhaa)** 💡.  
+I’d love to hear your feedback! Feel free to share your thoughts.  
 
-#### Author by [Harshhaa Reddy](https://github.com/NotHarshhaa)
+📧 **Connect with me:**
 
-### Ensure to follow me on GitHub. Please star/share this repository
+- **GitHub**: [@NotHarshhaa](https://github.com/NotHarshhaa)
+- **Blog**: [ProDevOpsGuy](https://blog.prodevopsguy.xyz)  
+- **Telegram Community**: [Join Here](https://t.me/prodevopsguy)  
+
+---
+
+## ⭐ Support the Project  
+
+If you found this helpful, consider **starring** ⭐ the repository and sharing it with your network! 🚀  
+
+### 📢 Stay Connected  
+
+![Follow Me](https://imgur.com/2j7GSPs.png)

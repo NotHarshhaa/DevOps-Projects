@@ -1,6 +1,6 @@
 # Real-World DevOps/Cloud Projects For Learning by ProDevOpsGuy Tech Community ♐
 
-![DevOps-Projects](https://imgur.com/5czbYqE.png)
+![DevOps-Projects](https://imgur.com/tlMOmn0.png)
 
 ## DevOps Real World Projects for Aspiring DevOps Engineers [Beginner to Advanced]
 

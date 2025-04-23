@@ -1,13 +1,21 @@
 {
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Effect": "Allow",
-        "Principal": {
-          "Service": "vpc-flow-logs.amazonaws.com"
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowVPCAssumeRoleForFlowLogs",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "vpc-flow-logs.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole",
+      "Condition": {
+        "StringEquals": {
+          "aws:SourceAccount": "123456789012"
         },
-        "Action": "sts:AssumeRole"
+        "ArnLike": {
+          "aws:SourceArn": "arn:aws:logs:us-west-2:123456789012:*"
+        }
       }
-    ]
-  }
-  
+    }
+  ]
+}

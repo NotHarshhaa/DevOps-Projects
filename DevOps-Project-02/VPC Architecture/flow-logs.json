@@ -1,17 +1,19 @@
 {
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Effect": "Allow",
-        "Action": [
-          "logs:CreateLogGroup",
-          "logs:CreateLogStream",
-          "logs:PutLogEvents",
-          "logs:DescribeLogGroups",
-          "logs:DescribeLogStreams"
-        ],
-        "Resource": "*"
-      }
-    ]
-  }   
-  
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowVPCFlowLogsToCloudWatch",
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents",
+        "logs:DescribeLogGroups",
+        "logs:DescribeLogStreams"
+      ],
+      "Resource": [
+        "arn:aws:logs:us-west-2:123456789012:log-group:/aws/vpc/flowlogs*"
+      ]
+    }
+  ]
+}

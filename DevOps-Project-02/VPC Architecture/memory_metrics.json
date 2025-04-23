@@ -1,16 +1,20 @@
 {
-    "metrics":{
-       "metrics_collected":{
-          "mem":{
-             "measurement":[
-                "mem_used_percent"
-             ],
-             "metrics_collection_interval":60
-          }
-       },
-       "append_dimensions": {
-         "InstanceId": "${aws:InstanceId}"
-       }
-    }
+   "Version": "2012-10-17",
+   "Statement": [
+     {
+       "Sid": "AllowMemoryMetricsToCloudWatch",
+       "Effect": "Allow",
+       "Action": [
+         "logs:CreateLogGroup",
+         "logs:CreateLogStream",
+         "logs:PutLogEvents",
+         "logs:DescribeLogGroups",
+         "logs:DescribeLogStreams"
+       ],
+       "Resource": [
+         "arn:aws:logs:us-west-2:123456789012:log-group:/aws/memory/metrics*"
+       ]
+     }
+   ]
  }
  

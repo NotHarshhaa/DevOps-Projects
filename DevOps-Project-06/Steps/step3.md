@@ -1,129 +1,213 @@
-# About Step-03
+# Step-03: Configuring Jenkins Master and Agents Using Ansible
 
-Configuring Jenkins Master and Agent nodes using Ansible involves defining Ansible playbooks to automate the installation and configuration of Jenkins components. Here's a step-by-step guide on how you might achieve this:
+In this step, we'll automate the **installation** and **configuration** of a **Jenkins Master** and multiple **Jenkins Agent nodes** using **Ansible Playbooks**.
 
-**Note:** Before you begin, ensure you have Ansible installed on your machine and have SSH access to the target nodes (Jenkins Master and Agent nodes).
+---
 
-1. **Create Ansible Playbooks:**
+## Prerequisites
 
-   Create two Ansible playbooks: one for configuring the Jenkins Master and another for configuring Jenkins Agents.
+- Ansible installed on the **Ansible Controller** machine.
+- Passwordless SSH access configured between the Controller and all Jenkins nodes (Master + Agents).
 
-   **Jenkins Master Playbook (`jenkins-master.yml`):**
+---
 
-   ```yaml
-   ---
-   - name: Install and configure Jenkins Master
-     hosts: jenkins-master
-     tasks:
-       - name: Install Java
-         apt:
-           name: openjdk-11-jdk
-           state: present
+## Step-by-Step Guide
 
-       - name: Add Jenkins APT key
-         apt_key:
-           url: https://pkg.jenkins.io/debian/jenkins.io.key
-           state: present
+### 1. 🛠️ Create Ansible Playbooks
 
-       - name: Add Jenkins APT repository
-         apt_repository:
-           repo: "deb http://pkg.jenkins.io/debian binary/"
-           state: present
+We'll create two playbooks:
 
-       - name: Install Jenkins
-         apt:
-           name: jenkins
-           state: present
+- One to configure the **Jenkins Master**.
+- One to configure the **Jenkins Agents**.
 
-       - name: Start Jenkins service
-         systemd:
-           name: jenkins
-           enabled: yes
-           state: started
-   ```
+---
 
-   **Jenkins Agent Playbook (`jenkins-agents.yml`):**
+#### 📄 Jenkins Master Playbook (`jenkins-master.yml`)
 
-   ```yaml
-   ---
-   - name: Install and configure Jenkins Agents
-     hosts: jenkins-agents
-     tasks:
-       - name: Install Java
-         apt:
-           name: openjdk-11-jdk
-           state: present
+This playbook installs Java, Jenkins, and starts the Jenkins service.
 
-       - name: Download Jenkins Agent JAR
-         get_url:
-           url: http://<jenkins-master>:<jenkins-port>/jnlpJars/agent.jar
-           dest: /home/{{ ansible_user }}/agent.jar
-           mode: 0755
+```yaml
+---
+- name: Install and configure Jenkins Master
+  hosts: jenkins-master
+  become: yes
+  tasks:
+    - name: Install Java
+      apt:
+        name: openjdk-11-jdk
+        state: present
+        update_cache: yes
 
-       - name: Configure Jenkins Agent as a service
-         systemd:
-           name: jenkins-agent
-           enabled: yes
-           state: started
-           daemon_reload: yes
-           unit_content: |
-             [Unit]
-             Description=Jenkins Agent
-             After=network.target
+    - name: Add Jenkins APT key
+      apt_key:
+        url: https://pkg.jenkins.io/debian/jenkins.io.key
+        state: present
 
-             [Service]
-             User={{ ansible_user }}
-             ExecStart=/usr/bin/java -jar /home/{{ ansible_user }}/agent.jar -jnlpUrl http://<jenkins-master>:<jenkins-port>/computer/{{ inventory_hostname }}/slave-agent.jnlp
-             Restart=always
+    - name: Add Jenkins APT repository
+      apt_repository:
+        repo: "deb http://pkg.jenkins.io/debian binary/"
+        state: present
 
-             [Install]
-             WantedBy=multi-user.target
-   ```
+    - name: Install Jenkins
+      apt:
+        name: jenkins
+        state: present
 
-2. **Inventory File:**
+    - name: Ensure Jenkins service is started and enabled
+      systemd:
+        name: jenkins
+        enabled: yes
+        state: started
+```
 
-   Create an Ansible inventory file (`inventory.ini`) to define your target nodes:
+---
 
-   ```plaintext
-   [jenkins-master]
-   jenkins-master-hostname-or-ip
+#### 📄 Jenkins Agent Playbook (`jenkins-agents.yml`)
 
-   [jenkins-agents]
-   agent1 ansible_host=agent1-hostname-or-ip
-   agent2 ansible_host=agent2-hostname-or-ip
-   # Add more agents as needed
-   ```
+This playbook installs Java, downloads the Jenkins Agent JAR, and sets up a systemd service for the agent.
 
-3. **Run Ansible Playbooks:**
+```yaml
+---
+- name: Install and configure Jenkins Agents
+  hosts: jenkins-agents
+  become: yes
+  tasks:
+    - name: Install Java
+      apt:
+        name: openjdk-11-jdk
+        state: present
+        update_cache: yes
 
-   Run the Ansible playbooks using the `ansible-playbook` command:
+    - name: Download Jenkins Agent JAR
+      get_url:
+        url: http://<jenkins-master-ip>:8080/jnlpJars/agent.jar
+        dest: /home/{{ ansible_user }}/agent.jar
+        mode: '0755'
 
-   ```bash
-   ansible-playbook -i inventory.ini jenkins-master.yml
-   ansible-playbook -i inventory.ini jenkins-agents.yml
-   ```
+    - name: Configure Jenkins Agent as a systemd service
+      copy:
+        dest: /etc/systemd/system/jenkins-agent.service
+        content: |
+          [Unit]
+          Description=Jenkins Agent
+          After=network.target
 
-4. **Configure Jenkins Master:**
+          [Service]
+          User={{ ansible_user }}
+          ExecStart=/usr/bin/java -jar /home/{{ ansible_user }}/agent.jar -jnlpUrl http://<jenkins-master-ip>:8080/computer/{{ inventory_hostname }}/slave-agent.jnlp
+          Restart=always
 
-   Access the Jenkins Master's web interface (`http://jenkins-master-hostname-or-ip:8080`) to complete the setup. You'll need to retrieve the initial admin password from the server and follow the setup wizard.
+          [Install]
+          WantedBy=multi-user.target
+      notify:
+        - Reload systemd
+        - Start jenkins-agent service
 
-5. **Configure Jenkins Agent as Maven Build Server:**
+  handlers:
+    - name: Reload systemd
+      command: systemctl daemon-reload
 
-   - In Jenkins, navigate to "Manage Jenkins" > "Manage Nodes and Clouds" > "New Node".
-   - Configure the Agent as follows:
-     - Node name: Choose a name for your agent.
-     - Remote root directory: Specify a directory on the agent where builds will be performed.
-     - Labels: Assign a label to the agent (e.g., "maven-build").
-     - Usage: Choose "Only build jobs with label expressions matching this node".
-     - Launch method: Choose "Launch agent by connecting it to the master".
-   - Save the configuration.
+    - name: Start jenkins-agent service
+      systemd:
+        name: jenkins-agent
+        enabled: yes
+        state: started
+```
 
-6. **Configure Jenkins Jobs:**
+> 🔥 **Important:**  
+> Replace `<jenkins-master-ip>` with the actual IP address of your Jenkins Master server.
 
-   Create or modify Jenkins jobs to use the Maven tool for builds. Configure the job's "Build Environment" to use the previously defined label ("maven-build") to ensure the job runs on the Maven Build agent.
+---
 
-7. **Testing:**
+### 2. 📜 Create the Ansible Inventory File (`inventory.ini`)
 
-   Test your Jenkins setup by running jobs on the Maven Build agent. Monitor the console output and verify that the build process is successful.
+Define your Master and Agent nodes:
 
-This outline provides a general approach to configuring Jenkins Master and Agent nodes using Ansible and setting up a Jenkins Agent as a Maven Build server. Adapt the steps to your specific environment and requirements.
+```ini
+[jenkins-master]
+jenkins-master ansible_host=<master_ip>
+
+[jenkins-agents]
+agent1 ansible_host=<agent1_ip>
+agent2 ansible_host=<agent2_ip>
+# Add more agents as needed
+```
+
+**Tip:**  
+You can also define specific SSH user or private key per host if needed.
+
+---
+
+### 3. 🚀 Run the Ansible Playbooks
+
+Execute the playbooks to configure Master and Agent nodes:
+
+```bash
+ansible-playbook -i inventory.ini jenkins-master.yml
+ansible-playbook -i inventory.ini jenkins-agents.yml
+```
+
+✅ This will install and configure Jenkins on all your nodes automatically.
+
+---
+
+### 4. 🌐 Access Jenkins Master Web UI
+
+- Open a browser and navigate to:
+
+  ```
+  http://<master_ip>:8080
+  ```
+
+- Retrieve the initial admin password:
+
+  ```bash
+  sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+  ```
+
+- Complete the **Jenkins Setup Wizard**.
+
+---
+
+### 5. ⚙️ Configure Jenkins Agents in Jenkins UI
+
+After Jenkins Master is ready:
+
+- Go to **Manage Jenkins** ➔ **Manage Nodes and Clouds** ➔ **New Node**.
+- Add a new node:
+  - **Node Name:** (e.g., agent1)
+  - **Remote root directory:** (e.g., `/home/<username>`)
+  - **Labels:** (e.g., `maven-build`, `linux`)
+  - **Usage:** "Only build jobs with label expressions matching this node"
+  - **Launch method:** "Launch agent by connecting it to the master"
+- Save and connect the agent.
+
+---
+
+### 6. 🛠️ Configure Jenkins Jobs for Maven Build
+
+- When creating or editing a job:
+  - Set the **Build Environment** to "Restrict where this project can be run".
+  - Enter the **label** you assigned to your Maven Agent (e.g., `maven-build`).
+
+✅ Your Jenkins job will now run on the appropriate agent!
+
+---
+
+### 7. 🧪 Testing
+
+- Trigger a build for a sample Maven project.
+- Verify that:
+  - The agent connects properly.
+  - The build completes successfully.
+  - Console logs show tasks running on the expected agent.
+
+---
+
+## Summary
+
+After completing Step-03:
+
+- Jenkins Master is installed and accessible via a browser.
+- Jenkins Agents are connected and ready for workloads.
+- Builds can be automatically dispatched to agents based on labels and configurations.

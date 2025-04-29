@@ -1,65 +1,155 @@
-# Implementation of the Entire Advanced CI/CD Pipeline with Major DevOps Tools
+# 🚀 Implementation of the Entire Advanced CI/CD Pipeline with Major DevOps Tools
 
-![devops](https://imgur.com/WcCpKVU.png)
+![DevOps Pipeline](https://imgur.com/WcCpKVU.png)
 
-### These are the steps I followed in the implementation of the entire CI/CD Pipeline
-
-1. [Provisioned the required infrastructure like VPC, Security Group, Ansible Controller Instance, Jenkins Master and Agent Instances using Terraform.](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step1.md#L1)
-
-2. [Configured SSH keys for password less authentication between Ansible Controller and Agent nodes.](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step2.md#L1)
-
-3. [Configured the Jenkins Master and Agent nodes using Ansible. Configured Jenkins Agent as the Maven Build server.](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step3.md#L1)
-
-4. [Added Jenkins Agent node's credentials in Jenkins Master to establish a connection between Jenkins Master and Agent nodes.](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step4.md#L1)
-
-5. [Added GitHub credentials to the Jenkins Master and created Multibranch Pipeline job.](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step5.md#L1)
-
-6. [Configured the Multibranch Pipeline job with GitHub Webhook Trigger with the help of Multibranch Scan Webhook Trigger Plugin.](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step6.md#L1)
-
-7. **SonarQube:**
-    1. [Generated an access token in SonarCloud and added SonarQube server credentials in Jenkins Master.](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step7.md#L3)
-    2. [Installed Sonarqube scanner plugin.](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step7.md#L64)
-    3. [Added Sonarqube server to the Jenkins Master in System section.](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step7.md#L100)
-    4. [Added Sonarqube scanner to the Jenkins Master in Tools section.](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step7.md#L140)
-    5. [Configured an organization and project in SonarCloud and wrote a sonar-project. properties file.](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step7.md#L174)
-    6. [Added sonarqube, unit tests and build stages in the Jenkinsfile.](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step7.md#L236)
-
-8. [Added JFrog credentials in the Jenkins Master and integrated JFrog artifactory with Jenkins by installing Artifactory plugin in Jenkins Master.](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step8.md#L1)
-
-9. [Created a Docker Image out of the jar file and committed that Docker Image into the Docker repository of the JFrog artifactory with the help of Docker Pipeline plugin. Added the Docker Build and Publish stage in Jenkinsfile.](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step9.md#L1)
-
-10. **EKS:**
-    1. [Provisioned the EKS cluster with Terraform.](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step10.md#L3)
-    2. [Installed kubectl in Jenkins Slave.](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step10.md#L69)
-    3. [Installed AWS CLI v2 in Jenkins Slave to connect with AWS account.](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step10.md#L125)
-    4. [Downloaded Kubernetes credentials and cluster configuration from the cluster using the command](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step10.md#L181)
-    5. `aws eks update-kubeconfig --region <region_name> --name <cluster_name>` 
-
-11. [Pulled the Docker Image from the JFrog artifactory using Kubernetes secret and deployed it in our EKS cluster using deployment resource and exposed it to access from outside using service resource under a particular namespace. Added the deployment stage in Jenkinsfile.](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step11.md#L1)
-
-12. [Added the Prometheus helm chart repository and implemented the cluster monitoring using Prometheus and Grafana.](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step12.md#L1) 
-    * Note: Changed the default service type of Prometheus and Grafana services from ClusterIP to LoadBalancer to access them from the browser.
+A comprehensive end-to-end CI/CD pipeline leveraging **Terraform**, **Ansible**, **Jenkins**, **SonarQube**, **JFrog**, **Docker**, **EKS**, **Prometheus**, and **Grafana**.
 
 ---
 
-## 🛠️ Author & Community  
+## 🧩 Pipeline Architecture Overview
 
-This project is crafted by **[Harshhaa](https://github.com/NotHarshhaa)** 💡.  
-I’d love to hear your feedback! Feel free to share your thoughts.  
+> Below is a step-by-step implementation breakdown of the complete DevOps CI/CD process.
 
-📧 **Connect with me:**
+<details>
+<summary><strong>🔧 Step 1: Infrastructure Provisioning (Terraform)</strong></summary>
 
-- **GitHub**: [@NotHarshhaa](https://github.com/NotHarshhaa)  
-- **Blog**: [ProDevOpsGuy](https://blog.prodevopsguy.xyz)  
-- **Telegram Community**: [Join Here](https://t.me/prodevopsguy)  
-- **LinkedIn**: [Harshhaa Vardhan Reddy](https://www.linkedin.com/in/harshhaa-vardhan-reddy/)  
+- Provisioned **VPC**, **Security Groups**, **Ansible Controller**, **Jenkins Master**, and **Agent Instances** using Terraform.  
+🔗 [Step Details](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step1.md#L1)
+
+</details>
+
+<details>
+<summary><strong>🔐 Step 2: SSH Configuration</strong></summary>
+
+- Set up password-less authentication between Ansible Controller and Agent nodes.  
+🔗 [Step Details](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step2.md#L1)
+
+</details>
+
+<details>
+<summary><strong>⚙️ Step 3: Jenkins Setup (Ansible)</strong></summary>
+
+- Configured Jenkins Master and Agent nodes.  
+- Agent configured as **Maven Build Server**.  
+🔗 [Step Details](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step3.md#L1)
+
+</details>
+
+<details>
+<summary><strong>🔗 Step 4: Jenkins Master-Agent Integration</strong></summary>
+
+- Connected Jenkins Master to Agent with credentials.  
+🔗 [Step Details](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step4.md#L1)
+
+</details>
+
+<details>
+<summary><strong>🌐 Step 5: GitHub Integration</strong></summary>
+
+- Added GitHub credentials.  
+- Created **Multibranch Pipeline Job**.  
+🔗 [Step Details](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step5.md#L1)
+
+</details>
+
+<details>
+<summary><strong>🚨 Step 6: Webhook Trigger Setup</strong></summary>
+
+- Configured GitHub webhook trigger using **Multibranch Scan Webhook Trigger Plugin**.  
+🔗 [Step Details](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step6.md#L1)
+
+</details>
+
+<details>
+<summary><strong>🧪 Step 7: SonarQube Integration</strong></summary>
+
+- Generated access token in SonarCloud.  
+- Installed SonarQube scanner plugin.  
+- Added SonarQube server and scanner to Jenkins.  
+- Configured `sonar-project.properties`.  
+- Added **code quality**, **unit test**, and **build** stages in `Jenkinsfile`.  
+🔗 [Step-by-step Setup](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step7.md#L3)
+
+</details>
+
+<details>
+<summary><strong>📦 Step 8: JFrog Artifactory Integration</strong></summary>
+
+- Configured JFrog credentials.  
+- Installed Artifactory plugin in Jenkins.  
+🔗 [Details](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step8.md#L1)
+
+</details>
+
+<details>
+<summary><strong>🐳 Step 9: Docker Image & Push to JFrog</strong></summary>
+
+- Built Docker image from `.jar`.  
+- Pushed to JFrog Artifactory using **Docker Pipeline Plugin**.  
+- Added **Docker Build & Publish** stage to Jenkinsfile.  
+🔗 [Details](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step9.md#L1)
+
+</details>
+
+<details>
+<summary><strong>☸️ Step 10: EKS Cluster Setup</strong></summary>
+
+- Created **EKS cluster** via Terraform.  
+- Installed `kubectl` and AWS CLI in Jenkins slave.  
+- Configured Kube credentials using:
+  ```
+  aws eks update-kubeconfig --region <region_name> --name <cluster_name>
+  ```
+
+🔗 [Details](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step10.md#L3)
+
+</details>
+
+<details>
+<summary><strong>🚀 Step 11: Kubernetes Deployment</strong></summary>
+
+- Pulled Docker image using Kubernetes secrets.  
+- Deployed it to EKS cluster using **Deployment** and **Service** resources.  
+- Exposed via LoadBalancer.  
+🔗 [Details](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step11.md#L1)
+
+</details>
+
+<details>
+<summary><strong>📊 Step 12: Monitoring (Prometheus & Grafana)</strong></summary>
+
+- Added Prometheus Helm repo.  
+- Enabled monitoring in EKS cluster.  
+- Changed Prometheus and Grafana services to `LoadBalancer` for browser access.  
+🔗 [Details](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/DevOps-Project-06/Steps/step12.md#L1)
+
+</details>
 
 ---
 
-## ⭐ Support the Project  
+## 👨‍💻 Author & Community
 
-If you found this helpful, consider **starring** ⭐ the repository and sharing it with your network! 🚀  
+This project is maintained by **[Harshhaa](https://github.com/NotHarshhaa)** 🚀
 
-### 📢 Stay Connected  
+### 💬 Connect with Me:
 
-![Follow Me](https://imgur.com/2j7GSPs.png)  
+- 🐙 **GitHub**: [@NotHarshhaa](https://github.com/NotHarshhaa)  
+- 📝 **Blog**: [ProDevOpsGuy](https://blog.prodevopsguy.xyz)  
+- 💬 **Telegram**: [Join Community](https://t.me/prodevopsguy)  
+- 👔 **LinkedIn**: [Harshhaa Vardhan Reddy](https://www.linkedin.com/in/harshhaa-vardhan-reddy/)
+
+---
+
+## ⭐ Support the Project
+
+If you found this helpful:
+
+- ⭐ Star this repo  
+- 🔁 Share it with your peers  
+- ✅ Follow for more DevOps content  
+
+---
+
+## 📢 Stay Updated
+
+![Follow Me](https://imgur.com/2j7GSPs.png)

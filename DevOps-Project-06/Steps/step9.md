@@ -1,6 +1,9 @@
-# About Step-09
+# Step-09: Build and Push Docker Image to Artifactory using Jenkins
 
-To create a Docker image from a JAR file, commit the image to a Docker repository in JFrog Artifactory using the Docker Pipeline plugin in Jenkins, you can follow this example Jenkinsfile:
+<details>
+<summary><strong>1. Example Jenkinsfile</strong></summary>
+
+<br/>
 
 ```groovy
 pipeline {
@@ -16,7 +19,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Build your project and generate the JAR file
-                sh 'mvn clean package' // Replace with your build command
+                sh 'mvn clean package' // Replace with your specific build command
             }
         }
 
@@ -38,28 +41,62 @@ pipeline {
 
     post {
         success {
-            // This block executes if the pipeline succeeds
             echo 'Pipeline succeeded!'
         }
 
         failure {
-            // This block executes if the pipeline fails
             echo 'Pipeline failed!'
         }
     }
 }
 ```
 
-Here's an explanation of the key sections:
+</details>
 
-1. **Build Docker Image:**
-   - The `docker.build` command creates a Docker image using the Dockerfile in the current directory ('.').
-   - Replace `"your-docker-image-name:${BUILD_NUMBER}"` with your desired image name and tag.
+---
 
-2. **Push Docker Image to Artifactory:**
-   - The `docker.withRegistry` block pushes the Docker image to your Artifactory repository.
-   - Replace `'https://your-artifactory-url'` with your Artifactory URL and `'your-artifactory-credentials-id'` with the ID of the Docker registry credentials added to Jenkins.
+<details>
+<summary><strong>2. Key Sections Explained</strong></summary>
 
-Remember to replace placeholders like `your-docker-image-name`, `https://your-artifactory-url`, and `your-artifactory-credentials-id` with actual values.
+<br/>
 
-This Jenkinsfile defines a Docker Pipeline with stages for building your project, creating a Docker image, and pushing it to the Artifactory Docker repository. Adjust the stages and commands as needed to match your project's structure and requirements.
+### Build Docker Image:
+- The `docker.build` command creates a Docker image using the Dockerfile in the current directory (`.`).
+- Naming convention: `"your-docker-image-name:${BUILD_NUMBER}"`.
+- **Replace** the image name with your project-specific naming convention.
+
+---
+
+### Push Docker Image to Artifactory:
+- The `docker.withRegistry` block handles:
+  - Authentication to your Artifactory Docker registry.
+  - Pushing the built Docker image.
+- **Important placeholders to replace:**
+  - `https://your-artifactory-url` ➔ Your Artifactory Docker registry URL.
+  - `your-artifactory-credentials-id` ➔ ID of the credentials stored in Jenkins.
+
+</details>
+
+---
+
+<details>
+<summary><strong>3. Important Notes</strong></summary>
+
+<br/>
+
+- **Credential Setup:**  
+  Ensure Jenkins has Docker registry credentials properly configured in "Manage Credentials."
+  
+- **Dockerfile Presence:**  
+  Your project root should contain a valid `Dockerfile`.
+
+- **Customize Build Commands:**  
+  Adjust `sh 'mvn clean package'` or other shell steps according to your technology stack (e.g., Gradle, npm, etc.).
+
+- **Security Tip:**  
+  Never hard-code sensitive information like access tokens directly inside the Jenkinsfile.
+
+- **Tagging Strategy:**  
+  Using `${BUILD_NUMBER}` automatically tags images uniquely for each build.
+
+</details>

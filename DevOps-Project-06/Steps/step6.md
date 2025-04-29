@@ -1,33 +1,94 @@
-# About Step-06
+# Step-06: Configure GitHub Webhook Trigger for Multibranch Pipeline in Jenkins
 
-To configure a Multibranch Pipeline job with a GitHub webhook trigger using the "Multibranch Scan Webhook Trigger" plugin in Jenkins, follow these steps:
+By setting up the **Multibranch Scan Webhook Trigger** plugin along with GitHub webhooks, you can automatically trigger Jenkins builds when code changes occur—without relying solely on periodic scans.
 
-1. **Install the Plugin:**
-   If you haven't already, install the "Multibranch Scan Webhook Trigger" plugin from the Jenkins Plugin Manager. You can find it by searching for "Multibranch Scan Webhook Trigger" and installing it.
+---
 
-2. **GitHub Webhook Setup:**
-   In your GitHub repository, set up a webhook to notify Jenkins of changes. Make sure you have repository administrator access to set up webhooks.
+## 🔌 1. Install Required Plugin
 
-   - Go to your GitHub repository.
-   - Click on "Settings" > "Webhooks" > "Add webhook".
-   - For "Payload URL," provide the Jenkins URL followed by `/github-webhook/`. Example: `https://your-jenkins-domain/github-webhook/`.
-   - Set the content type to "application/json".
-   - Choose the events you want to trigger the webhook (e.g., "Push" events).
-   - Create the webhook.
+Ensure you have installed:
 
-3. **Configure Multibranch Pipeline:**
+### 📦 **Multibranch Scan Webhook Trigger Plugin**
 
-   - Create a new Multibranch Pipeline job in Jenkins or modify an existing one.
-   - In the job configuration, under "Scan Multibranch Pipeline Triggers," check "Periodically if not otherwise run" and set the "Interval" to a reasonable value (e.g., 1 minute). This will make sure the plugin regularly checks for changes.
-   - Check "Build whenever a webhook is received." This option allows the plugin to trigger builds on webhook events.
+- Go to **Manage Jenkins > Manage Plugins > Available**.
+- Search for **"Multibranch Scan Webhook Trigger"**.
+- Install the plugin and **restart Jenkins** if prompted.
 
-4. **Save Configuration:**
-   Save the configuration of your Multibranch Pipeline job.
+---
 
-5. **Test Webhook Trigger:**
-   Make a small change in one of your repository's branches and push the changes to GitHub. This should trigger the webhook and, consequently, the Multibranch Pipeline job in Jenkins.
+## 🌐 2. Configure GitHub Webhook
 
-6. **View Build Logs:**
-   After the webhook is triggered, the Multibranch Pipeline job should start building the affected branch. You can view the build logs and status in the Jenkins web interface.
+Set up a webhook in your GitHub repository to notify Jenkins about changes.
 
-By configuring the "Multibranch Scan Webhook Trigger" plugin and setting up a GitHub webhook, you enable automated triggering of Jenkins builds whenever there are new commits or changes in your GitHub repository. This enhances your CI/CD workflow by ensuring that Jenkins responds to code changes promptly and automatically.
+- Open your GitHub repository.
+- Navigate to **Settings > Webhooks > Add webhook**.
+- Fill in:
+  - **Payload URL:**  
+
+    ```
+    https://<your-jenkins-domain>/github-webhook/
+    ```
+
+    *(Ensure your Jenkins server is publicly reachable if needed.)*
+  - **Content Type:**  
+
+    ```
+    application/json
+    ```
+
+  - **Events to Trigger:**  
+    - Recommended: **"Just the push event"**  
+    - Optionally: **"Pull requests"** (if you want builds for PRs too)
+  - **Secret:** (optional) — For added security, configure a webhook secret and validate it in Jenkins.
+
+- Click **"Add webhook"**.
+
+> 🚨 Make sure Jenkins has the **GitHub plugin** installed to properly receive GitHub webhooks.
+
+---
+
+## 🏗 3. Configure Your Multibranch Pipeline Job
+
+Create or modify your Multibranch Pipeline job:
+
+- From Jenkins dashboard, click **New Item** or open an existing Multibranch Pipeline.
+- Under **Build Triggers**:
+  - Enable **"Scan Multibranch Pipeline Triggers"**.
+  - ✅ **Check**: **"Periodically if not otherwise run"**  
+    - Set Interval: e.g., **1 minute** *(for fallback periodic scans)*
+  - ✅ **Check**: **"Build whenever a webhook is received"**  
+    (Option enabled by the Multibranch Scan Webhook Trigger plugin)
+
+- Under **Branch Sources**:
+  - Confirm that your GitHub credentials and repo URL are correctly set.
+
+---
+
+## 💾 4. Save the Job Configuration
+
+Click **"Save"** to apply the settings.
+
+Jenkins will now respond to GitHub webhooks for this job.
+
+---
+
+## 🔥 5. Test the Webhook Trigger
+
+- Make a change in your repository (e.g., update a `README.md` file).
+- Push the change to GitHub.
+- Check:
+  - In GitHub: **Webhooks > Recent Deliveries** should show a `200 OK` response from Jenkins.
+  - In Jenkins: The Multibranch Pipeline job should detect the change and automatically trigger a new build for the affected branch.
+
+---
+
+## 📄 6. Monitor Build Logs
+
+- Open your Multibranch Pipeline project in Jenkins.
+- Check the build logs and console output for your triggered branch.
+- Validate that the webhook trigger worked correctly.
+
+---
+
+✅ **Result:**  
+Now Jenkins automatically reacts to GitHub push and PR events, triggering builds without relying only on periodic polling—optimizing both resource usage and build responsiveness for a better CI/CD workflow.

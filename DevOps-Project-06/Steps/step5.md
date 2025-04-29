@@ -1,52 +1,134 @@
-# About Step-05
+# Step-05: Add GitHub Credentials & Create Multibranch Pipeline in Jenkins
 
-Adding GitHub credentials to Jenkins allows your Jenkins jobs to interact with your GitHub repositories, enabling tasks like cloning repositories, fetching code, and triggering builds based on changes. Here's how you can add GitHub credentials and create a Multibranch Pipeline job in Jenkins:
+To enable Jenkins to securely interact with your GitHub repositories (e.g., clone, build, trigger jobs), you must add GitHub credentials and configure a **Multibranch Pipeline** job.
 
-1. **Login to Jenkins Master:**
-   Open your web browser and log in to the Jenkins Master's web interface.
+---
 
-2. **Access Credentials:**
-   Click on "Manage Jenkins" from the home page, and then select "Manage Credentials" from the dropdown.
+## 🔐 1. Log In to Jenkins Master
 
-3. **Add GitHub Credentials:**
-   Click on the "Global" domain (or any other domain you prefer) and then click on "Add Credentials" from the left-hand side menu.
+Open your browser and access Jenkins:
 
-4. **Choose Credentials Kind:**
-   In the "Add Credentials" page, select "Username with password". This option is appropriate for GitHub API token-based authentication.
+```
+http://<jenkins-master-ip>:8080
+```
 
-5. **Fill in Details:**
-   - Username: Your GitHub username.
-   - Password: Generate a personal access token in your GitHub account settings (Settings > Developer settings > Personal access tokens) with the necessary scopes (e.g., repo, read:user) for your Jenkins use case. Enter this token as the password.
-   - ID: A unique identifier for these credentials.
+Log in with your admin credentials.
 
-6. **Add Description (Optional):**
-   Optionally, add a description to help you identify these credentials later.
+---
 
-7. **Save Credentials:**
-   Click the "OK" or "Save" button to save the credentials. They will now be available for use in Jenkins.
+## 🗂 2. Navigate to Credentials Management
 
-8. **Create a Multibranch Pipeline Job:**
+- Go to **"Manage Jenkins"**.
+- Select **"Manage Credentials"**.
 
-   - From the Jenkins dashboard, click "New Item".
-   - Enter a name for your job and choose "Multibranch Pipeline".
-   - Click "OK".
+---
 
-9. **Configure the Multibranch Pipeline:**
+## ➕ 3. Add GitHub Credentials
 
-   - In the "Branch Sources" section, add a new "GitHub" source.
-   - Provide the GitHub repository URL and credentials you added in the previous steps.
-   - Configure other options such as discovery behavior and build strategies according to your needs.
+- Under the **"(global)"** domain (or another scope if preferred), click **"Add Credentials"**.
 
-10. **Save Configuration:**
-    Click "Save" to create the Multibranch Pipeline job.
+---
 
-11. **Automatic Branch Discovery:**
-    The Multibranch Pipeline job will automatically discover branches and pull requests in your GitHub repository and create corresponding Jenkins pipeline projects for each branch or pull request.
+## 🔧 4. Select Credential Type
 
-12. **Pipeline Configuration:**
-    In each discovered pipeline project, you can create a `Jenkinsfile` in the repository to define the build steps, tests, and deployment actions for that branch or pull request.
+From the **Kind** dropdown, choose:
 
-13. **Webhooks (Optional):**
-    For better automation and triggering builds on new commits, consider configuring webhooks in your GitHub repository settings. Jenkins can listen to these webhooks and automatically trigger builds on code changes.
+### ✅ **Username with Password**
 
-With these steps, you've added GitHub credentials to Jenkins and created a Multibranch Pipeline job that automatically discovers and builds branches and pull requests from your GitHub repository. This allows you to maintain a CI/CD workflow with automatic integration, testing, and deployment based on code changes.
+Best suited for GitHub Personal Access Token (PAT) authentication.
+
+- **Username:** Your GitHub username
+- **Password:** A GitHub **Personal Access Token (PAT)**
+- **ID (optional):** e.g., `github-pat-jenkins`
+- **Description:** e.g., `GitHub PAT for Multibranch Pipeline`
+
+> 📌 **How to Get a GitHub PAT:**
+>
+> - Go to GitHub → **Settings > Developer Settings > Personal Access Tokens**
+> - Generate a new token with scopes:
+>   - `repo` (for private repositories)
+>   - `admin:repo_hook` (to manage webhooks)
+>   - `read:user`, `workflow` (optional for extended integration)
+
+---
+
+## 💾 5. Save Credentials
+
+Click **"OK"** or **"Save"** to store the credentials. Jenkins can now use these for GitHub access.
+
+---
+
+## 📦 6. Create a Multibranch Pipeline Job
+
+- From the **Jenkins Dashboard**, click **"New Item"**
+- Enter a job name (e.g., `my-github-ci`)
+- Select **"Multibranch Pipeline"**
+- Click **"OK"**
+
+---
+
+## 🔧 7. Configure Multibranch Pipeline
+
+- Under the **"Branch Sources"** section:
+  - Click **"Add source"** → Choose **GitHub**
+  - Fill in:
+    - **Repository URL:** `https://github.com/your-username/your-repo.git`
+    - **Credentials:** Select the GitHub PAT credentials you added earlier
+
+- (Optional) Configure:
+  - **Build strategies** (e.g., build on new PRs, tags)
+  - **Property strategies** for branches
+  - **Repository owner** and **API endpoints** if using GitHub Enterprise
+
+---
+
+## 💾 8. Save Job Configuration
+
+Click **"Save"** to finalize the setup.
+
+Jenkins will now **scan the repository** and automatically create jobs for each branch and pull request that contains a valid `Jenkinsfile`.
+
+---
+
+## 🔁 9. Jenkinsfile in GitHub
+
+Ensure that your repository contains a `Jenkinsfile` in each relevant branch. It defines the pipeline steps, such as:
+
+```groovy
+pipeline {
+  agent any
+  stages {
+    stage('Build') {
+      steps {
+        echo 'Building...'
+      }
+    }
+    stage('Test') {
+      steps {
+        echo 'Running tests...'
+      }
+    }
+  }
+}
+```
+
+---
+
+## 🔔 10. (Optional) Enable GitHub Webhooks
+
+To trigger builds automatically on new commits:
+
+- Go to your GitHub repo → **Settings > Webhooks**
+- Add a webhook pointing to:
+
+  ```
+  http://<jenkins-master-ip>:8080/github-webhook/
+  ```
+
+- Choose event types like: `push`, `pull_request`
+
+Ensure the GitHub plugin is installed in Jenkins for webhook compatibility.
+
+---
+
+✅ **Result:** Jenkins now integrates with GitHub and automatically discovers, builds, and manages branches or PRs based on your pipeline logic—ideal for CI/CD workflows.

@@ -1,0 +1,35 @@
+topic_slug,question_text,option1,option2,option3,option4,correct_answer
+jenkins,What is a Jenkins Multibranch Pipeline?,Automatically creates pipelines for branches in source control,Multiple Jenkins servers,Parallel build execution,Branch deletion tool,0
+jenkins,How to trigger a build manually?,Click Build Now button,Use command line,Edit pipeline code,Restart Jenkins,0
+jenkins,What is Jenkins Blue Ocean?,Modern and visual pipeline editor,Monitoring plugin,Source control system,Build scheduler,0
+jenkins,How to secure Jenkins?,Enable security and create user accounts,Install antivirus,Use special ports,Disable plugins,0
+jenkins,What is a Jenkins shared library?,Reusable pipeline code collection,Common build tools,Shared workspace,Plugin repository,0
+jenkins,What are Jenkins plugins?,Extensions that add functionality,Build logs,Pipeline stages,Source repositories,0
+jenkins,How to back up Jenkins?,Back up JENKINS_HOME directory,Use plugin backup,Copy workspace,Archive logs,0
+jenkins,What is a Jenkins node?,Machine capable of running builds,Network connection,Build step,Pipeline stage,0
+jenkins,Purpose of Jenkins environment variables?,Store build and job information,Network configuration,Plugin settings,User preferences,0
+jenkins,What is Jenkins pipeline stage?,Logical subdivision of build process,Build agent,Source control,Deployment target,0
+jenkins,What is Jenkinsfile?,Pipeline definition file,Configuration file,Log file,Plugin file,0
+jenkins,How to create a new job?,Click New Item,Edit config file,Use command line,Modify pipeline,0
+jenkins,What is Jenkins workspace?,Directory for build operations,Plugin storage,Log directory,Configuration folder,0
+jenkins,Which port is Jenkins default?,8080,80,443,8443,0
+jenkins,What is Jenkins credentials?,Secure storage for sensitive data,Build parameters,Environment variables,User preferences,0
+jenkins,How to install plugins?,Manage Jenkins > Manage Plugins,Edit config file,Use command line,Restart server,0
+jenkins,What is Jenkins master?,Main Jenkins server,Build agent,Pipeline stage,Source control,0
+jenkins,How to view build logs?,Click Console Output,Check system logs,View workspace,Monitor agents,0
+jenkins,What is post-build action?,Task executed after build completion,Pre-build setup,Build parameter,Pipeline stage,0
+jenkins,Which SCM is built-in?,Git,SVN,Mercurial,Perforce,0
+jenkins,What is pipeline script?,Groovy-based build definition,Shell script,Python script,Batch file,0
+jenkins,How to schedule builds?,Use Build Triggers,Edit Jenkinsfile,Modify config,Use plugin,0
+jenkins,What is Jenkins REST API?,HTTP interface for Jenkins,Build tool,Plugin manager,Source control,0
+jenkins,How to archive artifacts?,Use Archive Artifacts post-build action,Copy files manually,Use workspace,Edit pipeline,0
+jenkins,What is Jenkins CLI?,Command line interface,Configuration tool,Build agent,Plugin manager,0
+jenkins,How to configure email?,Configure system email settings,Edit Jenkinsfile,Use environment variables,Install plugin,0
+jenkins,What is Jenkins agent?,Remote build executor,Source control,Pipeline stage,Build trigger,0
+jenkins,How to create pipeline?,Use Pipeline or Multibranch Pipeline job,Edit config file,Use command line,Install plugin,0
+jenkins,What is declarative pipeline?,Simplified pipeline syntax,Build script,Shell command,Plugin type,0
+jenkins,Which build trigger is automatic?,SCM polling,Manual trigger,Remote trigger,Time trigger,0
+jenkins,What is Jenkins home directory?,Contains all Jenkins data,Workspace location,Plugin directory,Log storage,0
+jenkins,How to create slave node?,Configure new node in master,Edit config file,Use command line,Install plugin,0
+jenkins,What is build executor?,Thread for running build,Plugin manager,Pipeline stage,Source control,0
+jenkins,

@@ -1,0 +1,52 @@
+topic_slug,question_text,option1,option2,option3,option4,correct_answer
+docker,What command is used to remove all stopped containers?,docker container prune,docker remove all,docker clean,docker rm stopped,0
+docker,Which Dockerfile instruction sets the base image?,FROM,BASE,IMAGE,USING,0
+docker,What is the purpose of Docker volumes?,Persistent data storage that exists outside containers,Network connections between containers,Container resource limits,Docker image versioning,0
+docker,How do you expose a port in Dockerfile?,EXPOSE,PORT,PUBLISH,OPEN,0
+docker,What command shows Docker container logs?,docker logs,docker show-logs,docker output,docker display,0
+docker,Which instruction copies files from host to image?,COPY,ADD,MOVE,TRANSFER,0
+docker,What is Docker compose used for?,Define and run multi-container applications,Build single containers,Monitor container health,Manage container networks,0
+docker,How to check Docker version?,docker --version,docker version check,docker -v,docker info version,0
+docker,What command attaches to a running container?,docker attach,docker connect,docker join,docker enter,0
+docker,Which file is used to ignore files during build?,.dockerignore,docker.ignore,.ignore,Dockerfile.ignore,0
+docker,What is the purpose of the WORKDIR instruction?,Set the working directory for subsequent instructions,Create a new directory,Mount a volume,Define environment variables,0
+docker,How to force remove a running container?,docker rm -f,docker remove force,docker kill rm,docker stop force,0
+docker,Which command shows running containers?,docker ps,docker list,docker show,docker running,0
+docker,What is Docker Hub?,A registry for Docker images,A container orchestration tool,A monitoring system,A backup service,0
+docker,How to tag a Docker image?,docker tag source target,docker label source target,docker name source target,docker rename source target,0
+docker,What is the purpose of Docker networks?,Enable container communication,Store container logs,Manage container resources,Version control images,0
+docker,Which command pulls an image from registry?,docker pull,docker get,docker fetch,docker download,0
+docker,What is a multi-stage build used for?,Optimize final image size,Run multiple containers,Create backup images,Test different configurations,0
+docker,How to view container resource usage?,docker stats,docker metrics,docker monitor,docker resources,0
+docker,What is the purpose of HEALTHCHECK?,Monitor container health status,Check image integrity,Verify network connection,Validate configuration,0
+docker,Which instruction runs commands in container?,RUN,EXECUTE,START,COMMAND,0
+docker,What is Docker swarm used for?,Container orchestration,Image building,Network monitoring,Volume management,0
+docker,How to list all Docker volumes?,docker volume ls,docker volumes list,docker show volumes,docker volume all,0
+docker,What is the purpose of docker inspect?,View detailed information about Docker objects,Monitor container logs,Test container health,Build new images,0
+docker,Which port is Docker daemon's default?,2375,8080,3000,5000,0
+docker,What is a Docker registry?,Repository for Docker images,Container monitoring tool,Network configuration system,Resource manager,0
+docker,How to create a Docker network?,docker network create,docker create network,docker new network,docker network make,0
+docker,What is the purpose of docker save?,Export Docker image to tar archive,Save container state,Backup volumes,Create image tags,0
+docker,Which command shows image history?,docker history,docker log,docker timeline,docker changes,0
+docker,What is the purpose of --rm flag?,Remove container after it exits,Restart container automatically,Rename container,Rebuild container,0
+docker,How to copy files from container?,docker cp container:src dest,docker copy container:src dest,docker transfer container:src dest,docker move container:src dest,0
+docker,What is Docker content trust?,Security feature for image signing,Network monitoring tool,Resource allocation system,Backup service,0
+docker,Which command removes unused images?,docker image prune,docker clean images,docker remove unused,docker delete images,0
+docker,What is the purpose of docker commit?,Create new image from container changes,Save container logs,Export container configuration,Backup container data,0
+docker,How to view Docker events?,docker events,docker monitor,docker watch,docker track,0
+docker,What is the purpose of docker pause?,Suspend container processes,Stop container,Remove container,Restart container,0
+docker,Which instruction sets environment variables?,ENV,SET,VAR,ENVIRONMENT,0
+docker,What is the purpose of docker export?,Export container filesystem as tar,Create image backup,Save container state,Archive logs,0
+docker,How to limit container memory?,--memory flag,--ram flag,--limit flag,--max-memory flag,0
+docker,What is Docker BuildKit?,Optimized image builder,Container monitor,Network manager,Volume controller,0
+docker,Which port range is used by Docker?,32768-61000,1024-2048,8080-9090,3000-4000,0
+docker,How to view container processes?,docker top,docker ps,docker proc,docker process,0
+docker,What is the purpose of docker load?,Import images from tar archive,Load container state,Restore volumes,Import network config,0
+docker,Which instruction adds metadata?,LABEL,META,TAG,INFO,0
+docker,What is Docker compose version 3?,Latest version with swarm support,Network configuration tool,Volume management system,Container backup service,0
+docker,How to update container resources?,docker update,docker modify,docker change,docker configure,0
+docker,What is the purpose of docker wait?,Block until container stops,Monitor container logs,Check container health,Test container connection,0
+docker,Which file format does Compose use?,YAML,JSON,XML,INI,0
+docker,What is the purpose of docker restart?,Restart container,Create new container,Copy container,Move container,0
+docker,How to view image layers?,docker history,docker layers,docker show,docker inspect,0
+docker,What is the default network driver?,bridge,host,overlay,macvlan,0

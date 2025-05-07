@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: 3-tier-app-eks
+  labels:
+    app: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64 
+      initContainers:
+      - name: wait-for-db
+        image: busybox
+        command: ['sh', '-c', 'until nslookup postgres-db.3-tier-app-eks.svc.cluster.local; do echo waiting for database; sleep 2; done;']
+      containers:
+      - name: backend
+        image: livingdevopswithakhilesh/devopsdozo:backend-latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+        env:
+        - name: ALLOWED_ORIGINS
+          value: "https://akhileshmishra.tech,http://akhileshmishra.tech"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: db-secrets
+              key: DATABASE_URL
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: db-secrets
+              key: SECRET_KEY
+        - name: FLASK_DEBUG
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: FLASK_DEBUG
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: 3-tier-app-eks
+spec:
+  selector:
+    app: backend
+  ports:
+  - port: 8000
+    targetPort: 8000
+  type: ClusterIP

@@ -1,0 +1,104 @@
+topic_slug,question_text,option1,option2,option3,option4,correct_answer
+linux,Which command displays disk usage?,df -h,ps aux,top,free -m,0
+linux,What is the purpose of chmod command?,Change file permissions,Change file owner,Create directory,Delete file,0
+linux,How to list all processes?,ps aux,ls -la,netstat,ifconfig,0
+linux,Which command shows system memory usage?,free -m,top,ps,df,0
+linux,What is the root directory in Linux?,/,/root,/home,/etc,0
+linux,How to create a new directory?,mkdir,touch,cp,mv,0
+linux,Which command shows network interfaces?,ifconfig,netstat,route,ping,0
+linux,What is the purpose of grep command?,Search text patterns,Copy files,Move files,Delete files,0
+linux,How to change file ownership?,chown,chmod,chgrp,touch,0
+linux,Which command shows real-time processes?,top,ps,ls,df,0
+linux,What is the purpose of sudo?,Execute as superuser,Search files,Monitor system,Edit text,0
+linux,How to view file contents?,cat,touch,mkdir,rm,0
+linux,Which command creates empty files?,touch,mkdir,cp,mv,0
+linux,What is the purpose of wget?,Download files,Upload files,List files,Edit files,0
+linux,How to check system uptime?,uptime,date,time,clock,0
+linux,Which command shows disk partitions?,fdisk -l,mount,df,du,0
+linux,What is the purpose of ping?,Test network connectivity,Show processes,Check memory,List files,0
+linux,How to extract tar archives?,tar -xf,zip,unzip,gunzip,0
+linux,Which command shows system logs?,journalctl,dmesg,syslog,logread,0
+linux,What is the purpose of ssh?,Secure shell connection,System monitoring,File transfer,Process management,0
+linux,How to show current directory?,pwd,cd,ls,dir,0
+linux,Which command sets system time?,date,time,clock,timezone,0
+linux,What is the purpose of cron?,Schedule tasks,Monitor processes,Check memory,Test network,0
+linux,How to find files?,find,locate,grep,search,0
+linux,Which command shows routing table?,route,ifconfig,netstat,ip,0
+linux,What is the purpose of kill command?,Terminate processes,Delete files,Stop services,Remove directories,0
+linux,How to check disk space?,du -h,df,ls,ps,0
+linux,Which command shows opened ports?,netstat -tulpn,ifconfig,route,ping,0
+linux,What is the purpose of alias?,Create command shortcuts,List files,Show processes,Check memory,0
+linux,How to change user password?,passwd,usermod,chage,gpasswd,0
+linux,Which command shows CPU info?,lscpu,top,ps,free,0
+linux,What is the purpose of sed?,Stream editor,System monitor,Service manager,Shell command,0
+linux,How to compare files?,diff,cmp,comm,cut,0
+linux,Which command manages services?,systemctl,service,init.d,daemon,0
+linux,What is the purpose of awk?,Text processing,File management,Process control,Network monitoring,0
+linux,How to show calendar?,cal,date,time,clock,0
+linux,Which command shows environment variables?,env,echo,export,printenv,0
+linux,What is the purpose of tar?,Archive files,Compress files,Delete files,Move files,0
+linux,How to check file type?,file,type,stat,ls,0
+linux,Which command shows USB devices?,lsusb,usb,devices,hardware,0
+linux,What is the purpose of ln?,Create links,List files,Move files,Copy files,0
+linux,How to check DNS resolution?,nslookup,dig,host,dns,0
+linux,Which command shows block devices?,lsblk,block,devices,drives,0
+linux,What is the purpose of useradd?,Create users,Delete users,Modify users,List users,0
+linux,How to monitor system calls?,strace,trace,debug,monitor,0
+linux,Which command shows PCI devices?,lspci,pci,devices,hardware,0
+linux,What is the purpose of rsync?,Synchronize files,Copy files,Move files,Delete files,0
+linux,How to check file permissions?,ls -l,stat,file,chmod,0
+linux,Which command shows process tree?,pstree,ps,top,htop,0
+linux,What is the purpose of curl?,Transfer data,Process text,Monitor system,Edit files,0
+linux,How to check system architecture?,uname -a,arch,system,hardware,0
+linux,What is the /etc/fstab file used for?,Configure filesystem mounts,System logging,User management,Network config,0
+linux,How to compress files with gzip?,gzip filename,zip filename,compress filename,pack filename,0
+linux,Which command shows system messages?,dmesg,syslog,logread,messages,0
+linux,What is the purpose of nice command?,Set process priority,Process termination,Resource allocation,Task scheduling,0
+linux,How to check SELinux status?,getenforce,selinux,status,security,0
+linux,Which command shows logged in users?,who,users,logged,online,0
+linux,What is the purpose of lsof?,List open files,Show processes,Check memory,Monitor system,0
+linux,How to check default shell?,echo $SHELL,shell,default,current,0
+linux,Which command shows CPU temperature?,sensors,temp,cputemp,thermal,0
+linux,What is the purpose of vmstat?,Virtual memory statistics,Process stats,System monitoring,Resource usage,0
+linux,How to check system runlevel?,runlevel,level,system,init,0
+linux,Which command manages software packages?,apt/yum,install,package,software,0
+linux,What is the purpose of ulimit?,Set resource limits,User limits,System limits,Process control,0
+linux,How to check kernel version?,uname -r,kernel,version,system,0
+linux,Which command shows system information?,hostnamectl,sysinfo,system,info,0
+linux,What is the purpose of ionice?,Set I/O scheduling priority,Process priority,Disk management,Resource control,0
+linux,How to check disk I/O stats?,iostat,diskstat,io,storage,0
+linux,Which command shows network statistics?,netstat,network,stats,net,0
+linux,What is the purpose of taskset?,Set CPU affinity,Task management,Process control,CPU control,0
+linux,How to check filesystem type?,df -T,fstype,type,filesystem,0
+linux,Which command shows system load?,uptime,load,system,status,0
+linux,What is the purpose of tee?,Read from stdin and write to stdout/files,File copying,Data streaming,Input/output,0
+linux,How to check swap usage?,swapon -s,swap,memory,virtual,0
+linux,Which command shows IP routing?,ip route,route,network,routing,0
+linux,What is the purpose of at?,Schedule one-time tasks,Task management,Job control,Scheduling,0
+linux,How to check file age?,stat filename,age,file,time,0
+linux,Which command manages user groups?,groupadd,group,users,manage,0
+linux,What is the purpose of dd?,Convert and copy files,Disk management,Data transfer,File copying,0
+linux,How to check file compression?,file filename,compress,check,type,0
+linux,Which command shows hardware info?,lshw,hardware,system,info,0
+linux,What is the purpose of xargs?,Build command lines,Argument passing,Command execution,Input processing,0
+linux,How to check current locale?,locale,language,system,regional,0
+linux,Which command shows memory maps?,pmap,memory,mapping,process,0
+linux,What is the purpose of watch?,Execute commands periodically,System monitoring,Process watching,Task execution,0
+linux,How to check system messages?,tail -f /var/log/messages,messages,logs,system,0
+linux,Which command shows package info?,dpkg -l/rpm -qa,package,info,software,0
+linux,What is the purpose of ldd?,Show shared library dependencies,Library management,Dependencies,System libs,0
+linux,How to check process limits?,ulimit -a,limits,process,resource,0
+linux,Which command manages system services?,systemctl,service,system,manage,0
+linux,What is the purpose of whereis?,Locate binary/source/manual files,File search,Program location,Command find,0
+linux,How to check system resources?,top,resources,system,monitor,0
+linux,Which command shows disk partitions?,lsblk,partitions,disk,storage,0
+linux,What is the purpose of logger?,Generate system log entries,Logging,System logs,Message logging,0
+linux,How to check system timezone?,timedatectl,timezone,time,system,0
+linux,Which command shows network interfaces?,ip addr,network,interfaces,net,0
+linux,What is the purpose of namei?,Follow pathname,Path resolution,File path,Directory path,0
+linux,How to check system entropy?,cat /proc/sys/kernel/random/entropy_avail,entropy,random,system,0
+linux,Which command shows running services?,systemctl list-units,services,running,active,0
+linux,What is the purpose of renice?,Alter process priority,Process management,Priority change,Resource control,0
+linux,How to check CPU cores?,nproc,cores,cpu,processor,0
+linux,Which command shows system calls?,strace,syscall,system,calls,0
+linux,What is the purpose of sysctl?,Configure kernel parameters,System control,Kernel config,System settings,0

@@ -1,0 +1,72 @@
+topic_slug,question_text,option1,option2,option3,option4,correct_answer
+kubernetes,What is the purpose of a Kubernetes Service?,Expose applications running on pods,Store container images,Monitor cluster health,Manage user access,0
+kubernetes,Which command creates a new namespace?,kubectl create namespace,kubectl new namespace,kubectl add namespace,kubectl namespace create,0
+kubernetes,What is a Kubernetes ConfigMap used for?,Store non-confidential configuration data,Monitor pod health,Network routing,Container orchestration,0
+kubernetes,How do you scale a deployment?,kubectl scale deployment,kubectl resize,kubectl update size,kubectl modify scale,0
+kubernetes,What is the purpose of a DaemonSet?,Run a pod on all nodes,Manage cluster storage,Load balancing,User authentication,0
+kubernetes,Which component maintains cluster state?,etcd,kubelet,kube-proxy,controller-manager,0
+kubernetes,What is a Kubernetes Ingress?,Manages external access to services,Internal pod communication,Container runtime,Storage provisioner,0
+kubernetes,How to get all namespaces?,kubectl get namespaces,kubectl list ns,kubectl show namespaces,kubectl namespaces all,0
+kubernetes,What is the purpose of a StatefulSet?,Manage stateful applications,Handle network policies,Manage cluster access,Monitor pod health,0
+kubernetes,Which command shows pod logs?,kubectl logs,kubectl show-logs,kubectl get-logs,kubectl log,0
+kubernetes,What is a Kubernetes Secret?,Secure storage for sensitive data,Hidden namespace,Private registry,Protected pod,0
+kubernetes,How to delete a pod?,kubectl delete pod,kubectl remove pod,kubectl destroy pod,kubectl clear pod,0
+kubernetes,What is a ReplicaSet?,Maintains specified number of pod replicas,Network load balancer,Storage volume,Access controller,0
+kubernetes,Which tool manages cluster addons?,kubectl,kubeadm,kubelet,kube-proxy,0
+kubernetes,What is a PersistentVolume?,Persistent storage resource,Memory allocation,Network policy,Config storage,0
+kubernetes,How to update deployment image?,kubectl set image,kubectl update image,kubectl change image,kubectl modify image,0
+kubernetes,What is the purpose of kube-scheduler?,Schedule pods to nodes,Manage storage,Handle networking,Monitor cluster,0
+kubernetes,Which command shows cluster info?,kubectl cluster-info,kubectl info,kubectl status,kubectl about,0
+kubernetes,What is a HorizontalPodAutoscaler?,Automatically scales pods based on metrics,Storage scaling,Network load balancer,User authenticator,0
+kubernetes,How to expose a deployment?,kubectl expose,kubectl publish,kubectl show,kubectl reveal,0
+kubernetes,What is a Job in Kubernetes?,Run pods to completion,Continuous task,Permanent service,Background process,0
+kubernetes,Which network plugin is default?,kubenet,calico,flannel,weave,0
+kubernetes,What is a NodeSelector?,Pod node assignment constraint,Network selector,Storage filter,Service router,0
+kubernetes,How to check node status?,kubectl get nodes,kubectl node status,kubectl check nodes,kubectl list nodes,0
+kubernetes,What is a Taint?,Node constraint that repels pods,Network policy,Storage limit,Resource quota,0
+kubernetes,Which port is API server default?,6443,8080,443,8443,0
+kubernetes,What is a Kubernetes Operator?,Custom controller for complex applications,Command line tool,Monitoring system,Storage manager,0
+kubernetes,How to get service endpoints?,kubectl get endpoints,kubectl show endpoints,kubectl list endpoints,kubectl endpoints get,0
+kubernetes,What is a NetworkPolicy?,Pod network traffic rules,Storage policy,Compute policy,User policy,0
+kubernetes,Which command creates config?,kubectl create configmap,kubectl new config,kubectl add config,kubectl config create,0
+kubernetes,What is a PodDisruptionBudget?,Limits voluntary disruptions,Resource quota,Network policy,Storage limit,0
+kubernetes,How to check API versions?,kubectl api-versions,kubectl versions,kubectl list-apis,kubectl show-apis,0
+kubernetes,What is a CustomResourceDefinition?,Extends Kubernetes API,Custom network,Special storage,Unique service,0
+kubernetes,Which tool bootstraps clusters?,kubeadm,kubectl,kubelet,kube-proxy,0
+kubernetes,What is a Toleration?,Allows pod to schedule on tainted nodes,Network permission,Storage access,Service route,0
+kubernetes,How to get deployment status?,kubectl rollout status,kubectl status,kubectl check,kubectl verify,0
+kubernetes,What is a ServiceAccount?,Pod identity in cluster,User account,Network profile,Storage credential,0
+kubernetes,Which port is kubelet default?,10250,8080,443,6443,0
+kubernetes,When using the NodeResourcesFit plugin's default strategy which node would a new pod prefer?,Node with least resource usage,Node with most resource usage,Node with existing pods,Any available node,0
+kubernetes,What happens when a container encounters an OOM error?,Container restarts while Pod remains intact,Entire Pod gets recreated,Both container and Pod get deleted,System kills the node process,0
+kubernetes,How can ConfigMap updates be applied dynamically?,By mounting as files without subPath,By using environment variables,By recreating the Pod,By restarting the container,0
+kubernetes,What is the default sync frequency for ConfigMap updates?,1 minute,5 minutes,10 minutes,30 seconds,0
+kubernetes,Which factor does NOT typically cause Pod eviction?,Regular system updates,Resource shortages,Network disruptions,Node failures,0
+kubernetes,What technology does ClusterIP-based Services use for load balancing?,Linux kernel Netfilter,HAProxy,NGINX,Apache,0
+kubernetes,What is the recommended way to prevent log loss in Kubernetes?,Writing to persistent storage,Using stdout only,Using stderr only,Using node storage,0
+kubernetes,What does a livenessProbe primarily check?,If the application is alive,If the application works correctly,If the network is reliable,If the pod is stable,0
+kubernetes,Which autoscaling method requires Pod recreation?,Vertical Pod Autoscaling,Horizontal Pod Autoscaling,External scaling,Manual scaling,0
+kubernetes,When using kubectl exec which namespaces remain separate?,PID and Mount,Network and IPC,UTS and Network,IPC and Mount,0
+kubernetes,What is the best approach for troubleshooting a crash-looping container?,Use kubectl debug with temporary container,Try kubectl exec repeatedly,Restart the node,Delete and recreate the Pod,0
+kubernetes,Which namespace do containers within a Pod share?,Network,PID,Mount,None of the above,0
+kubernetes,What is the default RestartPolicy for Pods?,Always,Never,OnFailure,None,0
+kubernetes,What determines load distribution in ClusterIP Services?,Connection tracking mechanism,Round-robin algorithm,Random selection,Least connections,0
+kubernetes,How are logs typically collected from stdout/stderr?,Using log agents as DaemonSet,Direct node access,Manual copying,Container exec,0
+kubernetes,What can cause uneven load distribution in ClusterIP Services?,Long-lived TCP connections,Network latency,Pod resources,Service type,0
+kubernetes,Which is NOT a scoring strategy of NodeResourcesFit plugin?,RandomAllocation,LeastAllocated,MostAllocated,RequestedToCapacityRatio,0
+kubernetes,What type of metrics can HPA use for scaling?,All of the above,CPU usage,Request rate,Custom metrics,0
+kubernetes,How are environment variables updated in Pods?,They cannot be updated dynamically,Through ConfigMap updates,Using kubectl set env,Via API server,0
+kubernetes,What is required for examining a crash-looping container?,Node and container logs,Direct container access,Pod shell access,Live debugging session,0
+kubernetes,What is a PriorityClass?,Pod scheduling priority,Network class,Storage tier,Service level,0
+kubernetes,How to get resource quotas?,kubectl get quota,kubectl show quota,kubectl list quota,kubectl quota get,0
+kubernetes,What is a VolumeSnapshot?,Point-in-time copy of volume,Network capture,Memory snapshot,Config backup,0
+kubernetes,Which tool manages certificates?,cert-manager,kube-cert,cert-admin,kube-ca,0
+kubernetes,What is a MutatingWebhook?,Modifies API requests,Network filter,Storage validator,Service router,0
+kubernetes,How to view cluster roles?,kubectl get clusterroles,kubectl roles,kubectl show-roles,kubectl list-roles,0
+kubernetes,What is a StorageClass?,Defines storage provisioner,Network class,Compute class,Service tier,0
+kubernetes,Which metric server is default?,metrics-server,prometheus,grafana,datadog,0
+kubernetes,What is a ValidatingWebhook?,Validates API requests,Network validator,Storage checker,Service tester,0
+kubernetes,How to get pod IP?,kubectl get pod -o wide,kubectl pod ip,kubectl show-ip,kubectl get-ip,0
+kubernetes,What is a ResourceQuota?,Limits resource consumption,Network quota,Storage limit,Service cap,0
+kubernetes,Which proxy mode is default?,iptables,ipvs,userspace,direct,0
+kubernetes,What is a InitContainer?,Runs before app containers,Network initializer,Storage preparer,Service starter,0

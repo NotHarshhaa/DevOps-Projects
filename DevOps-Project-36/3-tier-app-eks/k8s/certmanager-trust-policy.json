@@ -1,0 +1,17 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Federated": "arn:aws:iam::163962798700:oidc-provider/oidc.eks.eu-west-1.amazonaws.com/id/933E913EF73EA1984715660058470EC0"
+      },
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringEquals": {
+          "oidc.eks.eu-west-1.amazonaws.com/id/933E913EF73EA1984715660058470EC0:sub": "system:serviceaccount:cert-manager:cert-manager"
+        }
+      }
+    }
+  ]
+}

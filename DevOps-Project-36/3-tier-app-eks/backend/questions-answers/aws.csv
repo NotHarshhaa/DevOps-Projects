@@ -1,0 +1,102 @@
+topic_slug,question_text,option1,option2,option3,option4,correct_answer
+aws,What is Amazon EC2?,Elastic Compute Cloud,Email Control Center,Enterprise Cloud Computing,External Cloud Connection,0
+aws,Which storage class is best for infrequently accessed data?,Amazon S3 Standard-IA,Amazon S3 Standard,Amazon S3 One Zone,Amazon S3 Glacier,0
+aws,What is the default timeout for AWS Lambda functions?,3 seconds,15 seconds,30 seconds,60 seconds,1
+aws,Which AWS service is used for managed relational databases?,Amazon RDS,Amazon DynamoDB,Amazon Redshift,Amazon ElastiCache,0
+aws,What is AWS CloudFormation used for?,Infrastructure as Code,Performance Monitoring,Log Analysis,Security Scanning,0
+aws,Which service provides NoSQL database?,DynamoDB,RDS,Aurora,Redshift,0
+aws,What is the maximum size of an S3 object?,5 TB,1 TB,500 GB,100 GB,0
+aws,Which AWS service is used for content delivery?,CloudFront,Route 53,API Gateway,AppSync,0
+aws,What is AWS IAM primarily used for?,Identity and Access Management,Internet Access Management,Infrastructure Asset Management,Instance Activity Monitoring,0
+aws,Which service provides managed Kubernetes?,EKS,ECS,Fargate,Batch,0
+aws,What is Amazon VPC?,Virtual Private Cloud,Virtual Process Control,Virtual Program Center,Virtual Package Container,0
+aws,Which service is used for DNS management?,Route 53,CloudFront,Global Accelerator,Transit Gateway,0
+aws,What is AWS Shield used for?,DDoS Protection,Firewall Management,Data Encryption,Access Control,0
+aws,Which service provides serverless computing?,Lambda,EC2,ECS,Batch,0
+aws,What is Amazon SNS?,Simple Notification Service,Simple Network Service,Secure Network System,System Notification Setup,0
+aws,Which service provides managed Apache Kafka?,MSK,MQ,SQS,SNS,0
+aws,What is AWS CloudWatch used for?,Monitoring and Observability,DNS Management,Load Balancing,Access Control,0
+aws,Which service provides managed Elasticsearch?,OpenSearch Service,Elasticsearch,ElastiCache,Neptune,0
+aws,What is AWS WAF?,Web Application Firewall,Website Access Framework,Web Analysis Function,Web Authentication Filter,0
+aws,Which service provides managed Redis?,ElastiCache,DynamoDB,RDS,Neptune,0
+aws,What is Amazon SQS?,Simple Queue Service,Simple Query Service,System Query Setup,Service Query System,0
+aws,Which storage service is most cost-effective for archival?,Glacier,S3 Standard,EBS,EFS,0
+aws,What is AWS Organizations used for?,Multi-account Management,Database Organization,Network Organization,Resource Organization,0
+aws,Which service provides managed MongoDB?,DocumentDB,DynamoDB,RDS,Neptune,0
+aws,What is AWS KMS used for?,Key Management Service,Kubernetes Management System,Knowledge Management Service,Kinesis Management Service,0
+aws,Which service provides container registry?,ECR,ECS,EKS,App Runner,0
+aws,What is Amazon Cognito used for?,User Authentication and Authorization,Content Delivery,Database Management,Network Security,0
+aws,Which service provides managed Apache Cassandra?,Keyspaces,DynamoDB,DocumentDB,Neptune,0
+aws,What is AWS Config used for?,Resource Configuration Tracking,Network Configuration,Security Configuration,Database Configuration,0
+aws,Which service provides API management?,API Gateway,AppSync,AppMesh,App Runner,0
+aws,What is AWS Direct Connect?,Dedicated Network Connection,Database Connection,Direct Storage Access,Domain Controller,0
+aws,Which service provides managed GraphQL?,AppSync,API Gateway,AppMesh,App Runner,0
+aws,What is AWS Systems Manager used for?,Application and Infrastructure Management,System Monitoring,Storage Management,Security Management,0
+aws,Which service provides managed PostgreSQL?,Aurora PostgreSQL,DynamoDB,MongoDB,Cassandra,0
+aws,What is Amazon Kinesis used for?,Real-time Data Streaming,Database Management,File Storage,Message Queue,0
+aws,Which service provides managed MySQL?,Aurora MySQL,DynamoDB,MongoDB,Cassandra,0
+aws,What is AWS Transit Gateway?,Network Transit Hub,Data Transfer Service,Traffic Management,Transport Layer Security,0
+aws,Which service provides serverless containers?,Fargate,ECS,EKS,EC2,0
+aws,What is AWS Secrets Manager used for?,Secure Secrets Storage,Password Generation,Key Management,Certificate Management,0
+aws,Which service provides managed Jenkins?,CodeBuild,CodePipeline,CodeDeploy,CodeStar,2
+aws,What is AWS Step Functions used for?,Workflow Orchestration,Function Management,Step Tracking,Process Control,0
+aws,Which service provides managed etcd?,EKS,DynamoDB,ElastiCache,Systems Manager,0
+aws,What is AWS Cloud9 used for?,Cloud IDE,Monitoring Tool,Deployment Service,Testing Platform,0
+aws,Which service provides managed Active Directory?,AWS Directory Service,IAM,Organizations,Control Tower,0
+aws,What is AWS Lake Formation used for?,Data Lake Setup,Database Creation,Storage Management,Network Formation,0
+aws,Which service provides managed PostgreSQL?,RDS,DynamoDB,MongoDB,Cassandra,0
+aws,What is AWS X-Ray used for?,Application Tracing,X-ray Storage,Security Scanning,Performance Testing,0
+aws,Which service provides managed Redis clusters?,ElastiCache,DynamoDB,RDS,Neptune,0
+aws,What is AWS Backup used for?,Centralized Backup Management,File Backup,Database Backup,Server Backup,0
+aws,Which service provides managed time series database?,Timestream,DynamoDB,RDS,Neptune,0
+aws,What is AWS Service Quotas used for?,Manage Service Limits,Quote Generation,Service Pricing,Resource Allocation,0
+aws,What is AWS EBS?,Elastic Block Store,Elastic Backup Service,Elastic Boot System,Enterprise Backup Storage,0
+aws,Which service is used for machine learning?,SageMaker,DeepLens,Rekognition,Comprehend,0
+aws,What is the maximum execution time for Lambda?,15 minutes,5 minutes,10 minutes,30 minutes,0
+aws,Which service provides managed Kafka streams?,Kinesis,SNS,SQS,MSK,3
+aws,What is AWS CloudTrail used for?,API Activity Logging,Performance Monitoring,Error Tracking,Resource Management,0
+aws,Which service provides managed blockchain?,Amazon Managed Blockchain,Ethereum Service,Blockchain Service,Chain Manager,0
+aws,What is AWS AppSync used for?,GraphQL API Service,App Deployment,Mobile Backend,Web Hosting,0
+aws,Which service is serverless data warehouse?,Redshift Serverless,Athena,EMR,Glue,0
+aws,What is AWS Control Tower used for?,Multi-account Governance,Resource Control,Access Management,Security Monitoring,0
+aws,Which service provides IoT device management?,AWS IoT Core,IoT Analytics,IoT Events,IoT Greengrass,0
+aws,What is AWS AppFlow?,SaaS Integration Service,Application Deployment,Traffic Management,Data Flow Control,0
+aws,Which service manages API keys?,API Gateway,Secrets Manager,KMS,Systems Manager,0
+aws,What is AWS DataSync used for?,Data Transfer Service,Database Sync,File Synchronization,Storage Management,0
+aws,Which service provides quantum computing?,Amazon Braket,Quantum Service,Q-Computer,Quantum Cloud,0
+aws,What is AWS Proton used for?,Container and Serverless Management,Electron Management,Atomic Service,Microservice Control,0
+aws,Which service manages IoT device security?,IoT Device Defender,IoT Security,Device Guard,Security Hub,0
+aws,What is AWS Outposts?,On-premises AWS Infrastructure,Network Connection,Data Center Service,Cloud Extension,0
+aws,Which service provides satellite ground stations?,Ground Station,Satellite Service,Space Connect,Orbital Service,0
+aws,What is AWS Snowball?,Data Migration Device,Storage Service,Backup Solution,Archive System,0
+aws,Which service provides voice transcription?,Amazon Transcribe,Voice Service,Speech-to-Text,Audio Convert,0
+aws,What is AWS App Runner?,Container Application Service,Mobile App Builder,Web App Creator,Code Runner,0
+aws,Which service provides workflow automation?,AWS Step Functions,Flow Control,Process Automation,Task Manager,0
+aws,What is AWS Batch used for?,Batch Computing Jobs,Data Processing,Queue Management,Task Scheduling,0
+aws,Which service provides media transcoding?,MediaConvert,Media Service,Transcode Service,Video Convert,0
+aws,What is AWS RAM?,Resource Access Manager,Random Access Memory,Resource Allocation,Access Management,0
+aws,Which service provides event routing?,EventBridge,Event Service,Message Router,Event Hub,0
+aws,What is AWS Amplify used for?,Mobile and Web App Development,Signal Amplification,Network Boost,Performance Enhancement,0
+aws,Which service manages firewall rules?,Network Firewall,Security Groups,WAF,Shield,0
+aws,What is AWS FSx?,Managed File Systems,File Storage,Storage Service,File Exchange,0
+aws,Which service provides managed Cassandra?,Amazon Keyspaces,DynamoDB,DocumentDB,Neptune,0
+aws,What is AWS Kendra used for?,Enterprise Search Service,Document Search,File Finder,Content Search,0
+aws,Which service provides video streaming?,Amazon IVS,Video Service,Stream Service,Media Stream,0
+aws,What is AWS Lake Formation?,Data Lake Service,Lake Creator,Storage Formation,Data Pool,0
+aws,Which service provides contact center?,Amazon Connect,Contact Service,Call Center,Support Hub,0
+aws,What is AWS Macie used for?,Data Security and Privacy,Access Control,Identity Management,Resource Protection,0
+aws,Which service provides edge computing?,AWS Wavelength,Edge Service,Computing Edge,Network Edge,0
+aws,What is AWS MSK?,Managed Streaming for Kafka,Message Service,Stream Control,Queue Manager,0
+aws,Which service provides network firewall?,AWS Network Firewall,Security Groups,WAF,Shield,0
+aws,What is AWS Polly used for?,Text-to-Speech Service,Voice Generator,Speech Service,Audio Creator,0
+aws,Which service provides quantum ledger?,QLDB,Ledger Service,Quantum DB,Blockchain Service,0
+aws,What is AWS RoboMaker used for?,Robotics Development,Robot Control,Machine Learning,Automation Service,0
+aws,Which service provides AR/VR building?,Amazon Sumerian,Reality Service,3D Builder,Virtual World,0
+aws,What is AWS Service Catalog?,IT Service Management,Product Catalog,Service List,Resource Catalog,0
+aws,Which service provides video analysis?,Amazon Rekognition Video,Video Analyzer,Media Analysis,Video Intelligence,0
+aws,What is AWS Shield used for?,DDoS Protection,Security Service,Firewall Management,Access Control,0
+aws,Which service provides voice ID?,Amazon Voice ID,Identity Service,Voice Auth,Speech ID,0
+aws,What is AWS Snow Family?,Data Migration Devices,Storage Family,Transfer Service,Migration Tool,0
+aws,Which service provides workflow studio?,Step Functions Studio,Workflow Builder,Process Designer,Flow Creator,0
+aws,What is AWS WorkSpaces?,Virtual Desktop Service,Workspace Manager,Desktop Cloud,Virtual Office,0
+aws,Which service provides IoT analytics?,IoT Analytics,Data Analysis,IoT Insights,Device Analytics,0

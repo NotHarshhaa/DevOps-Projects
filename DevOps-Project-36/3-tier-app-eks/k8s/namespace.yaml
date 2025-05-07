@@ -1,0 +1,6 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: 3-tier-app-eks
+  labels:
+    name: 3-tier-app-eks

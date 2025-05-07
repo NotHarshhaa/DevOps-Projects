@@ -1,0 +1,38 @@
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: alb
+  annotations:
+    ingressclass.kubernetes.io/is-default-class: "false"
+spec:
+  controller: ingress.k8s.aws/alb
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: 3-tier-app-ingress
+  namespace: 3-tier-app-eks
+  annotations:
+    alb.ingress.kubernetes.io/scheme: "internet-facing"
+    alb.ingress.kubernetes.io/target-type: "ip"
+    alb.ingress.kubernetes.io/healthcheck-path: "/"  # This tells ALB to check / for health
+    
+spec:
+  ingressClassName: alb
+  rules:
+  - http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: backend
+            port:
+              number: 8000
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend
+            port:
+              number: 80

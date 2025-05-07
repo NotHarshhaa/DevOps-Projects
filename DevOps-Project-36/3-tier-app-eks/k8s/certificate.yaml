@@ -1,0 +1,13 @@
+# certificate.yaml
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: example-com-tls
+  namespace: 3-tier-app-eks
+spec:
+  secretName: example-com-tls
+  issuerRef:
+    name: letsencrypt-dev
+    kind: ClusterIssuer
+  dnsNames:
+  - "akhileshmishra.tech" # replace with your domain name

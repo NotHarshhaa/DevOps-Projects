@@ -1,0 +1,66 @@
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: alb
+  annotations:
+    ingressclass.kubernetes.io/is-default-class: "false"
+spec:
+  controller: ingress.k8s.aws/alb
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: 3-tier-app-eks-ingress
+  namespace: 3-tier-app-eks
+  annotations:
+    alb.ingress.kubernetes.io/scheme: "internet-facing"
+    alb.ingress.kubernetes.io/target-type: "ip"
+    alb.ingress.kubernetes.io/healthcheck-path: "/"  # This tells ALB to check / for health
+
+    
+    # Enable HTTPS and HTTP to HTTPS redirect
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    # 
+    
+    # Use the certificate managed by cert-manager
+    alb.ingress.kubernetes.io/ssl-policy: "ELBSecurityPolicy-TLS-1-2-2017-01"
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-west-1:163962798700:certificate/58982a1c-bf20-4d38-9b3b-c8c1ad3e5c46
+    
+    # Add this annotation to use the certificate from cert-manager
+    alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": {"Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
+spec:
+  ingressClassName: "alb"
+  tls:
+  - hosts:
+    - "akhileshmishra.tech"
+    secretName: example-com-tls  # This must match the secretName in the Certificate resource
+  rules:
+  - host: "akhileshmishra.tech"  # Replace with your actual domain
+    http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: backend
+            port:
+              number: 8000
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend
+            port:
+              number: 80
+  # # Optional: Add a rule for www subdomain if needed
+  # - host: "www.akhileshmishra.tech"  # Replace with your actual domain
+  #   http:
+  #     paths:
+  #     - path: /
+  #       pathType: Prefix
+  #       backend:
+  #         service:
+  #           name: frontend
+  #           port:
+  #             number: 80

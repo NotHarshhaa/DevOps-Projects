@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: 3-tier-app-eks
+data:
+  DB_HOST: "postgres-db.3-tier-app-eks.svc.cluster.local"
+  DB_NAME: "postgres"
+  DB_PORT: "5432"
+  FLASK_DEBUG: "0"

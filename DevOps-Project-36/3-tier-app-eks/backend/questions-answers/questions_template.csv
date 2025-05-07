@@ -1,0 +1,4 @@
+topic_slug,question_text,option1,option2,option3,option4,correct_answer
+docker,What command shows running containers?,docker ps,docker list,docker show,docker status,0
+docker,What is a Dockerfile?,A configuration file for building images,A container log file,A network configuration,A volume mount file,0
+kubernetes,What is a Pod?,The smallest deployable unit in K8s,A network policy,A storage volume,A service mesh,0

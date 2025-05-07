@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-db
+  namespace: 3-tier-app-eks
+  labels:
+    service: database
+spec:
+  type: ExternalName
+  externalName: skymonil-postgres.c54w64eikb30.ap-south-1.rds.amazonaws.com
+  ports:
+  - port: 5432
+  # postgres-db.devopsdozo.svc.cluster.local  

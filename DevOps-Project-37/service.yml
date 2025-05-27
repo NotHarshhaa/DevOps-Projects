@@ -1,0 +1,16 @@
+apiVersion: v1
+# Indicates this as a service
+kind: Service
+metadata:
+  # Service name
+  name: reddit-clone-service
+spec:
+  selector:
+    # Selector for Pods
+    app: reddit-clone
+  ports:
+    # Port Map
+  - port: 3000
+    targetPort: 3000
+    protocol: TCP
+  type: LoadBalancer

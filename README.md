@@ -30,6 +30,12 @@
 
 ---
 
+## 🌟 **Star History**
+
+[![Star History Chart](https://api.star-history.com/svg?repos=NotHarshhaa/DevOps-Projects&type=Date)](https://www.star-history.com/#NotHarshhaa/DevOps-Projects&Date)
+
+---
+
 _*Welcome to the ultimate resource for **learning DevOps through hands-on projects!** This repository is designed to cater to aspiring **DevOps engineers** of all skill levels, from beginners taking their first steps in the field to advanced users looking to deepen their knowledge and expertise.*_
 
 ![Welcome Badge](https://img.shields.io/badge/🚀%20Welcome-Learn%20DevOps%20Through%20Hands--On%20Projects-10b981?style=for-the-badge&logo=opsgenie&logoColor=white)

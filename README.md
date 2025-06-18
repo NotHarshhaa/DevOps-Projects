@@ -28,6 +28,12 @@
 
 ![DevOps-Projects](https://imgur.com/tlMOmn0.png)
 
+## 👥 **Project Ownership**
+
+<a href="https://github.com/NotHarshhaa/DevOps-Projects/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=NotHarshhaa/DevOps-Projects" />
+</a>
+
 ---
 
 ## 🌟 **Star History**

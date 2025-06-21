@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-reddit-app
+spec:
+  rules:
+  - host: "domain.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/test"
+        backend:
+          service:
+            name: reddit-clone-service
+            port:
+              number: 3000
+  - host: "*.domain.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/test"
+        backend:
+          service:
+            name: reddit-clone-service
+            port:
+              number: 3000

@@ -14,12 +14,6 @@ variable "environment" {
   type        = string
   default     = "dev"
 }
-variable "Role" {
-  description = "Role of the instance"
-  type        = list(string)
-  default     = ["master", "agent", "sonar"]
-
-}
 variable "vpc_cidr" {
   description = "CIDR block for VPC"
   type        = string
@@ -74,59 +68,4 @@ variable "vpc_single_nat_gateway" {
   description = "Enable only single NAT Gateway in one Availability Zone to save costs during our demos"
   type        = bool
   default     = true
-}
-
-# EC2 Instance Variables
-variable "ami" {
-  description = "AMI ID for the EC2 instance"
-  type        = string
-  default     = "ami-0f918f7e67a3323f0" # Replace with a valid AMI ID
-}
-variable "instance_type" {
-  description = "Instance type for the EC2 instance"
-  type        = string
-  default     = "t3.micro"
-}
-
-variable "jumper_instance" {
-  description = "Name for the Jumper EC2 instance"
-  type        = string
-  default     = "jumper-instance"
-}
-variable "jenkins_instance" {
-  description = "Name for the Jenkins EC2 instance"
-  type        = string
-  default     = "jenkins-instance"
-}
-variable "ansible_master_instance" {
-  description = "Name for the Ansible Master EC2 instance"
-  type        = string
-  default     = "ansible-master-instance"
-}
-
-variable "key_name" {
-  description = "Key pair name for SSH access"
-  type        = string
-  default     = "terraform-key" # Replace with your key pair name
-
-}
-
-variable "security_group_ids" {
-  description = "List of security group IDs to associate with the instance"
-  type        = list(string)
-  default     = []
-
-}
-variable "tags" {
-  description = "Tags to apply to the EC2 instance"
-  type        = map(string)
-  default     = {}
-
-}
-
-variable "iam_instance_profile_name" {
-  description = "IAM instance profile name to associate with the EC2 instance"
-  type        = string
-  default     = "" # This should be set to the IAM instance profile name from the IAM module
-
 }

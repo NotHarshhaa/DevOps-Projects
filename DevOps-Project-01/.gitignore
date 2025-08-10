@@ -1,0 +1,30 @@
+# Terraform .terraform directory
+.terraform/
+
+# Terraform state files
+*.tfstate
+*.tfstate.*.backup
+
+# Terraform crash log files
+crash.log
+crash.*.log
+
+# Terraform variable definition files (if sensitive)
+# Uncomment or modify if your .tfvars files contain sensitive data and should not be committed
+# *.tfvars
+# *.tfvars.json
+
+# Local override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Providers and modules downloaded by 'terraform init'
+# These are handled by the .terraform/ rule, but explicitly listing them can be helpful
+# .terraform-providers/
+# .terraform-modules/
+
+# Sensitive files (e.g., credentials, keys) - ensure these are never committed
+# Add specific patterns for any sensitive files not covered by the above
+keys/terraform-key.pem

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        body {
+            background: linear-gradient(135deg, #6e45e2, #88d3ce);
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            background-color: rgba(34, 34, 34, 0.8);
+            padding: 10px 20px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .navbar .nav-link, .navbar .navbar-brand {
+            color: #88d3ce !important;
+            font-weight: bold;
+        }
+
+        .navbar .nav-link:hover {
+            color: #ffffff !important;
+        }
+
+        .container {
+            max-width: 1200px;
+            padding: 20px;
+            margin-top: 80px;
+            margin-bottom: auto;
+        }
+
+        h1 {
+            color: #88d3ce;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 36px;
+            position: relative;
+            animation: fadeInDown 1s ease-in-out;
+        }
+
+        h1:after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: #6e45e2;
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        .welcome-message {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        .card {
+            background-color: rgba(0, 0, 0, 0.7);
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 45px rgba(0, 0, 0, 0.7);
+        }
+
+        .card-text {
+            color: #ffffff;
+        }
+
+        .post-author {
+            font-style: italic;
+            color: #bbbbbb;
+        }
+
+        .trending-section {
+            margin-top: 60px;
+            padding: 40px 20px;
+            background-color: rgba(34, 34, 34, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        .trending-section h2 {
+            color: #6e45e2;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 28px;
+        }
+
+        .trending-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .trending-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .trending-item-icon {
+            font-size: 30px;
+            color: #88d3ce;
+            margin-right: 15px;
+        }
+
+        .trending-item-title {
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .footer {
+            background-color: rgba(34, 34, 34, 0.8);
+            padding: 10px;
+            text-align: center;
+            color: #bbbbbb;
+            margin-top: auto;
+            animation: fadeInUp 1s ease-in-out;
+            width: 100%;
+        }
+
+        .footer a {
+            color: #88d3ce;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: #ffffff;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">Twitter</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/add}">Add Post</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <h1>Daily Posts</h1>
+
+    <div class="welcome-message">
+        <p>Welcome to your daily dose of the latest posts. Explore what's trending, share your thoughts, and stay connected with the community.</p>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12" th:each="post : ${posts}">
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-text" th:text="${post.content}"></p>
+                    <p class="post-author">Posted by: <span th:text="${post.user.username}"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="trending-section">
+        <h2>Trending Topics</h2>
+        <div class="trending-item">
+            <div class="trending-item-icon">🔥</div>
+            <div class="trending-item-title">#BreakingNews</div>
+        </div>
+        <div class="trending-item">
+            <div class="trending-item-icon">💡</div>
+            <div class="trending-item-title">#TechInnovations</div>
+        </div>
+        <div class="trending-item">
+            <div class="trending-item-icon">🎉</div>
+            <div class="trending-item-title">#FunFriday</div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <p>&copy; 2024 DevOps Shack. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+</div>
+
+<!-- Bootstrap JS (Optional) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

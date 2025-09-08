@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #6e45e2, #88d3ce);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(34, 34, 34, 0.8);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar h1 {
+            color: #ffffff;
+            font-size: 24px;
+            margin: 0;
+            margin-right: auto;
+        }
+
+        .navbar .links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar a {
+            color: #88d3ce;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .navbar a:hover {
+            color: #ffffff;
+        }
+
+        .form-container {
+            background-color: rgba(0, 0, 0, 0.7);
+            width: 400px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1s ease-in-out;
+            transform: translateY(0);
+            margin-top: 80px;
+            margin-bottom: auto;
+        }
+
+        h2 {
+            color: #88d3ce;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+            position: relative;
+        }
+
+        h2:after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: #6e45e2;
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #444;
+            color: #ffffff;
+            box-sizing: border-box;
+            font-size: 14px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        input:focus {
+            background-color: #555;
+            outline: none;
+            transform: translateY(-2px);
+        }
+
+        button {
+            background-color: #6e45e2;
+            color: #ffffff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #88d3ce;
+            transform: translateY(-3px);
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #ccc;
+        }
+
+        .form-footer a {
+            color: #88d3ce;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .form-footer a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        .success-message {
+            background-color: rgba(0, 128, 0, 0.7);
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 3px;
+            text-align: center;
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .error-message {
+            color: #ff4c4c;
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+            animation: shake 0.5s;
+        }
+
+        .footer {
+            background-color: rgba(34, 34, 34, 0.8);
+            padding: 10px;
+            text-align: center;
+            color: #bbbbbb;
+            margin-top: auto;
+            animation: fadeInUp 1s ease-in-out;
+            width: 100%;
+        }
+
+        .footer a {
+            color: #88d3ce;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: #ffffff;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-5px);
+            }
+            50% {
+                transform: translateX(5px);
+            }
+            75% {
+                transform: translateX(-5px);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <h1>DevOps</h1>
+        <div class="links">
+            <a href="https://www.youtube.com/@rahimsstudio/videos" target="_blank">YouTube</a>
+            <a href="https://github.com/abrahimcse" target="_blank">Github</a>
+            <a href="https://www.linkedin.com/in/abrahimcse/" target="_blank">LinkedIn</a>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <div th:if="${param.success}">
+            <div class="success-message">
+                <p>Registration Successful!</p>
+            </div>
+        </div>
+
+        <h2>Registration</h2>
+        <form th:action="@{/register}" method="post" role="form" th:object="${user}">
+            <label for="username">Username:</label>
+            <input th:field="*{username}" type="text" id="username" name="username"
+                placeholder="Enter your Username" required>
+
+            <label for="password">Password:</label>
+            <input th:field="*{password}" type="password" id="password" name="password"
+                placeholder="Enter your Password" required>
+
+            <button type="submit">Register</button>
+        </form>
+
+        <div th:if="${Userexist}">
+            <div class="error-message">Username is Taken</div>
+        </div>
+
+        <div class="form-footer">
+            Already have an account? <a th:href="@{/login1}">Login</a> here.
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 DevOps. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </div>
+</body>
+
+</html>
+

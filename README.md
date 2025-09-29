@@ -85,6 +85,24 @@ A website showcasing a curated list of major real-time DevOps and Cloud projects
 
 ---
 
+## 🔗 **Related AWS Projects Repository**
+
+For comprehensive AWS-specific projects and hands-on learning experiences, visit our dedicated AWS Projects repository:
+
+**AWS Projects Repository Highlights:**
+
+* **Real-world AWS Projects** from beginner to advanced levels
+* **AWS DevOps Focus** with practical implementation guides
+* **Hands-on Learning** with AWS services and best practices
+* **Industry-Relevant** projects covering EC2, VPC, RDS, Lambda, and more
+* **Community Driven** with active contributions and AWS expertise
+
+🔗 **Visit the AWS repository**: [AWS-Projects](https://github.com/NotHarshhaa/AWS-Projects)
+
+![AWS Projects](https://img.shields.io/badge/☁️%20AWS%20Projects-Dedicated%20AWS%20Learning%20Hub-ff9900?style=for-the-badge&logo=amazonaws&logoColor=white)
+
+---
+
 ## **Repository Contents for DevOps Projects from Beginner to Advanced Levels**
 
 > [!IMPORTANT]

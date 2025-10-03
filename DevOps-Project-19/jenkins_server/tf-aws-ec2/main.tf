@@ -92,8 +92,8 @@ module "ec2_instance" {
   name = var.jenkins_ec2_instance
 
   instance_type               = var.instance_type
-  ami                         = "ami-0e8a34246278c21e4"
-  key_name                    = "jenkins_server_keypair"
+  ami                         = "ami-0d473344347276854"
+  key_name                    = "aws.in"
   monitoring                  = true
   vpc_security_group_ids      = [module.sg.security_group_id]
   subnet_id                   = module.vpc.public_subnets[0]

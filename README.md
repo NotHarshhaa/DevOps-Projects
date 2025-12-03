@@ -1,4 +1,10 @@
-# Real-World DevOps/Cloud Projects For Learning from Beginner to Advanced ♐
+# **Real-World DevOps/Cloud Projects For Learning from Beginner to Advanced** ♐
+
+<p align="center">
+  <a href="https://trendshift.io/repositories/13316" target="_blank" rel="noopener noreferrer">
+    <img src="https://trendshift.io/api/badge/repositories/13316" alt="NotHarshhaa/DevOps-Projects | Trendshift" style="width:350px;height:80px;max-width:100%;" />
+  </a>
+</p>
 
 [![Forks][forks-shield]][forks-url]
 [![Stars][stars-shield]][stars-url]

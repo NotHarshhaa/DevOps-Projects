@@ -20,7 +20,7 @@ This project demonstrates a **Two-Tier architecture on AWS** using **Terraform**
 ## 📖 Step-by-Step Guide  
 
 📌 **Read the full tutorial with screenshots**:  
-[Deploy Two-Tier Architecture on AWS using Terraform](https://blog.prodevopsguy.xyz/deploy-two-tier-architecture-on-aws-using-terraform)  
+[Deploy Two-Tier Architecture on AWS using Terraform](https://blog.prodevopsguytech.com/deploy-two-tier-architecture-on-aws-using-terraform)  
 
 ---
 
@@ -84,7 +84,7 @@ I’d love to hear your feedback! Feel free to share your thoughts.
 📧 **Connect with me:**
 
 - **GitHub**: [@NotHarshhaa](https://github.com/NotHarshhaa)  
-- **Blog**: [ProDevOpsGuy](https://blog.prodevopsguy.xyz)  
+- **Blog**: [ProDevOpsGuy](https://blog.prodevopsguytech.com)  
 - **Telegram Community**: [Join Here](https://t.me/prodevopsguy)  
 - **LinkedIn**: [Harshhaa Vardhan Reddy](https://www.linkedin.com/in/harshhaa-vardhan-reddy/)  
 

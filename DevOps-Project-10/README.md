@@ -188,7 +188,7 @@ I’d love to hear your feedback! Feel free to share your thoughts.
 📧 **Connect with me:**
 
 - **GitHub**: [@NotHarshhaa](https://github.com/NotHarshhaa)  
-- **Blog**: [ProDevOpsGuy](https://blog.prodevopsguy.xyz)  
+- **Blog**: [ProDevOpsGuy](https://blog.prodevopsguytech.com)  
 - **Telegram Community**: [Join Here](https://t.me/prodevopsguy)  
 - **LinkedIn**: [Harshhaa Vardhan Reddy](https://www.linkedin.com/in/harshhaa-vardhan-reddy/)  
 

@@ -134,7 +134,7 @@ This project is maintained by **[Harshhaa](https://github.com/NotHarshhaa)** �
 ### 💬 Connect with Me:
 
 - 🐙 **GitHub**: [@NotHarshhaa](https://github.com/NotHarshhaa)  
-- 📝 **Blog**: [ProDevOpsGuy](https://blog.prodevopsguy.xyz)  
+- 📝 **Blog**: [ProDevOpsGuy](https://blog.prodevopsguytech.com)  
 - 💬 **Telegram**: [Join Community](https://t.me/prodevopsguy)  
 - 👔 **LinkedIn**: [Harshhaa Vardhan Reddy](https://www.linkedin.com/in/harshhaa-vardhan-reddy/)
 

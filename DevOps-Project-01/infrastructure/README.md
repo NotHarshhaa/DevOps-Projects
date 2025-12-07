@@ -30,15 +30,17 @@ The infrastructure consists of:
 infrastructure/
 ├── main.tf           # Main Terraform configuration
 ├── variables.tf      # Input variables
-├── outputs.tf        # Output values
+├── README.md         # This file
 ├── modules/
 │   ├── vpc/         # VPC and networking
-│   ├── security/    # Security groups
-│   ├── rds/         # Database
-│   ├── alb/         # Load balancer
-│   ├── asg/         # Auto Scaling Group
-│   └── monitoring/  # CloudWatch monitoring
-└── environments/    # Environment-specific configurations
+│   │   ├── main.tf
+│   │   ├── variables.tf
+│   │   └── outputs.tf
+│   └── security/    # Security groups
+│       ├── main.tf
+│       ├── variables.tf
+│       └── outputs.tf
+└── environments/    # Environment-specific configurations (optional)
     ├── dev/
     └── prod/
 ```
@@ -72,6 +74,49 @@ infrastructure/
    ```bash
    terraform apply tfplan
    ```
+
+## Module Outputs
+
+### VPC Module Outputs
+
+The VPC module provides the following outputs for integration with other modules:
+
+**Basic Resources:**
+- `vpc_id` - ID of the VPC
+- `vpc_name` - Name of the VPC (from tags)
+- `vpc_cidr_block` - CIDR block of the VPC
+
+**Subnets:**
+- `public_subnet_ids` - List of public subnet IDs
+- `private_subnet_ids` - List of private subnet IDs
+- `public_subnet_cidrs` - List of public subnet CIDR blocks
+- `private_subnet_cidrs` - List of private subnet CIDR blocks
+
+**Networking Components:**
+- `internet_gateway_id` - ID of the Internet Gateway
+- `public_route_table_ids` - List of public route table IDs
+- `private_route_table_ids` - List of private route table IDs
+
+**NAT Gateways:**
+- `nat_gateway_ids` - List of NAT Gateway IDs
+- `nat_gateway_elastic_ips` - List of Elastic IP addresses associated with NAT Gateways
+
+**Usage Example:**
+```hcl
+module "vpc" {
+  source = "./modules/vpc"
+  # ... variables
+}
+
+# Access outputs
+output "vpc_id" {
+  value = module.vpc.vpc_id
+}
+
+output "public_subnets" {
+  value = module.vpc.public_subnet_ids
+}
+```
 
 ## Security Considerations
 

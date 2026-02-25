@@ -101,7 +101,7 @@ For comprehensive AWS-specific projects and hands-on learning experiences, visit
 * **AWS DevOps Focus** with practical implementation guides
 * **Hands-on Learning** with AWS services and best practices
 * **Industry-Relevant** projects covering EC2, VPC, RDS, Lambda, and more
-* **Community Driven** with active contributions and AWS expertise
+* **Community-Driven** with active contributions and AWS expertise
 
 🔗 **Visit the AWS repository**: [AWS-Projects](https://github.com/NotHarshhaa/AWS-Projects)
 

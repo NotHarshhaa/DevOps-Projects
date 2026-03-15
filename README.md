@@ -123,6 +123,55 @@ For comprehensive AWS-specific projects and hands-on learning experiences, visit
 
 ---
 
+## 📊 **Complete Projects Overview Table**
+
+| # | Project Title | Tools & Technologies | Description |
+|---|---------------|---------------------|-------------|
+| **01** | Deploy Java Application on AWS 3-Tier Architecture | AWS (EC2, RDS, VPC, ALB, Auto Scaling), Maven, SonarCloud, JFrog, Nginx, Tomcat, MySQL | Production-grade Java web application deployment using AWS 3-tier architecture with high availability, auto-scaling, and comprehensive monitoring |
+| **02** | Deploy Scalable VPC Architecture on AWS Cloud | AWS (VPC, EC2, NAT Gateway, Transit Gateway, CloudWatch), Apache, Git, SSM | Modular and scalable virtual network architecture with bastion host, auto-scaling groups, and VPC flow logs |
+| **03** | Fun with Linux for Cloud & DevOps Engineers | Linux, AWS EC2, EBS, File Systems | Hands-on Linux fundamentals covering user management, permissions, directory structure, and file systems |
+| **04** | Production-Ready Django Deployment on AWS ECS & ECR | AWS (ECS, ECR, RDS, ElastiCache, CloudFront), Django, Docker, Python, Terraform | Complete DevOps pipeline for Django applications with containerization, security scanning, and monitoring |
+| **05** | Deploy Code on Docker Container using Jenkins | Jenkins, Docker, Maven, Git, AWS EC2, Tomcat | Automated build and deployment process using Jenkins pipeline with Docker containerization |
+| **06** | Advanced CI/CD Pipeline with Major DevOps Tools | Terraform, Ansible, Jenkins, SonarQube, JFrog, Docker, EKS, Prometheus, Grafana | End-to-end CI/CD pipeline with infrastructure provisioning, code quality checks, and Kubernetes deployment |
+| **07** | DevOps Journey Using Azure DevOps | Azure DevOps, Terraform, AKS, ACR, Application Insights, Key Vault, Inspec | Complete Azure DevOps setup with CI/CD pipelines, infrastructure testing, and monitoring |
+| **08** | Kubernetes End to End Project on EKS | AWS EKS, kubectl, eksctl, Kubernetes, Docker, 2048 Game App | Deploy and manage containerized applications on Amazon EKS with load balancing and scaling |
+| **09** | DevSecOps: Netflix Clone CI-CD with Monitoring | Jenkins, Docker, Kubernetes, Trivy, SonarQube, Prometheus, Grafana, OWASP, TMDB API | Secure Netflix clone deployment with comprehensive security scanning and monitoring |
+| **10** | CI/CD Pipeline for .NET with DevOps Starter | Azure DevOps, .NET Core, ASP.NET, Azure App Service, Azure SQL, Application Insights | Automated CI/CD setup for .NET applications using Azure DevOps Starter |
+| **11** | Two-Tier AWS Infrastructure with Terraform | Terraform, AWS (VPC, EC2, RDS, ALB, Route 53, CloudFront, WAF), S3 | Infrastructure as Code deployment of scalable two-tier architecture with security best practices |
+| **12** | Deployment of Super Mario on Kubernetes using Terraform | Terraform, Kubernetes, AWS EKS, Docker, EC2 | Automated deployment of Super Mario game on Kubernetes cluster using Terraform |
+| **13** | Zomato Clone: Secure Deployment with DevSecOps CI/CD | Jenkins, Docker, Kubernetes, Terraform, SonarQube, Trivy, Prometheus, Grafana | Food delivery application deployment with integrated security and monitoring |
+| **14** | End-to-End CI/CD Pipeline for Android Apps | GitHub Actions, Gradle, Android, SonarQube, Firebase, Google Play Store | Automated build, test, and deployment pipeline for Android applications |
+| **15** | Deploy E-Commerce Three Tier Application on AWS EKS | AWS EKS, Helm, kubectl, eksctl, ALB Controller, EBS CSI, RobotShop | Three-tier e-commerce application deployment with Helm charts and AWS EKS |
+| **16** | Real Time DevOps: Deploy to Kubernetes Using Jenkins | Jenkins, Kubernetes, Docker, Maven, Git, AWS EC2 | End-to-end CI/CD project deploying applications to Kubernetes cluster via Jenkins |
+| **17** | Terraform Modules for AWS Infrastructure | Terraform, AWS (VPC, EC2, S3, IAM, RDS), Modules | Reusable Terraform modules for building AWS infrastructure components |
+| **18** | Jenkins Pipeline with Maven, SonarQube, Argo CD, Helm | Jenkins, Maven, SonarQube, Argo CD, Helm, Kubernetes, Docker, GitOps | Complete CI/CD pipeline for Java applications with GitOps deployment |
+| **19** | Multi-Cloud Kubernetes Deployment | Kubernetes, AWS EKS, Azure AKS, GCP GKE, Terraform, Helm | Deploy applications across multiple cloud providers using Kubernetes |
+| **20** | Azure DevOps Pipeline + Terraform Deployment | Azure DevOps, Terraform, Azure Service Bus, Blob Storage, Service Principal | Automated Terraform deployments via Azure DevOps with state management |
+| **21** | Microservices Deployment with Service Mesh | Kubernetes, Istio, Docker, Prometheus, Grafana, Jaeger | Deploy microservices architecture with service mesh for traffic management |
+| **22** | Serverless Application Deployment on AWS | AWS Lambda, API Gateway, DynamoDB, S3, CloudFormation, SAM | Build and deploy serverless applications using AWS services |
+| **23** | GitLab CI/CD with Kubernetes and Helm | GitLab CI/CD, Kubernetes, Helm, Docker, AWS EKS | Automated deployment pipeline using GitLab CI/CD and Kubernetes |
+| **24** | Infrastructure Monitoring with Prometheus Stack | Prometheus, Grafana, AlertManager, Node Exporter, Blackbox Exporter | Complete monitoring solution for infrastructure and applications |
+| **25** | DevSecOps: Petshop Java Application Deployment | Jenkins, Docker, Kubernetes, Terraform, SonarQube, Trivy, Ansible, Maven | Secure deployment of Java-based Petshop application with automation |
+| **26** | Cloud Cost Optimization with Automation | AWS Cost Explorer, Lambda, CloudWatch, Terraform, Python | Automated cloud cost monitoring and optimization strategies |
+| **27** | Disaster Recovery and Backup Automation | AWS Backup, Lambda, S3, RDS, EC2, CloudFormation | Automated backup and disaster recovery solutions for AWS resources |
+| **28** | Multi-Environment Deployment Strategy | Terraform, Jenkins, Kubernetes, Helm, Git, AWS/Azure | Manage multiple environments (dev, staging, prod) with IaC |
+| **29** | Log Aggregation and Analysis Pipeline | ELK Stack (Elasticsearch, Logstash, Kibana), Filebeat, AWS | Centralized logging solution for distributed applications |
+| **30** | Production Blog App Deployment with Full Monitoring | Jenkins, SonarQube, Nexus, Trivy, Docker, EKS, Prometheus, Grafana, Terraform | Complete CI/CD pipeline with security scanning and comprehensive monitoring |
+| **31** | Container Security Scanning Pipeline | Trivy, Clair, Anchore, Jenkins, Docker, Kubernetes | Automated container vulnerability scanning in CI/CD pipeline |
+| **32** | Blue-Green Deployment on Kubernetes | Kubernetes, Helm, Istio, Jenkins, AWS EKS, ArgoCD | Zero-downtime deployment strategy using blue-green methodology |
+| **33** | Automated Database Migration Pipeline | Flyway, Liquibase, Jenkins, PostgreSQL, MySQL, Docker | Automated database schema migration and version control |
+| **34** | Infrastructure Compliance and Security Scanning | Terraform, Checkov, tfsec, AWS Config, Jenkins | Automated infrastructure compliance checking and security scanning |
+| **35** | Multi-Region High Availability Setup | AWS (Route 53, CloudFront, RDS Multi-AZ, S3), Terraform | Deploy highly available applications across multiple AWS regions |
+| **36** | Kubernetes Cluster Management with GitOps | ArgoCD, Flux, Kubernetes, Helm, Git, AWS EKS | GitOps-based cluster management and application deployment |
+| **37** | API Gateway and Microservices Architecture | Kong, AWS API Gateway, Lambda, ECS, Docker, Terraform | Build scalable API gateway for microservices architecture |
+| **38** | Automated Testing in CI/CD Pipeline | Selenium, JUnit, Jest, Jenkins, Docker, Kubernetes | Integrate automated testing (unit, integration, E2E) in CI/CD |
+| **39** | Service Mesh Implementation with Istio | Istio, Kubernetes, Prometheus, Grafana, Kiali, Jaeger | Implement service mesh for microservices with observability |
+| **40** | Cloud Migration Strategy and Execution | AWS Migration Hub, Database Migration Service, Terraform, Jenkins | Plan and execute cloud migration from on-premises to AWS |
+
+![Projects Overview](https://img.shields.io/badge/📊%20Projects%20Overview-40%20Complete%20DevOps%20Projects-orange?style=for-the-badge&logo=github&logoColor=white)
+
+---
+
 ## **Integration of DevOps Technology with Other Technologies**
 
 > [!NOTE]

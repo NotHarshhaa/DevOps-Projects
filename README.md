@@ -287,3 +287,5 @@ I’d love to hear your feedback! Feel free to share your thoughts.
 ## 📜 **Copyright & License**
 
 ![Copyright](https://img.shields.io/badge/©%202026%20H%20A%20R%20S%20H%20H%20A%20A-All%20Rights%20Reserved-red?style=for-the-badge&logo=copyright&logoColor=white) ![License](https://img.shields.io/badge/⚠️%20Unauthorized%20Reproduction-Prohibited-darkred?style=for-the-badge&logo=shield&logoColor=white)
+Added a line
+Added a line

@@ -12,6 +12,7 @@
 [![Last Commit][commit-shield]][commit-url]
 [![Code of Conduct][coc-shield]][coc-url]
 [![Contributing][contrib-shield]][contrib-url]
+[![Security][security-shield]][security-url]
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [forks-shield]: https://img.shields.io/github/forks/NotHarshhaa/DevOps-Projects?style=for-the-badge&logo=github&logoColor=white&color=orange
@@ -31,6 +32,9 @@
 
 [contrib-shield]: https://img.shields.io/badge/Contributions-Welcome-ff69b4?style=for-the-badge&logo=gitbook&logoColor=white
 [contrib-url]: https://github.com/NotHarshhaa/DevOps-Projects/blob/master/CONTRIBUTING.md
+
+[security-shield]: https://img.shields.io/badge/Security-Policy-10b981?style=for-the-badge&logo=shield&logoColor=white
+[security-url]: https://github.com/NotHarshhaa/DevOps-Projects/blob/master/SECURITY.md
 
 ![DevOps-Projects](https://imgur.com/tlMOmn0.png)
 
@@ -224,6 +228,16 @@ For comprehensive AWS-specific projects and hands-on learning experiences, visit
 > We are committed to fostering a welcoming and respectful environment for all contributors. Please take a moment to review our [Code of Conduct](./CODE_OF_CONDUCT.md) before participating in this community.
 
 [![Code of Conduct](https://img.shields.io/badge/Code%20of%20Conduct-Enforced-blueviolet?style=for-the-badge&logo=handshake&logoColor=white)](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/CODE_OF_CONDUCT.md)
+
+---
+
+## **Security Policy**
+
+> [!IMPORTANT]
+> 
+> We prioritize security in all our DevOps projects. Please review our [Security Policy](./SECURITY.md) to understand our security practices, vulnerability reporting process, and how we maintain secure educational environments.
+
+[![Security Policy](https://img.shields.io/badge/Security-Policy-10b981?style=for-the-badge&logo=shield&logoColor=white)](https://github.com/NotHarshhaa/DevOps-Projects/blob/master/SECURITY.md)
 
 ---
 

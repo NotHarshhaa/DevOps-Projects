@@ -20,8 +20,12 @@ public class JobUpdater
         await using var cmd = conn.CreateCommand();
         cmd.CommandText = "UPDATE ai_jobs SET status = 'processing' WHERE job_id = @id";
         cmd.Parameters.AddWithValue("id", jobId);
-        await cmd.ExecuteNonQueryAsync();
-    }
+        
+        var affected = await cmd.ExecuteNonQueryAsync();
+        if (affected != 1)
+            throw new InvalidOperationException($"Job update failed for job_id={jobId}. Affected rows: {affected}.");
+    } 
+
 
     public async Task MarkCompletedAsync(string jobId, string result, string provider, long durationMs)
     {
@@ -38,7 +42,10 @@ public class JobUpdater
         cmd.Parameters.AddWithValue("result", result);
         cmd.Parameters.AddWithValue("provider", provider);
         cmd.Parameters.AddWithValue("duration", durationMs);
-        await cmd.ExecuteNonQueryAsync();
+
+        var affected = await cmd.ExecuteNonQueryAsync();
+        if (affected != 1)
+            throw new InvalidOperationException($"Job update failed for job_id={jobId}. Affected rows: {affected}.");
     }
 
     public async Task MarkFailedAsync(string jobId, string error)
@@ -49,6 +56,9 @@ public class JobUpdater
         cmd.CommandText = "UPDATE ai_jobs SET status = 'failed', error = @error, completed_at = NOW() WHERE job_id = @id";
         cmd.Parameters.AddWithValue("id", jobId);
         cmd.Parameters.AddWithValue("error", error);
-        await cmd.ExecuteNonQueryAsync();
+
+        var affected = await cmd.ExecuteNonQueryAsync();
+        if (affected != 1)
+            throw new InvalidOperationException($"Job update failed for job_id={jobId}. Affected rows: {affected}.");
     }
 }

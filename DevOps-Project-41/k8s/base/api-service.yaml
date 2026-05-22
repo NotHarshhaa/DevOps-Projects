@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-api
+  namespace: ai-devsecops
+  labels:
+    app.kubernetes.io/name: ai-api
+    app.kubernetes.io/part-of: ai-native-devsecops-platform
+    app.kubernetes.io/component: api
+spec:
+  selector:
+    app.kubernetes.io/name: ai-api
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+      protocol: TCP
+  type: ClusterIP

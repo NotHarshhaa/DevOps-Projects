@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-worker
+  namespace: ai-devsecops
+  labels:
+    app.kubernetes.io/name: ai-worker
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/part-of: ai-native-devsecops-platform
+    app.kubernetes.io/component: worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ai-worker
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ai-worker
+        app.kubernetes.io/version: "1.0.0"
+        app.kubernetes.io/component: worker
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ai-platform-sa
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+        - name: ai-worker
+          image: ghcr.io/GITHUB_REPOSITORY/ai-worker:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9090
+              name: metrics
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: ai-platform-config
+            - secretRef:
+                name: ai-platform-secrets
+                optional: true
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+          readinessProbe:
+            exec:
+              command: ["pgrep", "-x", "dotnet"]
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            exec:
+              command: ["pgrep", "-x", "dotnet"]
+            initialDelaySeconds: 20
+            periodSeconds: 30
+            failureThreshold: 3
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+      volumes:
+        - name: tmp
+          emptyDir: {}

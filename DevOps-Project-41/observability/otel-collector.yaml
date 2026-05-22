@@ -1,0 +1,128 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: otel-collector-config
+  namespace: ai-devsecops
+  labels:
+    app.kubernetes.io/name: otel-collector
+    app.kubernetes.io/part-of: ai-native-devsecops-platform
+data:
+  otel-collector-config.yaml: |
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+            endpoint: 0.0.0.0:4317
+          http:
+            endpoint: 0.0.0.0:4318
+
+    processors:
+      batch:
+        timeout: 5s
+        send_batch_size: 1024
+      memory_limiter:
+        limit_mib: 256
+        spike_limit_mib: 64
+        check_interval: 5s
+
+    exporters:
+      prometheus:
+        endpoint: "0.0.0.0:8889"
+        namespace: ai_platform
+      debug:
+        verbosity: normal
+      otlp/tempo:
+        endpoint: tempo:4317
+        tls:
+          insecure: true
+
+    service:
+      pipelines:
+        traces:
+          receivers: [otlp]
+          processors: [memory_limiter, batch]
+          exporters: [debug, otlp/tempo]
+        metrics:
+          receivers: [otlp]
+          processors: [memory_limiter, batch]
+          exporters: [prometheus]
+        logs:
+          receivers: [otlp]
+          processors: [memory_limiter, batch]
+          exporters: [debug]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: otel-collector
+  namespace: ai-devsecops
+  labels:
+    app.kubernetes.io/name: otel-collector
+    app.kubernetes.io/version: "0.104.0"
+    app.kubernetes.io/part-of: ai-native-devsecops-platform
+    app.kubernetes.io/component: observability
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: otel-collector
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: otel-collector
+        app.kubernetes.io/component: observability
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+      containers:
+        - name: otel-collector
+          image: otel/opentelemetry-collector-contrib:0.104.0
+          command: ["--config=/etc/otel/otel-collector-config.yaml"]
+          ports:
+            - containerPort: 4317
+              name: otlp-grpc
+            - containerPort: 4318
+              name: otlp-http
+            - containerPort: 8889
+              name: prometheus
+          volumeMounts:
+            - name: config
+              mountPath: /etc/otel
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "256Mi"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: [ALL]
+      volumes:
+        - name: config
+          configMap:
+            name: otel-collector-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: otel-collector
+  namespace: ai-devsecops
+  labels:
+    app.kubernetes.io/name: otel-collector
+    app.kubernetes.io/part-of: ai-native-devsecops-platform
+spec:
+  selector:
+    app.kubernetes.io/name: otel-collector
+  ports:
+    - name: otlp-grpc
+      port: 4317
+      targetPort: 4317
+    - name: otlp-http
+      port: 4318
+      targetPort: 4318
+    - name: prometheus
+      port: 8889
+      targetPort: 8889

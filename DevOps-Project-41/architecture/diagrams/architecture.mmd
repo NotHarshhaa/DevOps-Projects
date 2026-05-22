@@ -1,0 +1,56 @@
+flowchart TD
+    DEV[Developer] -->|git push| GH[GitHub Repository]
+
+    subgraph CI_CD [CI/CD — GitHub Actions]
+        CI[ci.yml\nbuild + test]
+        SEC[security.yml\nTrivy scan + SARIF]
+        REL[release.yml\nGHCR push + SBOM + Cosign]
+    end
+
+    GH --> CI
+    GH --> SEC
+    GH --> REL
+    REL --> GHCR[GitHub Container Registry\nghcr.io/owner/ai-api\nghcr.io/owner/ai-worker]
+    REL -->|update image digest| MANIFESTS[k8s/overlays/dev\nkustomization.yaml]
+
+    MANIFESTS --> ARGO[Argo CD\nautomated reconciliation]
+
+    subgraph K8S [Kubernetes Cluster — ai-devsecops namespace]
+        direction TB
+        API[ai-api\n.NET 8 Minimal API\nPORT 8080]
+        WORKER[ai-worker\n.NET 8 Worker\nPORT 9090 metrics]
+        REDIS[(Redis 7.2\nJob Queue)]
+        PG[(PostgreSQL 16\nJob Results)]
+        KEDA_OBJ[KEDA ScaledObject\nmin=0 max=10]
+        OTEL[OTel Collector\n:4317 gRPC :4318 HTTP]
+        PROM[Prometheus\n:9090]
+        GRAF[Grafana\n:3000]
+        LOKI[Loki\n:3100]
+    end
+
+    ARGO --> K8S
+
+    API -->|1. enqueue job| REDIS
+    API -->|2. insert row| PG
+    KEDA_OBJ -->|scale replicas| WORKER
+    REDIS -->|3. dequeue job| WORKER
+    WORKER -->|4. call provider| AIPROV[AI Provider\nmock / Ollama /\nOpenAI-compatible]
+    WORKER -->|5. update result| PG
+    API -->|OTLP traces + metrics| OTEL
+    WORKER -->|OTLP traces + metrics| OTEL
+    OTEL -->|scrape| PROM
+    OTEL --> LOKI
+    PROM --> GRAF
+    LOKI --> GRAF
+
+    subgraph SECURITY [Supply Chain Security]
+        TRIVY[Trivy\nfs + image + config]
+        SBOM_BOX[SBOM\nSPDX + CycloneDX]
+        COSIGN[Cosign\nkeyless signing]
+        KYVERNO[Kyverno\nadmission policies]
+    end
+
+    REL --> TRIVY
+    REL --> SBOM_BOX
+    REL --> COSIGN
+    KYVERNO -.->|admission webhook| K8S

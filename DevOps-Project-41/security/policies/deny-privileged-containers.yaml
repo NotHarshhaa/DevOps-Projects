@@ -1,0 +1,27 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: deny-privileged-containers
+  annotations:
+    policies.kyverno.io/title: Deny Privileged Containers
+    policies.kyverno.io/category: Pod Security Standards
+    policies.kyverno.io/severity: high
+    policies.kyverno.io/description: >-
+      Privileged containers allow root-level access to the host and must be denied.
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+    - name: deny-privileged
+      match:
+        any:
+          - resources:
+              kinds: [Pod]
+              namespaces: [ai-devsecops]
+      validate:
+        message: "Privileged containers are not allowed."
+        pattern:
+          spec:
+            containers:
+              - =(securityContext):
+                  =(privileged): "false"

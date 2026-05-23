@@ -25,8 +25,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-+       with:
-+         persist-credentials: false
+        with:
+          persist-credentials: false
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -58,6 +58,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3

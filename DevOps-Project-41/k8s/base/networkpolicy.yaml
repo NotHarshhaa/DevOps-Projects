@@ -1,0 +1,68 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ai-api-netpol
+  namespace: ai-devsecops
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: ai-api
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - ports:
+        - port: 8080
+  egress:
+    - ports:
+        - port: 6379  # Redis
+        - port: 5432  # PostgreSQL
+        - port: 4317  # OTLP gRPC
+        - port: 4318  # OTLP HTTP
+        - port: 53    # DNS
+          protocol: UDP
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ai-worker-netpol
+  namespace: ai-devsecops
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: ai-worker
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - ports:
+        - port: 9090  # Prometheus metrics
+  egress:
+    - ports:
+        - port: 6379
+        - port: 5432
+        - port: 4317
+        - port: 4318
+        - port: 443   # External AI providers
+        - port: 11434 # Ollama
+        - port: 53
+          protocol: UDP
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: redis-netpol
+  namespace: ai-devsecops
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: redis
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/part-of: ai-native-devsecops-platform
+      ports:
+        - port: 6379

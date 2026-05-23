@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ai-native-platform-prod
+  namespace: argocd
+  labels:
+    app.kubernetes.io/part-of: ai-native-devsecops-platform
+    environment: prod
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/GITHUB_OWNER/DevOps-Projects.git
+    targetRevision: main
+    path: DevOps-Project-41/k8s/overlays/prod
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ai-devsecops
+  syncPolicy:
+    # Production uses manual sync — promotion requires explicit Git change + manual trigger
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+    retry:
+      limit: 3
+      backoff:
+        duration: 10s
+        factor: 2
+        maxDuration: 5m

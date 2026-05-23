@@ -1,0 +1,89 @@
+name: "[P41] CI"
+
+on:
+  push:
+    branches: [devops-project, master]
+    paths:
+      - "DevOps-Project-41/app/**"
+      - ".github/workflows/project-41-ci.yml"
+  pull_request:
+    branches: [master]
+    paths:
+      - "DevOps-Project-41/app/**"
+      - ".github/workflows/project-41-ci.yml"
+
+permissions:
+  contents: read
+
+env:
+  APP_DIR: DevOps-Project-41/app
+
+jobs:
+  build-test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Restore
+        working-directory: ${{ env.APP_DIR }}
+        run: dotnet restore
+
+      - name: Build
+        working-directory: ${{ env.APP_DIR }}
+        run: dotnet build -c Release --no-restore
+
+      - name: Test
+        working-directory: ${{ env.APP_DIR }}
+        run: dotnet test -c Release --no-build --logger trx --results-directory TestResults
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: ${{ env.APP_DIR }}/TestResults
+
+  docker-build:
+    name: Docker Build (smoke test)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build API image
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ env.APP_DIR }}
+          file: ${{ env.APP_DIR }}/Dockerfile
+          target: api
+          push: false
+          load: true
+          tags: ai-api:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build Worker image
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ env.APP_DIR }}
+          file: ${{ env.APP_DIR }}/Dockerfile
+          target: worker
+          push: false
+          load: true
+          tags: ai-worker:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

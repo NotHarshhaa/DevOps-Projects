@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: ai-devsecops
+
+resources:
+  - namespace.yaml
+  - serviceaccount.yaml
+  - configmap.yaml
+  - networkpolicy.yaml
+  - redis-deployment.yaml
+  - postgres-statefulset.yaml
+  - api-deployment.yaml
+  - api-service.yaml
+  - worker-deployment.yaml
+  - worker-service.yaml
+  - keda-scaledobject-worker.yaml

@@ -1,0 +1,22 @@
+severity:
+  - CRITICAL
+  - HIGH
+
+exit-code: 1
+
+scanners:
+  - vuln
+  - secret
+  - misconfig
+
+vuln:
+  ignore-unfixed: false
+
+misconfig:
+  include-non-failures: false
+
+format: table
+
+cache:
+  dir: .trivy-cache
+  backend: fs

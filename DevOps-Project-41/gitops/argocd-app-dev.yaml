@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ai-native-platform-dev
+  namespace: argocd
+  labels:
+    app.kubernetes.io/part-of: ai-native-devsecops-platform
+    environment: dev
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/GITHUB_OWNER/DevOps-Projects.git
+    targetRevision: devops-project
+    path: DevOps-Project-41/k8s/overlays/dev
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ai-devsecops
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m

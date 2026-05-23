@@ -1,0 +1,147 @@
+{
+  "__inputs": [],
+  "__requires": [],
+  "annotations": { "list": [] },
+  "description": "AI-Native DevSecOps Platform — operational dashboard",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "id": 1,
+      "title": "API Request Rate",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+      "targets": [
+        {
+          "expr": "rate(http_requests_received_total{job=\"ai-api\"}[1m])",
+          "legendFormat": "{{method}} {{path}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "API P95 Latency (ms)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job=\"ai-api\"}[5m])) * 1000",
+          "legendFormat": "p95 latency",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Job Queue Depth",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 8 },
+      "targets": [
+        {
+          "expr": "ai_queue_depth",
+          "legendFormat": "Queue depth",
+          "refId": "A"
+        }
+      ],
+      "options": { "colorMode": "background", "graphMode": "area" }
+    },
+    {
+      "id": 4,
+      "title": "Worker Replicas",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 8 },
+      "targets": [
+        {
+          "expr": "kube_deployment_status_replicas_ready{namespace=\"ai-devsecops\", deployment=\"ai-worker\"}",
+          "legendFormat": "Ready replicas",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Jobs Created",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 6, "x": 12, "y": 8 },
+      "targets": [
+        {
+          "expr": "increase(ai_jobs_created_total[1h])",
+          "legendFormat": "Jobs (1h)",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Job Success/Failure Rate",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 12 },
+      "targets": [
+        {
+          "expr": "rate(ai_jobs_completed_total[1m])",
+          "legendFormat": "Completed",
+          "refId": "A"
+        },
+        {
+          "expr": "rate(ai_jobs_failed_total[1m])",
+          "legendFormat": "Failed",
+          "refId": "B"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "AI Provider Duration (p95 ms)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 12 },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, rate(ai_job_duration_seconds_bucket[5m])) * 1000",
+          "legendFormat": "p95 duration",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Redis Availability",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 20 },
+      "targets": [
+        {
+          "expr": "up{job=\"redis\"}",
+          "legendFormat": "Redis",
+          "refId": "A"
+        }
+      ],
+      "options": { "colorMode": "background" }
+    },
+    {
+      "id": 9,
+      "title": "PostgreSQL Availability",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 20 },
+      "targets": [
+        {
+          "expr": "up{job=\"postgres\"}",
+          "legendFormat": "PostgreSQL",
+          "refId": "A"
+        }
+      ],
+      "options": { "colorMode": "background" }
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 38,
+  "tags": ["ai", "devsecops", "platform"],
+  "time": { "from": "now-1h", "to": "now" },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "AI-Native DevSecOps Platform",
+  "uid": "ai-devsecops-platform",
+  "version": 1
+}

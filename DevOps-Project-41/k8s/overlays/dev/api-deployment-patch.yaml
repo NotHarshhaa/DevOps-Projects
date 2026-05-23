@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-api
+  namespace: ai-devsecops
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: ai-api
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"

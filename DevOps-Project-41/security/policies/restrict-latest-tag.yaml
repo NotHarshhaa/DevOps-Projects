@@ -1,0 +1,26 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: restrict-latest-tag
+  annotations:
+    policies.kyverno.io/title: Restrict Latest Tag
+    policies.kyverno.io/category: Best Practices
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/description: >-
+      Using 'latest' image tag makes deployments non-reproducible. Require explicit version tags.
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+    - name: no-latest-tag
+      match:
+        any:
+          - resources:
+              kinds: [Pod]
+              namespaces: [ai-devsecops]
+      validate:
+        message: "Image tag 'latest' is not allowed. Use an explicit version tag (e.g., :1.0.0 or a SHA digest)."
+        pattern:
+          spec:
+            containers:
+              - image: "!*:latest"

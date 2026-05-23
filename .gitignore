@@ -1,0 +1,52 @@
+# Build artifacts
+bin/
+obj/
+out/
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+
+# .NET
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# Docker
+*.env
+.env.*
+!.env.example
+
+# SBOM and scan reports
+sbom-*.json
+*.sarif
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+*.tfplan
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Kubernetes secrets (never commit)
+*secret*.yaml
+!*secret*.example.yaml
+!*secret*.template.yaml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node (if any tooling added)
+node_modules/
+
+# Logs
+*.log

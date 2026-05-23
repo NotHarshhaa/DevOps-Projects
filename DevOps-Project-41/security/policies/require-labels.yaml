@@ -1,0 +1,27 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-app-labels
+  annotations:
+    policies.kyverno.io/title: Require Application Labels
+    policies.kyverno.io/category: Best Practices
+    policies.kyverno.io/severity: low
+    policies.kyverno.io/description: >-
+      All workloads must define app.kubernetes.io/name and app.kubernetes.io/version labels.
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+    - name: require-labels
+      match:
+        any:
+          - resources:
+              kinds: [Deployment, StatefulSet, DaemonSet]
+              namespaces: [ai-devsecops]
+      validate:
+        message: "Labels app.kubernetes.io/name and app.kubernetes.io/version are required."
+        pattern:
+          metadata:
+            labels:
+              app.kubernetes.io/name: "?*"
+              app.kubernetes.io/version: "?*"

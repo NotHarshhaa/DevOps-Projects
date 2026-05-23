@@ -1,0 +1,21 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: ai-worker-scaledobject
+  namespace: ai-devsecops
+  labels:
+    app.kubernetes.io/name: ai-worker
+    app.kubernetes.io/part-of: ai-native-devsecops-platform
+spec:
+  scaleTargetRef:
+    name: ai-worker
+  minReplicaCount: 0
+  maxReplicaCount: 10
+  pollingInterval: 10
+  cooldownPeriod: 60
+  triggers:
+    - type: redis
+      metadata:
+        address: redis.ai-devsecops.svc.cluster.local:6379
+        listName: ai-jobs
+        listLength: "5"

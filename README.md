@@ -171,6 +171,7 @@ For comprehensive AWS-specific projects and hands-on learning experiences, visit
 | **38** | Automated Testing in CI/CD Pipeline | Selenium, JUnit, Jest, Jenkins, Docker, Kubernetes | Integrate automated testing (unit, integration, E2E) in CI/CD |
 | **39** | Service Mesh Implementation with Istio | Istio, Kubernetes, Prometheus, Grafana, Kiali, Jaeger | Implement service mesh for microservices with observability |
 | **40** | Cloud Migration Strategy and Execution | AWS Migration Hub, Database Migration Service, Terraform, Jenkins | Plan and execute cloud migration from on-premises to AWS |
+| 41 | AI-Native DevSecOps Platform with GitOps and Observability | GitHub Actions, Docker, Kubernetes, Argo CD, KEDA, OpenTelemetry, Prometheus, Grafana, Trivy, Cosign, Terraform | End-to-end platform for deploying AI-ready applications with GitOps, autoscaling, observability, SBOM generation, image signing and DevSecOps controls |
 
 ![Projects Overview](https://img.shields.io/badge/📊%20Projects%20Overview-40%20Complete%20DevOps%20Projects-orange?style=for-the-badge&logo=github&logoColor=white)
 

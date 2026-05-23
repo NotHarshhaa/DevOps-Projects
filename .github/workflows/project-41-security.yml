@@ -1,0 +1,109 @@
+name: "[P41] Security Scanning"
+
+on:
+  push:
+    branches: [devops-project, master]
+    paths:
+      - "DevOps-Project-41/app/**"
+      - "DevOps-Project-41/k8s/**"
+      - ".github/workflows/project-41-security.yml"
+  schedule:
+    - cron: "0 6 * * 1"  # Weekly on Monday at 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+
+env:
+  APP_DIR: DevOps-Project-41/app
+
+jobs:
+  trivy-filesystem:
+    name: Trivy Filesystem Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Trivy filesystem scan
+        uses: aquasecurity/trivy-action@0.24.0
+        with:
+          scan-type: fs
+          scan-ref: DevOps-Project-41
+          format: sarif
+          output: trivy-fs.sarif
+          severity: HIGH,CRITICAL
+          exit-code: "0"
+
+      - name: Upload SARIF to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: trivy-fs.sarif
+          category: trivy-filesystem
+
+  trivy-config:
+    name: Trivy Kubernetes Manifest Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Trivy config scan on k8s manifests
+        uses: aquasecurity/trivy-action@0.24.0
+        with:
+          scan-type: config
+          scan-ref: DevOps-Project-41/k8s
+          format: sarif
+          output: trivy-config.sarif
+          severity: HIGH,CRITICAL
+          exit-code: "0"
+
+      - name: Upload SARIF to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: trivy-config.sarif
+          category: trivy-config
+
+  trivy-image:
+    name: Trivy Image Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build API image for scanning
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ env.APP_DIR }}
+          file: ${{ env.APP_DIR }}/Dockerfile
+          target: api
+          push: false
+          load: true
+          tags: ai-api:scan
+          cache-from: type=gha
+
+      - name: Scan API image with Trivy
+        uses: aquasecurity/trivy-action@0.24.0
+        with:
+          image-ref: ai-api:scan
+          format: sarif
+          output: trivy-image-api.sarif
+          severity: HIGH,CRITICAL
+          exit-code: "0"
+
+      - name: Upload API image SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: trivy-image-api.sarif
+          category: trivy-image-api
+
+      - name: Upload scan reports as artefacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-reports
+          path: "*.sarif"

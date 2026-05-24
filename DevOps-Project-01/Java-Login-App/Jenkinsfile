@@ -1,0 +1,20 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'Maven 3' // Set this up in Jenkins tools config
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/your/repo.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+    }
+}

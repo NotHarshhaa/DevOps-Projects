@@ -49,7 +49,7 @@ Press enter or click to view image in full size
 
 ![](https://miro.medium.com/v2/resize:fit:700/1*iYkYc9x8AvTci6ER3bYulA.png)
 
-### **🔐 2️⃣ Run** `start.sh` to Prepare the Jenkins Agent
+### **🔐 2️⃣ Run** `setup.sh` to Prepare the Jenkins Agent
 
 This script does two important things:
 

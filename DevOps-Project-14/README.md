@@ -1,6 +1,6 @@
 # 🚀 End-to-End CI/CD Pipeline for Android Apps with GitHub Actions  
 
-![GitHub Actions](https://imgur.com/XNUS0pA.png)  
+![GitHub Actions](https://imgur.com/XNUS0pA.png)   
 
 ## 📌 Overview  
 

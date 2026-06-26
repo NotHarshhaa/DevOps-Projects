@@ -19,16 +19,28 @@ function signin() {
   } = useForm<TSignInSchema>({ resolver: zodResolver(signInSchema) });
 
   const onSubmit = async (data: FieldValues) => {
-    if (data.email === 'abc@gamil.com') {
-      toast.error('Submitting form is failed');
-      return;
+    try {
+      const apiUrl = import.meta.env.VITE_API_PATH ?? 'http://localhost:5000';
+      const response = await fetch(`${apiUrl}/api/auth/email-password/signin`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          email: data.email,
+          password: data.password,
+        }),
+      });
+      const result = await response.json();
+      if (!response.ok) {
+        toast.error(result.message ?? 'Sign in failed. Please check your credentials.');
+        return;
+      }
+      toast.success(result.message ?? 'Signed in successfully!');
+      reset();
+      navigate('/');
+    } catch {
+      toast.error('Unable to connect to the server. Please try again later.');
     }
-
-    // TODO: Server-side validation
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    reset();
-    navigate('/');
   };
 
   return (

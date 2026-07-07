@@ -1,0 +1,28 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {} # lets you redeploy manually from the Actions tab
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false # never cancel a deploy that's mid-flight
+
+jobs:
+  deploy:
+    name: Deploy to EC2
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH in and run remote-deploy.sh
+        uses: appleboy/ssh-action@v1.2.0 # pinned, not @master — don't trust a floating tag with your prod SSH key
+        with:
+          host: ${{ secrets.HOST_DNS }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            bash ${{ vars.APP_DIR }}/scripts/remote-deploy.sh \
+              "${{ vars.APP_DIR }}" \
+              "${{ vars.APP_NAME }}" \
+              "main" \
+              "${{ vars.HEALTH_PORT }}"

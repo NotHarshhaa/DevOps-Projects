@@ -11,6 +11,10 @@ TypeScript instead of plain JS (with its own build step walked through in detail
 and the CI/CD step does a real build + health-check + automatic rollback instead of
 a bare `pm2 restart`.
 
+
+![Architecture Diagram](./assets/architecture-diagram.png)
+
+
 ## What you get
 
 - `scripts/setup-server.sh` — optional shortcut that automates everything in steps 3, 6, 8, and 10 below in one go. Worth reading the manual walkthrough at least once first so you know what it's actually doing.

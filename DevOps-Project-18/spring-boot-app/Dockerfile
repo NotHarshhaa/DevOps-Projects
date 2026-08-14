@@ -1,26 +1,9 @@
-FROM eclipse-temurin:17-jdk-jammy
+FROM adoptopenjdk/openjdk11:alpine-jre
 
-USER root
+ARG artifact=target/spring-boot-web.jar
 
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        maven \
-        docker.io \
-        curl \
-        ca-certificates \
-        git \
-    && rm -rf /var/lib/apt/lists/*
+WORKDIR /opt/app
 
-# Install Helm
-RUN curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+COPY ${artifact} app.jar
 
-# Install kubectl
-RUN curl -fsSL -o /usr/local/bin/kubectl \
-    https://dl.k8s.io/release/$(curl -fsSL https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl && \
-    chmod +x /usr/local/bin/kubectl
-
-# Verify tools
-RUN mvn --version && \
-    docker --version && \
-    helm version && \
-    kubectl version --client
+ENTRYPOINT ["java", "-jar", "app.jar"]

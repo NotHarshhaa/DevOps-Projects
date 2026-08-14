@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'tushar31/tushar-maven-docker-agent:2'
-            args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+    agent any
 
     environment {
         DOCKER_IMAGE = "tushar31/spring-boot-app:${BUILD_NUMBER}"
@@ -12,7 +7,7 @@ pipeline {
 
     stages {
 
-        stage('Build and Test') {
+        stage('Build Application') {
             steps {
                 dir('DevOps-Project-18/spring-boot-app') {
                     sh 'mvn clean package'
@@ -41,7 +36,7 @@ pipeline {
             }
         }
 
-        stage('Deploy to AKS with Helm') {
+        stage('Deploy to AKS') {
             steps {
                 sh '''
                     helm upgrade --install spring-boot-app \
@@ -49,7 +44,9 @@ pipeline {
                       --namespace project18 \
                       --create-namespace \
                       --set image.repository=tushar31/spring-boot-app \
-                      --set image.tag=${BUILD_NUMBER}
+                      --set image.tag=${BUILD_NUMBER} \
+                      --wait \
+                      --timeout 2m
                 '''
             }
         }
@@ -57,11 +54,10 @@ pipeline {
         stage('Verify Deployment') {
             steps {
                 sh '''
+                    kubectl get pods -n project18
                     kubectl rollout status deployment/spring-boot-app \
                       -n project18 \
                       --timeout=120s
-
-                    kubectl get pods -n project18
                 '''
             }
         }

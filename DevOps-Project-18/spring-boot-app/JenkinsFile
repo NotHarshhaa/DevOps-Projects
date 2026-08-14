@@ -21,13 +21,21 @@ stage('SonarQube Analysis') {
 
             dir('DevOps-Project-18/spring-boot-app') {
                 withSonarQubeEnv('SonarQube') {
-                    sh """
-                        ${scannerHome}/bin/sonar-scanner \
-                          -Dsonar.projectKey=my-app \
-                          -Dsonar.projectName=my-app \
-                          -Dsonar.sources=src/main/java \
-                          -Dsonar.java.binaries=target/classes
-                    """
+                    withCredentials([
+                        string(
+                            credentialsId: 'sonarqube-token',
+                            variable: 'SONAR_TOKEN'
+                        )
+                    ]) {
+                        sh """
+                            ${scannerHome}/bin/sonar-scanner \
+                              -Dsonar.projectKey=my-app \
+                              -Dsonar.projectName=my-app \
+                              -Dsonar.sources=src/main/java \
+                              -Dsonar.java.binaries=target/classes \
+                              -Dsonar.token=\$SONAR_TOKEN
+                        """
+                    }
                 }
             }
         }

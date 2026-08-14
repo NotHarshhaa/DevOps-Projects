@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'tushar-maven-docker-agent:1'
-            args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
+            args '--user root -v /var/run/docker.sock:/var/run/docker.sock -v /home/azureuser/.kube:/root/.kube'
         }
     }
 
@@ -38,6 +38,31 @@ pipeline {
                         docker.image("${DOCKER_IMAGE}").push()
                     }
                 }
+            }
+        }
+
+        stage('Deploy to AKS with Helm') {
+            steps {
+                sh '''
+                    helm upgrade --install spring-boot-app \
+                      ./DevOps-Project-18/helm/spring-boot-app \
+                      --namespace project18 \
+                      --create-namespace \
+                      --set image.repository=tushar31/spring-boot-app \
+                      --set image.tag=${BUILD_NUMBER}
+                '''
+            }
+        }
+
+        stage('Verify Deployment') {
+            steps {
+                sh '''
+                    kubectl rollout status deployment/spring-boot-app \
+                      -n project18 \
+                      --timeout=120s
+
+                    kubectl get pods -n project18
+                '''
             }
         }
     }

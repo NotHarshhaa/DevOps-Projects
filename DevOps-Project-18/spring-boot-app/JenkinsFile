@@ -14,16 +14,21 @@ pipeline {
                 }
             }
         }
- stage('SonarQube Analysis') {
+stage('SonarQube Analysis') {
     steps {
-        dir('DevOps-Project-18/spring-boot-app') {
-            withSonarQubeEnv('SonarQube') {
-                sh '''
-                    mvn sonar:sonar \
-                      -Dsonar.projectKey=my-app \
-                      -Dsonar.projectName=my-app \
-                      -Dsonar.token=$SONAR_AUTH_TOKEN
-                '''
+        script {
+            def scannerHome = tool 'sonar-scanner'
+
+            dir('DevOps-Project-18/spring-boot-app') {
+                withSonarQubeEnv('SonarQube') {
+                    sh """
+                        ${scannerHome}/bin/sonar-scanner \
+                          -Dsonar.projectKey=my-app \
+                          -Dsonar.projectName=my-app \
+                          -Dsonar.sources=src/main/java \
+                          -Dsonar.java.binaries=target/classes
+                    """
+                }
             }
         }
     }

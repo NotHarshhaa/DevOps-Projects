@@ -1,0 +1,11 @@
+replicaCount: 2
+
+image:
+  repository: tushar31/spring-boot-app
+  tag: "1"
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 80
+  targetPort: 8080

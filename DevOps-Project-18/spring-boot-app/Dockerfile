@@ -1,13 +1,15 @@
-# You can change this base image to anything else
-# But make sure to use the correct version of Java
-FROM adoptopenjdk/openjdk11:alpine-jre
+FROM maven:3.9-eclipse-temurin-17
 
-# Simply the artifact path
-ARG artifact=target/spring-boot-web.jar
+USER root
 
-WORKDIR /opt/app
+# Install Docker CLI
+RUN apt-get update && \
+    apt-get install -y docker.io curl && \
+    rm -rf /var/lib/apt/lists/*
 
-COPY ${artifact} app.jar
+# Install Helm
+RUN curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
-# This should not be changed
-ENTRYPOINT ["java","-jar","app.jar"]
+RUN mvn -version
+RUN docker --version
+RUN helm version

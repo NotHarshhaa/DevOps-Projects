@@ -14,6 +14,20 @@ pipeline {
                 }
             }
         }
+ stage('SonarQube Analysis') {
+    steps {
+        dir('DevOps-Project-18/spring-boot-app') {
+            withSonarQubeEnv('SonarQube') {
+                sh '''
+                    mvn sonar:sonar \
+                      -Dsonar.projectKey=my-app \
+                      -Dsonar.projectName=my-app \
+                      -Dsonar.token=$SONAR_AUTH_TOKEN
+                '''
+            }
+        }
+    }
+}
 
         stage('Build Docker Image') {
             steps {
@@ -55,6 +69,7 @@ pipeline {
             steps {
                 sh '''
                     kubectl get pods -n project18
+
                     kubectl rollout status deployment/spring-boot-app \
                       -n project18 \
                       --timeout=120s

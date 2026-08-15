@@ -8,13 +8,11 @@ WORKDIR /opt/app
 
 COPY ${artifact} app.jar
 
-# Create non-root user and group
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+RUN addgroup -S -g 10001 appgroup && \
+    adduser -S -u 10001 -G appgroup appuser
 
-# Give the user ownership of the application
 RUN chown -R appuser:appgroup /opt/app
 
-# Run container as non-root user
 USER appuser
 
 ENTRYPOINT ["java", "-jar", "app.jar"]

@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: spring-boot-rolebinding
+  namespace: project18
+subjects:
+  - kind: ServiceAccount
+    name: spring-boot-sa
+    namespace: project18
+roleRef:
+  kind: Role
+  name: spring-boot-role
+  apiGroup: rbac.authorization.k8s.io

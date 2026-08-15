@@ -1,0 +1,40 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: spring-boot-network-policy
+  namespace: project18
+
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: spring-boot-app
+
+  policyTypes:
+    - Ingress
+    - Egress
+
+  ingress:
+    # Allow traffic from pods in project18
+    - from:
+        - podSelector: {}
+
+      ports:
+        - protocol: TCP
+          port: 8080
+
+  egress:
+    # Allow communication to pods in project18
+    - to:
+        - podSelector: {}
+
+    # Allow DNS
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53
+

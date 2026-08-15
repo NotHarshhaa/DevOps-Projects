@@ -1,5 +1,7 @@
 FROM eclipse-temurin:17-jre-alpine
 
+RUN apk update && apk upgrade
+
 ARG artifact=target/spring-boot-web.jar
 
 WORKDIR /opt/app

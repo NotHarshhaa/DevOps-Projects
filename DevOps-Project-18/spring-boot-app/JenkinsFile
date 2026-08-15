@@ -43,7 +43,7 @@ stage('SonarQube Analysis') {
 }
 stage('OWASP Dependency Check') {
     steps {
-            dir('spring-boot-app') {
+            dir('DevOps-Project-18/spring-boot-app') {
               sh 'mvn org.owasp:dependency-check-maven:13.0.0:check -DfailBuildOnCVSS=8'
         }        
     }

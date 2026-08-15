@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: network-test
+  namespace: project18
+spec:
+  containers:
+  - name: network-test
+    image: curlimages/curl
+    command: ["sleep", "3600"]
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+

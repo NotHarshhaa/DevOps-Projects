@@ -16,7 +16,9 @@ spec:
   ingress:
     # Allow traffic from pods in project18
     - from:
-        - podSelector: {}
+        - podSelector: 
+               matchLabels:
+                   app.kubernetes.io/name: spring-boot-app
 
       ports:
         - protocol: TCP

@@ -1,5 +1,5 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: {{ include "spring-boot-app.fullname" . }}
   labels:
@@ -7,7 +7,12 @@ metadata:
 
 spec:
   replicas: {{ .Values.replicaCount }}
-
+  strategy:
+    canary:
+      steps:
+        - setWeight: 50
+        - pause:
+            duration: 30s
   selector:
     matchLabels:
       {{- include "spring-boot-app.selectorLabels" . | nindent 6 }}

@@ -41,6 +41,11 @@ stage('SonarQube Analysis') {
         }
     }
 }
+stage('OWASP Dependency Check') {
+    steps {
+        sh 'mvn dependency-check:check'
+    }
+}
 
         stage('Build Docker Image') {
             steps {
@@ -49,6 +54,16 @@ stage('SonarQube Analysis') {
                 }
             }
         }
+        stage('Trivy Image Scan') {
+    steps {
+        sh '''
+            trivy image \
+              --severity HIGH,CRITICAL \
+              --exit-code 1 \
+              ${DOCKER_IMAGE}
+        '''
+    }
+}
 
         stage('Push Docker Image') {
             steps {

@@ -23,6 +23,9 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
 
+          securityContext:
+            runAsNonRoot: true
+
           ports:
             - name: http
               containerPort: {{ .Values.service.targetPort }}

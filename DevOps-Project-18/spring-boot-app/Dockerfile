@@ -11,8 +11,8 @@ COPY ${artifact} app.jar
 RUN addgroup -S -g 10001 appgroup && \
     adduser -S -u 10001 -G appgroup appuser
 
-RUN chown -R appuser:appgroup /opt/app
+RUN chown -R 10001:10001 /opt/app
 
-USER appuser
+USER 10001
 
 ENTRYPOINT ["java", "-jar", "app.jar"]

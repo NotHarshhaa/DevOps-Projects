@@ -45,11 +45,12 @@ stage('OWASP Dependency Check') {
     steps {
         dir('DevOps-Project-18/spring-boot-app') {
             withCredentials([string(credentialsId: 'nvd-api-key', variable: 'NVD_API_KEY')]) {
-                sh '''
-                    mvn org.owasp:dependency-check-maven:13.0.0:check \
-                    -DnvdApiKey=$NVD_API_KEY \
-                    -DfailBuildOnCVSS=8
-                '''
+               sh """
+    export NVD_API_KEY=\$(printf '%s' '${NVD_API_KEY}' | tr -d '\\r' | tr -d '\\n')
+    mvn org.owasp:dependency-check-maven:13.0.0:check \
+      -DnvdApiKey="\$NVD_API_KEY" \
+      -DfailBuildOnCVSS=8
+"""
             }
         }
     }

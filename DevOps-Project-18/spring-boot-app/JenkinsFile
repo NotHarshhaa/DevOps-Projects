@@ -114,7 +114,6 @@ stage('OWASP Dependency Check') {
 
 stage('OWASP ZAP DAST') {
     steps {
-
         sh '''
             docker run --rm \
               --user 0 \
@@ -122,12 +121,15 @@ stage('OWASP ZAP DAST') {
               ghcr.io/zaproxy/zaproxy:stable \
               zap-baseline.py \
               -t http://4.157.219.55/ \
-              -r zap-report.html
+              -r zap-report.html \
+              -I
         '''
     }
+
     post {
         always {
-            archiveArtifacts artifacts: 'zap-report.html', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'zap-report.html',
+                         allowEmptyArchive: true
         }
     }
 }

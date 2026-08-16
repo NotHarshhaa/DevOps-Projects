@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "tushar31/spring-boot-app:${BUILD_NUMBER}"
+        APP_URL = "http://4.157.219.55/"
     }
 
     stages {
@@ -106,12 +107,27 @@ stage('OWASP Dependency Check') {
             steps {
                 sh '''
                     kubectl get pods -n project18
-
-                    kubectl rollout status deployment/spring-boot-app \
-                      -n project18 \
-                      --timeout=120s
+                    kubectl argo rollouts status spring-boot-app -n project18 --timeout=120s
                 '''
             }
         }
+
+stage('OWASP ZAP DAST') {
+    steps {
+        sh '''
+            docker run --rm \
+              -v "$WORKSPACE:/zap/wrk/:rw" \
+              ghcr.io/zaproxy/zaproxy:stable \
+              zap-baseline.py \
+              -t ${APP_URL} \
+              -r zap-report.html
+        '''
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: 'zap-report.html', allowEmptyArchive: true
+        }
+    }
+}
     }
 }

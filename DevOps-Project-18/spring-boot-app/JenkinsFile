@@ -114,12 +114,14 @@ stage('OWASP Dependency Check') {
 
 stage('OWASP ZAP DAST') {
     steps {
+
         sh '''
             docker run --rm \
+              --user 0 \
               -v "$WORKSPACE:/zap/wrk/:rw" \
               ghcr.io/zaproxy/zaproxy:stable \
               zap-baseline.py \
-              -t ${APP_URL} \
+              -t http://4.157.219.55/ \
               -r zap-report.html
         '''
     }

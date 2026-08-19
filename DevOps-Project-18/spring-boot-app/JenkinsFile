@@ -181,6 +181,7 @@ stage('Create Build Provenance') {
   "buildId": "${BUILD_ID}",
   "jobName": "${JOB_NAME}",
   "gitCommit": "${GIT_COMMIT ?: 'unknown'}",
+  "repository": "${GIT_URL}",
   "image": "${DOCKER_IMAGE}",
   "imageDigest": "${IMAGE_DIGEST}"
 }

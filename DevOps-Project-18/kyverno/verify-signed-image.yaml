@@ -20,9 +20,6 @@ spec:
         - imageReferences:
             - "tushar31/spring-boot-app:*"
 
-          mutateDigest: true
-          verifyDigest: true
-
           attestors:
             - entries:
                 - keys:
@@ -31,7 +28,7 @@ spec:
                       namespace: kyverno
 
           attestations:
-            - type: https://in-toto.io/attestation/v1
+            - type: "https://in-toto.io/attestation/v1"
 
               attestors:
                 - entries:

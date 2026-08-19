@@ -174,9 +174,9 @@ stage('Create Build Provenance') {
                 text: """
 {
   "buildType": "https://jenkins.io/build",
-  "builder": {
-    "id": "${JENKINS_URL}job/${JOB_NAME}"
-  },
+"builder": {
+  "id": "${JENKINS_URL}job/${JOB_NAME}"
+},
   "buildNumber": "${BUILD_NUMBER}",
   "buildId": "${BUILD_ID}",
   "jobName": "${JOB_NAME}",

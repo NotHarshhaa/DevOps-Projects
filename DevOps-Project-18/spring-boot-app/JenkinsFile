@@ -113,6 +113,11 @@ stage('OWASP Dependency Check') {
 stage('Cosign Sign Image') {
     steps {
         withCredentials([
+            usernamePassword(
+                credentialsId: 'docker-cred',
+                usernameVariable: 'DOCKER_USERNAME',
+                passwordVariable: 'DOCKER_PASSWORD'
+            ),
             file(
                 credentialsId: 'cosign-private-key',
                 variable: 'COSIGN_KEY'
@@ -123,10 +128,23 @@ stage('Cosign Sign Image') {
             )
         ]) {
             sh '''
+                set -e
+
+                echo "$DOCKER_PASSWORD" | docker login \
+                    -u "$DOCKER_USERNAME" \
+                    --password-stdin \
+                    docker.io
+
+                IMAGE_DIGEST=$(docker inspect \
+                    --format='{{index .RepoDigests 0}}' \
+                    "$DOCKER_IMAGE")
+
+                echo "Signing: $IMAGE_DIGEST"
+
                 cosign sign \
-                  --key "$COSIGN_KEY" \
-                  --yes \
-                  "$DOCKER_IMAGE"
+                    --key "$COSIGN_KEY" \
+                    --yes \
+                    "$IMAGE_DIGEST"
             '''
         }
     }

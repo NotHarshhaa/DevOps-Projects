@@ -20,9 +20,40 @@ spec:
         - imageReferences:
             - "tushar31/spring-boot-app:*"
 
+          mutateDigest: true
+          verifyDigest: true
+
           attestors:
             - entries:
                 - keys:
                     secret:
                       name: cosign-public-key
                       namespace: kyverno
+
+          attestations:
+            - type: https://in-toto.io/attestation/v1
+
+              attestors:
+                - entries:
+                    - keys:
+                        secret:
+                          name: cosign-public-key
+                          namespace: kyverno
+
+              conditions:
+                - all:
+                    - key: "{{ builder.id }}"
+                      operator: Equals
+                      value: "http://172.172.234.187:8080/job/DevOps-Project-18"
+
+                    - key: "{{ predicate.repository }}"
+                      operator: Equals
+                      value: "https://github.com/RawatTushar/DevOps-Projects.git"
+
+                    - key: "{{ predicate.buildType }}"
+                      operator: Equals
+                      value: "https://jenkins.io/build"
+
+                    - key: "{{ predicate.imageDigest }}"
+                      operator: Equals
+                      value: "{{ subject[0].digest.sha256 }}"

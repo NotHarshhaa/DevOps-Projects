@@ -87,6 +87,7 @@ stage('OWASP Dependency Check') {
                 }
             }
         }
+        
         stage('Test Cosign') {
     steps {
         withCredentials([
@@ -149,7 +150,82 @@ stage('Cosign Sign Image') {
         }
     }
 }
+stage('Get Image Digest') {
+    steps {
+        script {
+            env.IMAGE_DIGEST = sh(
+                script: """
+                    docker inspect \
+                      --format='{{index .RepoDigests 0}}' \
+                      ${DOCKER_IMAGE}
+                """,
+                returnStdout: true
+            ).trim()
 
+            echo "Image digest: ${env.IMAGE_DIGEST}"
+        }
+    }
+}
+stage('Create Build Provenance') {
+    steps {
+        script {
+            writeFile(
+                file: 'build-provenance.json',
+                text: """
+{
+  "buildType": "https://jenkins.io/build",
+  "builder": {
+    "id": "${JENKINS_URL}job/${JOB_NAME}"
+  },
+  "buildNumber": "${BUILD_NUMBER}",
+  "buildId": "${BUILD_ID}",
+  "jobName": "${JOB_NAME}",
+  "gitCommit": "${GIT_COMMIT ?: 'unknown'}",
+  "image": "${DOCKER_IMAGE}",
+  "imageDigest": "${IMAGE_DIGEST}"
+}
+"""
+            )
+        }
+
+        sh 'cat build-provenance.json'
+    }
+}
+stage('Cosign Attest Build') {
+    steps {
+        withCredentials([
+            usernamePassword(
+                credentialsId: 'docker-cred',
+                usernameVariable: 'DOCKER_USERNAME',
+                passwordVariable: 'DOCKER_PASSWORD'
+            ),
+            file(
+                credentialsId: 'cosign-private-key',
+                variable: 'COSIGN_KEY'
+            ),
+            string(
+                credentialsId: 'cosign-password',
+                variable: 'COSIGN_PASSWORD'
+            )
+        ]) {
+            sh '''
+                set -e
+
+                echo "$DOCKER_PASSWORD" | docker login \
+                    -u "$DOCKER_USERNAME" \
+                    --password-stdin \
+                    docker.io
+
+                cosign attest \
+                    --key "$COSIGN_KEY" \
+                    --yes \
+                    --predicate build-provenance.json \
+                    --type https://in-toto.io/attestation/v1 \
+                    "$IMAGE_DIGEST"
+            '''
+        }
+    }
+}
         stage('Deploy to AKS') {
             steps {
                 sh '''

@@ -87,6 +87,50 @@ stage('OWASP Dependency Check') {
                 }
             }
         }
+        stage('Test Cosign') {
+    steps {
+        withCredentials([
+            file(
+                credentialsId: 'cosign-private-key',
+                variable: 'COSIGN_KEY'
+            ),
+            string(
+                credentialsId: 'cosign-password',
+                variable: 'COSIGN_PASSWORD'
+            )
+        ]) {
+            sh '''
+                echo "Testing Cosign..."
+                cosign version
+
+                test -f "$COSIGN_KEY"
+
+                echo "Cosign private key is available"
+            '''
+        }
+    }
+}
+stage('Cosign Sign Image') {
+    steps {
+        withCredentials([
+            file(
+                credentialsId: 'cosign-private-key',
+                variable: 'COSIGN_KEY'
+            ),
+            string(
+                credentialsId: 'cosign-password',
+                variable: 'COSIGN_PASSWORD'
+            )
+        ]) {
+            sh '''
+                cosign sign \
+                  --key "$COSIGN_KEY" \
+                  --yes \
+                  "$DOCKER_IMAGE"
+            '''
+        }
+    }
+}
 
         stage('Deploy to AKS') {
             steps {

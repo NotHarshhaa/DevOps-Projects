@@ -1,0 +1,28 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: verify-spring-boot-image
+spec:
+  validationFailureAction: Enforce
+  background: false
+
+  rules:
+    - name: verify-spring-boot-cosign
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+              namespaces:
+                - project18
+
+      verifyImages:
+        - imageReferences:
+            - "tushar31/spring-boot-app:*"
+
+          attestors:
+            - entries:
+                - keys:
+                    secret:
+                      name: cosign-public-key
+                      namespace: kyverno

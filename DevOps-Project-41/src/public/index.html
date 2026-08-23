@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Server Status</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #3fb950;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    color: var(--text);
+    padding: 24px;
+  }
+
+  .window {
+    width: 100%;
+    max-width: 480px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.6);
+  }
+
+  .titlebar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    background: #0d1117;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .dot.red { background: #f85149; }
+  .dot.yellow { background: #d29922; }
+  .dot.green { background: #3fb950; }
+
+  .titlebar span {
+    margin-left: 8px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .body {
+    padding: 28px 24px 24px;
+  }
+
+  .status-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .pulse {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0 rgba(63, 185, 80, 0.6);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(63, 185, 80, 0.55); }
+    70%  { box-shadow: 0 0 0 8px rgba(63, 185, 80, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(63, 185, 80, 0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pulse { animation: none; }
+  }
+
+  .status-line strong {
+    font-size: 15px;
+    letter-spacing: 0.2px;
+  }
+
+  pre {
+    margin: 0 0 20px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--muted);
+    white-space: pre-wrap;
+  }
+
+  pre .prompt { color: var(--accent); }
+  pre .key { color: var(--text); }
+
+  .cursor {
+    display: inline-block;
+    width: 7px;
+    height: 14px;
+    background: var(--text);
+    vertical-align: -2px;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cursor { animation: none; }
+  }
+
+  a.health {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 12px;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+
+  a.health:hover,
+  a.health:focus-visible {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  a.health:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+  <div class="window">
+    <div class="titlebar">
+      <span class="dot red"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+      <span>ubuntu@ec2:~/your-repo</span>
+    </div>
+    <div class="body">
+      <div class="status-line">
+        <span class="pulse"></span>
+        <strong>Server is online</strong>
+      </div>
+      <pre><span class="prompt">$</span> pm2 status
+<span class="key">my-app</span>  online  build: dist/index.js
+
+<span class="prompt">$</span> curl localhost:5000/health
+{ "status": "ok" }<span class="cursor"></span></pre>
+      <a class="health" href="/health">→ /health</a>
+    </div>
+  </div>
+</body>
+</html>

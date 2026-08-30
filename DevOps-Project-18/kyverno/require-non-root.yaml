@@ -20,6 +20,13 @@ spec:
               kinds:
                 - Pod
 
+      exclude:
+        any:
+          - resources:
+              namespaces:
+                - monitoring
+
+
       validate:
         message: "Containers must run as non-root."
         pattern:

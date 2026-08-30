@@ -16,7 +16,7 @@ Here are the step-by-step details to set up an **end-to-end Jenkins pipeline for
 
 **Steps:**
 
-    1. Install the necessary Jenkins plugins:
+    1. Install the Necessary Jenkins plugins:
        1.1 Git plugin
        1.2 Maven Integration plugin
        1.3 Pipeline plugin

@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: {{ include "spring-boot-app.fullname" . }}
+  labels:
+    {{- include "spring-boot-app.labels" . | nindent 4 }}
+
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    canary:
+      steps:
+        - setWeight: 50
+        - pause:
+            duration: 30s
+  selector:
+    matchLabels:
+      {{- include "spring-boot-app.selectorLabels" . | nindent 6 }}
+
+  template:
+    metadata:
+      labels:
+        {{- include "spring-boot-app.selectorLabels" . | nindent 8 }}
+
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+          securityContext:
+            runAsNonRoot: true
+
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.targetPort }}
+              protocol: TCP
+
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}

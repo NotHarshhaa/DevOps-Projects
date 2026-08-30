@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "spring-boot-app.fullname" . }}
+  labels:
+    release: monitoring
+spec:
+  selector:
+    matchLabels:
+      {{- include "spring-boot-app.labels" . | nindent 6 }}
+  endpoints:
+    - port: http
+      path: /actuator/prometheus
+      interval: 10s

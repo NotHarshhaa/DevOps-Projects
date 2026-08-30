@@ -1,68 +1,278 @@
 pipeline {
-  agent {
-    docker {
-      image 'abhishekf5/maven-abhishek-docker-agent:v1'
-      args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
+    agent any
+
+    environment {
+        DOCKER_IMAGE = "tushar31/spring-boot-app:${BUILD_NUMBER}"
+        APP_URL = "http://4.157.219.55/"
     }
-  }
-  stages {
-    stage('Checkout') {
-      steps {
-        sh 'echo passed'
-        //git branch: 'main', url: 'https://github.com/iam-veeramalla/Jenkins-Zero-To-Hero.git'
-      }
-    }
-    stage('Build and Test') {
-      steps {
-        sh 'ls -ltr'
-        // build the project and create a JAR file
-        sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && mvn clean package'
-      }
-    }
-    stage('Static Code Analysis') {
-      environment {
-        SONAR_URL = "http://34.201.116.83:9000"
-      }
-      steps {
-        withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
-          sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
-        }
-      }
-    }
-    stage('Build and Push Docker Image') {
-      environment {
-        DOCKER_IMAGE = "abhishekf5/ultimate-cicd:${BUILD_NUMBER}"
-        // DOCKERFILE_LOCATION = "java-maven-sonar-argocd-helm-k8s/spring-boot-app/Dockerfile"
-        REGISTRY_CREDENTIALS = credentials('docker-cred')
-      }
-      steps {
-        script {
-            sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && docker build -t ${DOCKER_IMAGE} .'
-            def dockerImage = docker.image("${DOCKER_IMAGE}")
-            docker.withRegistry('https://index.docker.io/v1/', "docker-cred") {
-                dockerImage.push()
+
+    stages {
+
+        stage('Build Application') {
+            steps {
+                dir('DevOps-Project-18/spring-boot-app') {
+                    sh 'mvn clean package'
+                }
             }
         }
-      }
-    }
-    stage('Update Deployment File') {
-        environment {
-            GIT_REPO_NAME = "Jenkins-Zero-To-Hero"
-            GIT_USER_NAME = "iam-veeramalla"
+stage('SonarQube Analysis') {
+    steps {
+        script {
+            def scannerHome = tool 'sonar-scanner'
+
+            dir('DevOps-Project-18/spring-boot-app') {
+                withSonarQubeEnv('SonarQube') {
+                    withCredentials([
+                        string(
+                            credentialsId: 'sonarqube-token',
+                            variable: 'SONAR_TOKEN'
+                        )
+                    ]) {
+                        sh """
+                            ${scannerHome}/bin/sonar-scanner \
+                              -Dsonar.projectKey=my-app \
+                              -Dsonar.projectName=my-app \
+                              -Dsonar.sources=src/main/java \
+                              -Dsonar.java.binaries=target/classes \
+                              -Dsonar.token=\$SONAR_TOKEN
+                        """
+                    }
+                }
+            }
         }
-        steps {
-            withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+    }
+}
+stage('OWASP Dependency Check') {
+    steps {
+        dir('DevOps-Project-18/spring-boot-app') {
+            withCredentials([string(credentialsId: 'nvd-api-key', variable: 'NVD_API_KEY')]) {
+               sh """
+    export NVD_API_KEY=\$(printf '%s' '${NVD_API_KEY}' | tr -d '\\r' | tr -d '\\n')
+    mvn org.owasp:dependency-check-maven:13.0.0:check \
+      -DnvdApiKey="\$NVD_API_KEY" \
+      -DfailBuildOnCVSS=8
+"""
+            }
+        }
+    }
+}
+
+        stage('Build Docker Image') {
+            steps {
+                dir('DevOps-Project-18/spring-boot-app') {
+                    sh 'docker build -t ${DOCKER_IMAGE} .'
+                }
+            }
+        }
+        stage('Trivy Image Scan') {
+    steps {
+        sh '''
+            trivy image \
+              --severity HIGH,CRITICAL \
+              --exit-code 1 \
+              ${DOCKER_IMAGE}
+        '''
+    }
+}
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    docker.withRegistry(
+                        'https://index.docker.io/v1/',
+                        'docker-cred'
+                    ) {
+                        docker.image("${DOCKER_IMAGE}").push()
+                    }
+                }
+            }
+        }
+
+
+        
+        stage('Test Cosign') {
+    steps {
+        withCredentials([
+            file(
+                credentialsId: 'cosign-private-key',
+                variable: 'COSIGN_KEY'
+            ),
+            string(
+                credentialsId: 'cosign-password',
+                variable: 'COSIGN_PASSWORD'
+            )
+        ]) {
+            sh '''
+                echo "Testing Cosign..."
+                cosign version
+
+                test -f "$COSIGN_KEY"
+
+                echo "Cosign private key is available"
+            '''
+        }
+    }
+}
+stage('Cosign Sign Image') {
+    steps {
+        withCredentials([
+            usernamePassword(
+                credentialsId: 'docker-cred',
+                usernameVariable: 'DOCKER_USERNAME',
+                passwordVariable: 'DOCKER_PASSWORD'
+            ),
+            file(
+                credentialsId: 'cosign-private-key',
+                variable: 'COSIGN_KEY'
+            ),
+            string(
+                credentialsId: 'cosign-password',
+                variable: 'COSIGN_PASSWORD'
+            )
+        ]) {
+            sh '''
+                set -e
+
+                echo "$DOCKER_PASSWORD" | docker login \
+                    -u "$DOCKER_USERNAME" \
+                    --password-stdin \
+                    docker.io
+
+                IMAGE_DIGEST=$(docker inspect \
+                    --format='{{index .RepoDigests 0}}' \
+                    "$DOCKER_IMAGE")
+
+                echo "Signing: $IMAGE_DIGEST"
+
+                cosign sign \
+                    --key "$COSIGN_KEY" \
+                    --yes \
+                    "$IMAGE_DIGEST"
+            '''
+        }
+    }
+}
+stage('Get Image Digest') {
+    steps {
+        script {
+            env.IMAGE_DIGEST = sh(
+                script: """
+                    docker inspect \
+                      --format='{{index .RepoDigests 0}}' \
+                      ${DOCKER_IMAGE}
+                """,
+                returnStdout: true
+            ).trim()
+
+            echo "Image digest: ${env.IMAGE_DIGEST}"
+        }
+    }
+}
+stage('Create Build Provenance') {
+    steps {
+        script {
+            writeFile(
+                file: 'build-provenance.json',
+                text: """
+{
+  "buildType": "https://jenkins.io/build",
+"builder": {
+  "id": "${JENKINS_URL}job/${JOB_NAME}"
+},
+  "buildNumber": "${BUILD_NUMBER}",
+  "buildId": "${BUILD_ID}",
+  "jobName": "${JOB_NAME}",
+  "gitCommit": "${GIT_COMMIT ?: 'unknown'}",
+  "repository": "${GIT_URL}",
+  "image": "${DOCKER_IMAGE}",
+  "imageDigest": "${IMAGE_DIGEST}"
+}
+"""
+            )
+        }
+
+        sh 'cat build-provenance.json'
+    }
+}
+stage('Cosign Attest Build') {
+    steps {
+        withCredentials([
+            usernamePassword(
+                credentialsId: 'docker-cred',
+                usernameVariable: 'DOCKER_USERNAME',
+                passwordVariable: 'DOCKER_PASSWORD'
+            ),
+            file(
+                credentialsId: 'cosign-private-key',
+                variable: 'COSIGN_KEY'
+            ),
+            string(
+                credentialsId: 'cosign-password',
+                variable: 'COSIGN_PASSWORD'
+            )
+        ]) {
+            sh '''
+                set -e
+
+                echo "$DOCKER_PASSWORD" | docker login \
+                    -u "$DOCKER_USERNAME" \
+                    --password-stdin \
+                    docker.io
+
+                cosign attest \
+                    --key "$COSIGN_KEY" \
+                    --yes \
+                    --predicate build-provenance.json \
+                    --type https://in-toto.io/attestation/v1 \
+                    "$IMAGE_DIGEST"
+            '''
+        }
+    }
+}
+        stage('Deploy to AKS') {
+            steps {
                 sh '''
-                    git config user.email "abhishek.xyz@gmail.com"
-                    git config user.name "Abhishek Veeramalla"
-                    BUILD_NUMBER=${BUILD_NUMBER}
-                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
-                    git add java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
-                    git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-                    git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
+                    helm upgrade --install spring-boot-app \
+                      ./DevOps-Project-18/helm/spring-boot-app \
+                      --namespace project18 \
+                      --create-namespace \
+                      --set image.repository=tushar31/spring-boot-app \
+                      --set image.tag=${BUILD_NUMBER} \
+                      --wait \
+                      --timeout 2m
                 '''
             }
         }
+
+        stage('Verify Deployment') {
+            steps {
+                sh '''
+                    kubectl get pods -n project18
+                    kubectl argo rollouts status spring-boot-app -n project18 --timeout=120s
+                '''
+            }
+        }
+
+stage('OWASP ZAP DAST') {
+    steps {
+        sh '''
+            docker run --rm \
+              --user 0 \
+              -v "$WORKSPACE:/zap/wrk/:rw" \
+              ghcr.io/zaproxy/zaproxy:stable \
+              zap-baseline.py \
+              -t http://4.157.219.55/ \
+              -r zap-report.html \
+              -I
+        '''
     }
-  }
+
+    post {
+        always {
+            archiveArtifacts artifacts: 'zap-report.html',
+                         allowEmptyArchive: true
+        }
+    }
+}
+    }
 }

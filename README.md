@@ -171,8 +171,9 @@ For comprehensive AWS-specific projects and hands-on learning experiences, visit
 | **38** | Automated Testing in CI/CD Pipeline | Selenium, JUnit, Jest, Jenkins, Docker, Kubernetes | Integrate automated testing (unit, integration, E2E) in CI/CD |
 | **39** | Service Mesh Implementation with Istio | Istio, Kubernetes, Prometheus, Grafana, Kiali, Jaeger | Implement service mesh for microservices with observability |
 | **40** | Cloud Migration Strategy and Execution | AWS Migration Hub, Database Migration Service, Terraform, Jenkins | Plan and execute cloud migration from on-premises to AWS |
+| **41** | Deploy Swiggy Clone with DevSecOps CI/CD Pipeline [![NEW](https://img.shields.io/badge/NEW-10b981?style=flat-square)](./DevOps-Project-41) | Terraform, Jenkins, SonarQube, Trivy, Docker, AWS (EC2, VPC, IAM), Node.js | End-to-end DevSecOps CI/CD pipeline deploying a Swiggy clone application using Terraform IaC, SonarQube code quality gates, Trivy security scanning, and Docker containerization |
 
-![Projects Overview](https://img.shields.io/badge/📊%20Projects%20Overview-40%20Complete%20DevOps%20Projects-orange?style=for-the-badge&logo=github&logoColor=white)
+![Projects Overview](https://img.shields.io/badge/📊%20Projects%20Overview-41%20Complete%20DevOps%20Projects-orange?style=for-the-badge&logo=github&logoColor=white)
 
 ---
 

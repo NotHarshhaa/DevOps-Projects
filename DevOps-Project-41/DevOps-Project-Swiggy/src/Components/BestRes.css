@@ -1,0 +1,17 @@
+.buttons-grp button{
+    width: 300px;
+    padding: 13px 0;
+    background: transparent;
+    border-radius: 10px;
+    font-weight: 400;
+    border: 1.5px solid rgba(2, 6, 12, 0.1);
+}
+  
+.buttons-grps button{
+    width: 49%;
+    padding: 13px 0px;
+    background: transparent;
+    border-radius: 10px;
+    font-weight: 400;
+    border: 1.5px solid rgba(2, 6, 12, 0.1);
+}

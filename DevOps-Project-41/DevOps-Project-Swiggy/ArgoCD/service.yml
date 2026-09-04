@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: swiggy-app
+  labels:
+    app: swiggy-app
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 3000
+  selector:
+    app: swiggy-app
